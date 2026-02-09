@@ -1,0 +1,312 @@
+table 'VMware Tools'
+	lineageTag: d348fb5b-e2f1-4cce-bc28-152a51599a93
+
+	column VM
+		dataType: string
+		lineageTag: 07b7f591-7b1b-4a89-aa0f-4d9adcb735d2
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: bcb0b537-5be0-4e22-8ea2-eb8dc08c6f66
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Template
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f2832053-f16a-4378-a3c3-0ac5d395fd9d
+		summarizeBy: none
+		sourceColumn: Template
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SRM Placeholder'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2ce34dce-87e2-497e-8fca-2505bfae8534
+		summarizeBy: none
+		sourceColumn: SRM Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Version'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4383c899-ade4-479f-8bf8-0e821e2bc2bb
+		summarizeBy: sum
+		sourceColumn: VM Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tools
+		dataType: string
+		lineageTag: b495e130-984c-4a27-af57-eddaed44a200
+		summarizeBy: none
+		sourceColumn: Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tools Version'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ea167c9-f216-4aad-9a98-40369bb44bb5
+		summarizeBy: sum
+		sourceColumn: Tools Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Required Version'
+		dataType: int64
+		formatString: 0
+		lineageTag: d35290ac-48a5-4329-8431-f0e7a53f64a9
+		summarizeBy: sum
+		sourceColumn: Required Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column Upgradeable
+		dataType: string
+		lineageTag: fbe7b193-31ff-4d28-86c3-e3b2a7d8b5f3
+		summarizeBy: none
+		sourceColumn: Upgradeable
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Upgrade Policy'
+		dataType: string
+		lineageTag: 576a979e-ba37-4784-941c-e81685f1ad0e
+		summarizeBy: none
+		sourceColumn: Upgrade Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sync time'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c6f99965-1ed4-4b26-825e-56112cbadfc8
+		summarizeBy: none
+		sourceColumn: Sync time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App status'
+		dataType: string
+		lineageTag: 428917c1-7b74-48c7-8880-a98087f8d755
+		summarizeBy: none
+		sourceColumn: App status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Heartbeat status'
+		dataType: string
+		lineageTag: 4389871b-4094-40cb-bc1f-70c053ddf42c
+		summarizeBy: none
+		sourceColumn: Heartbeat status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Kernel Crash state'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8c23ec4b-c18e-462b-a16e-8a11db370a18
+		summarizeBy: none
+		sourceColumn: Kernel Crash state
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operation Ready'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8e2e11dd-d052-44ba-8edc-96c8cff1c5c4
+		summarizeBy: none
+		sourceColumn: Operation Ready
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State change support'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6a733fa1-1716-441a-88b9-ec1f33b8760d
+		summarizeBy: none
+		sourceColumn: State change support
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interactive Guest'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b48f06de-007e-4fc9-b88a-c88123a064bc
+		summarizeBy: none
+		sourceColumn: Interactive Guest
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 91fe7e98-ca32-4f04-a508-ade0b58181e2
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: 057db30b-924e-4462-a7b5-cd2874752654
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: 4ea809a5-416a-4245-91da-5387575d4410
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: 12bdac0e-d8e9-4e2a-bad5-6464c6390a6c
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: ce987339-985d-4063-b1be-5e23b1d4b3e9
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: 901ed4bb-2109-4321-8226-92533a23d90c
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: bfbfeb32-a95b-40d4-9bb7-93ad1595b39e
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: 1f36578f-eda9-4688-b7af-ad0496574cd7
+		summarizeBy: none
+		sourceColumn: Folder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: 63c911d8-ac85-4d96-8148-fcc26a525ef2
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 84d9e9cf-58fc-47b6-83e3-8bb1b3dfef8f
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column VMRef
+		dataType: int64
+		formatString: 0
+		lineageTag: 668f1b05-12c0-4518-8893-74576cfd7213
+		summarizeBy: sum
+		sourceColumn: VMRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: bde2fff2-2954-4ca3-8800-3fae34e15cc0
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: fd8f7950-1d3b-49d7-99f7-4bcd764846b4
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: 5cbc40d5-cece-4629-af4b-c58814105c23
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 22501a27-34d5-4576-8eca-29876449869c
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 7e3d1acb-ecef-4508-ab28-c3468027f837
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware Tools' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vTools",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"VM", type text}, {"Powerstate", type text}, {"Template", type logical}, {"SRM Placeholder", type logical}, {"VM Version", Int64.Type}, {"Tools", type text}, {"Tools Version", Int64.Type}, {"Required Version", Int64.Type}, {"Upgradeable", type text}, {"Upgrade Policy", type text}, {"Sync time", type logical}, {"App status", type text}, {"Heartbeat status", type text}, {"Kernel Crash state", type logical}, {"Operation Ready", type logical}, {"State change support", type logical}, {"Interactive Guest", type logical}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"Folder", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"VMRef", Int64.Type}, {"VM ID", type text}, {"VM UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping-VMwareVM-ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping-VMwareVM-ServerName", {"Name"}, {"Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded Mapping-VMwareVM-ServerName",{{"VM", type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Changed Type1", {"VM"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Duplicates",{"Name", "VM", "Powerstate", "Template", "SRM Placeholder", "VM Version", "Tools", "Tools Version", "Required Version", "Upgradeable", "Upgrade Policy", "Sync time", "App status", "Heartbeat status", "Kernel Crash state", "Operation Ready", "State change support", "Interactive Guest", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "Folder", "OS according to the configuration file", "OS according to the VMware Tools", "VMRef", "VM ID", "VM UUID", "VI SDK Server", "VI SDK UUID"})
+				in
+				    #"Reordered Columns"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

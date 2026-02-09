@@ -1,0 +1,55 @@
+table 'Application Catalogue Wave Plan'
+	lineageTag: 0b357ea2-ba1a-4d7c-8507-73b5283e64a3
+
+	column 'Application component'
+		dataType: string
+		lineageTag: 1d124459-392e-46d6-a25e-f0de195e0c71
+		summarizeBy: none
+		sourceColumn: Application component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wave
+		dataType: string
+		lineageTag: 9af003e9-f510-4be5-84e5-f9009eb2f55d
+		summarizeBy: none
+		sourceColumn: Wave
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wave Outlook'
+		dataType: string
+		lineageTag: d559c44b-1ae6-4248-a0af-5d44155586f0
+		summarizeBy: none
+		sourceColumn: Wave Outlook
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Reference'
+		dataType: string
+		lineageTag: ae9e03c7-8f7e-4324-8c1b-7c579b1e6eb1
+		summarizeBy: none
+		sourceColumn: Application Reference
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Application Catalogue Wave Plan' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(ApplicationCataloguePath), null, true),
+				    #"Wave Planning - Current_Sheet" = Source{[Item="Wave Planning - Current",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Wave Planning - Current_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Application Reference", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type", {"Application Reference"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Errors", each ([Type] <> null)),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Application Reference", "Application component", "Wave", "Wave  outlook"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Wave  outlook", "Wave Outlook"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

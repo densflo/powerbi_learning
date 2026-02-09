@@ -1,0 +1,42 @@
+table 'Application Catalogue Missing From Data Model'
+	lineageTag: 7b454556-1e74-401d-b856-38950043a041
+
+	column Reference
+		dataType: int64
+		formatString: 0
+		lineageTag: ec02596c-164c-41a1-9064-4a2d23fc4334
+		summarizeBy: sum
+		sourceColumn: Reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column Component
+		dataType: string
+		lineageTag: 7dd62554-a05a-406f-ba27-14311b7eb2ca
+		summarizeBy: none
+		sourceColumn: Component
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Application Catalogue Missing From Data Model' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DataCentreStrategy/Shared%20Documents/General/DC%20Migration/03.%20Assessment/Application%20mapping/Apps%20Cat%20updates%20for%20DC%20Work%20-%20Working%20Version%20-%20Not%20baselined.xlsx"), null, true),
+				    #"Working Catalogue_Sheet" = Source{[Item="Working Catalogue",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Working Catalogue_Sheet", [PromoteAllScalars=true]),
+				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([Application Reference] <> null) and ([Style Of System] = "MSAmlin Data Centre" or [Style Of System] = "Vendor DC/Cloud or MS Amlin Azure but on premise components")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Application Reference", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"Application Reference", "Application component"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"Application Reference"}, #"Mapping Application to Application Catalogue", {"Reference"}, "ApplicationCatalogueMapping", JoinKind.LeftAnti),
+				    #"Removed Columns" = Table.RemoveColumns(#"Merged Queries",{"ApplicationCatalogueMapping"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Application Reference", "Reference"}, {"Application component", "Component"}}),
+				    #"Sorted Rows" = Table.Sort(#"Renamed Columns",{{"Component", Order.Ascending}})
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

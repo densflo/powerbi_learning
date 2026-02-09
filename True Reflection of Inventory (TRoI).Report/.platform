@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "True Reflection of Inventory (TRoI)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "97dc64be-e24e-4e83-9b76-064a48c0a5d3"
+  }
+}

@@ -1,0 +1,56 @@
+table 'Mapping VLAN to Application'
+	lineageTag: 43b5bc5a-7402-4701-b658-f992cb116660
+
+	column Datacenter
+		dataType: string
+		lineageTag: 3b53a9e3-53c2-4e91-b7bb-94e9f3e09a79
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #1'
+		dataType: string
+		lineageTag: 85ebfc7d-6199-46ab-b1ee-9da91090b44b
+		summarizeBy: none
+		sourceColumn: Network #1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary IP Address'
+		dataType: string
+		lineageTag: 61c9e710-3fc0-40f8-8f82-1b6c69d50ea2
+		summarizeBy: none
+		sourceColumn: Primary IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: a77221c3-0e59-47e7-86be-4324a05d5558
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column VM
+		dataType: string
+		lineageTag: f5b8c61f-cdac-4bc5-8c13-d362c376145a
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping VLAN to Application' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = #"VMware VMs",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"VM", "Powerstate", "Primary IP Address", "Network #1", "Datacenter"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Other Columns",{"Datacenter", "Network #1", "Primary IP Address", "VM", "Powerstate"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_ResultType = Exception
+

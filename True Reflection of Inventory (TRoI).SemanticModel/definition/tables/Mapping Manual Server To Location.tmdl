@@ -1,0 +1,42 @@
+table 'Mapping Manual Server To Location'
+	lineageTag: 9066daa7-4ecd-4fa4-a2bf-311df4b9d4d5
+
+	column Name
+		dataType: string
+		lineageTag: 3a717441-039c-454a-8691-05b8beb81efc
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: b62a0c09-aa7d-4936-8144-7531d5aafc38
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: d33b072d-f3c9-4d30-b5ba-ff9b81295ba3
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping Manual Server To Location' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hVZtb5swEP4rUT4Xy6+APxJIgTUEC5O0U1VNkcq2SGlapd3/nyEhOdtDU96k5+U4+87nPD/PCUaUccQwInh+N+/fL3cWTCAcUURCRKREnLq4RCQWSPwLloiFAE+LIEutwANCIbLUT5gEDY4NMMSJEeEE0ZHPF0FRLDEOsqwENgM3dTUNlyoF8KpOk1VR63Z8iFlbGJql93vRvL/9fD+9DkK1StogXTQPgWqyYNPLca+mGIlrSk1dt/3CGHjCBaMQ032gdE0wJlYg7gvoRRDbT7oJmBVB+AJuRWA3QZ0lJcbD/lqgNmmFFrjRlQExscBtqktrBTHiHntL37wAWyWuV3gs9PosA14/MgfeyGMF8PpsCLzcYyPglR4bA6/PSuANXXY4fqP3xmamj+29kiCrkb3tFWTvmWr6Egu7u2PqNPdVGDpCMSWMgFCaz5BA0b11h5n5/vj86naOI3YdZMqRB2nunV9dFKxK8KWyYxxhfuRUnGKr87FtB0dkhhBifePo/fHX7uP91M3S3cf+azfLT113tG3UtvH/2EpzdIyNwvGnv20qZS0+MuOUgQqNAglWJSIgWGdL75gRHns8PCyQV8m20G2JrxGomQJMngeB2p32nxddlbcZ3CyJTCrcrf8oo7d8KZYoiqeKoFSlrLh92TjieMrQlPpBZcnw6OsqmureK35ILsW3EtT5ud3g5WTATZq4A0yXy8pXrh6zRFn7bd7C5xnkQ58XkI98PoJ87PMS8tLiKy8/bvFaWf3g8Y+Z6z/f/LbACgAF6l6XTkHNqCBx7JXioqS2kvpdNSqZOyPEVJeMDu46oilHWz0utFvubf19OOvWdbfVyRqukDIUmstz+L+zMvG64+/d4TBb/NkfXs1AOJueluv+4mQSRGqXuv2hkjYtHHBbXTvx5S8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Name = _t, #"IP Address" = _t, Location = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Name", type text}, {"IP Address", type text}, {"Location", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","",null,Replacer.ReplaceValue,{"IP Address", "Location"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

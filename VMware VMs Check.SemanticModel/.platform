@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "VMware VMs Check"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "46b6b5a5-f474-442a-b560-02b0b89b82dd"
+  }
+}

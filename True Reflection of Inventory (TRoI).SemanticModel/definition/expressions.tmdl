@@ -1,0 +1,155 @@
+expression ExpandSubnet = ```
+		let
+		    ExpandSubnet = (Subnet as text) =>
+		    let
+		        // Split CIDR notation into base IP and prefix length
+		        SubnetParts = Text.Split(Subnet, "/"),
+		        BaseIP = SubnetParts{0},
+		        PrefixLength = Number.From(SubnetParts{1}),
+		
+		        // Convert base IP to integer
+		        BaseIPParts = List.Transform(Text.Split(BaseIP, "."), Number.From),
+		        BaseIPInteger = (BaseIPParts{0} * Number.Power(256, 3)) + 
+		                        (BaseIPParts{1} * Number.Power(256, 2)) + 
+		                        (BaseIPParts{2} * Number.Power(256, 1)) + 
+		                        (BaseIPParts{3}),
+		
+		        // Calculate the number of IPs in the subnet
+		        TotalIPs = Number.Power(2, 32 - PrefixLength),
+		
+		        // Generate list of IP integers
+		        IPIntegers = List.Transform({0..TotalIPs - 1}, each BaseIPInteger + _),
+		
+		        // Convert IP integers back to dotted-decimal notation
+		        IPAddresses = List.Transform(IPIntegers, each 
+		            Text.From(Number.IntegerDivide(_, Number.Power(256, 3))) & "." &
+		            Text.From(Number.IntegerDivide(Number.Mod(_, Number.Power(256, 3)), Number.Power(256, 2))) & "." &
+		            Text.From(Number.IntegerDivide(Number.Mod(_, Number.Power(256, 2)), Number.Power(256, 1))) & "." &
+		            Text.From(Number.Mod(_, Number.Power(256, 1)))
+		        )
+		    in
+		        IPAddresses
+		in
+		    ExpandSubnet
+		```
+	lineageTag: c852e92f-8382-4091-9d30-111464c9faec
+	queryGroup: 'Child Queries\Functions'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ConvertToMACAddress =
+		(MACAddress as text) as text =>
+		let
+		    SplitText = Text.Split(MACAddress, "."),
+		    CombinedText = Text.Combine(SplitText, ""),
+		    FormattedMACAddress = Text.Middle(CombinedText, 0, 2) & ":" &
+		                          Text.Middle(CombinedText, 2, 2) & ":" &
+		                          Text.Middle(CombinedText, 4, 2) & ":" &
+		                          Text.Middle(CombinedText, 6, 2) & ":" &
+		                          Text.Middle(CombinedText, 8, 2) & ":" &
+		                          Text.Middle(CombinedText, 10, 2)
+		in
+		    FormattedMACAddress
+	lineageTag: 7b87efa4-9140-4f1a-a706-d6948eaa032c
+	queryGroup: 'Child Queries\Functions'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ApplicationCataloguePath = "https://amlinonline.sharepoint.com/sites/DataCentreStrategy/Shared%20Documents/General/DC%20Migration/03.%20Assessment/Application%20mapping/Apps%20Cat%20updates%20for%20DC%20Work%20-%20Working%20Version%20-%20Not%20baselined.xlsx" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 2e0112dc-7326-4fca-b9f1-2ddd0020026d
+	queryGroup: 'Child Queries\Asset Management & Inventory'
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Ops Theater RAETSMARINE Apps' =
+		let
+		    Source = Web.BrowserContents("http://spdoca0001.raetsmarine.local/servers_func.html"),
+		    #"Extracted Table From Html" = Html.Table(Source, {{"Column1", "TABLE[id='servers_srt'] > * > TR > :nth-child(1)"}, {"Column2", "TABLE[id='servers_srt'] > * > TR > :nth-child(2)"}, {"Column3", "TABLE[id='servers_srt'] > * > TR > :nth-child(3)"}, {"Column4", "TABLE[id='servers_srt'] > * > TR > :nth-child(4)"}, {"Column5", "TABLE[id='servers_srt'] > * > TR > :nth-child(5)"}, {"Column6", "TABLE[id='servers_srt'] > * > TR > :nth-child(6)"}, {"Column7", "TABLE[id='servers_srt'] > * > TR > :nth-child(7)"}, {"Column8", "TABLE[id='servers_srt'] > * > TR > :nth-child(8)"}}, [RowSelector="TABLE[id='servers_srt'] > * > TR"]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Extracted Table From Html",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Host", type text}, {"IP", type text}, {"Env", type text}, {"Branch", type text}, {"Application", type text}, {"Component", type text}, {"Contact", type text}, {"Comment", type text}})
+		in
+		    #"Changed Type1"
+	lineageTag: 90ff833c-48e9-4e94-9cd3-c4f49b652345
+	queryGroup: 'Child Queries\Asset Management & Inventory'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression ConvertIPToDecimal =
+		let
+		    ConvertIPToDecimal = (IPAddress as text) as number =>
+		    let
+		        IP = Text.Split(IPAddress, "."),
+		        Part1 = Number.FromText(IP{0}),
+		        Part2 = Number.FromText(IP{1}),
+		        Part3 = Number.FromText(IP{2}),
+		        Part4 = Number.FromText(IP{3})
+		    in
+		        (Part1 * 256 * 256 * 256) + (Part2 * 256 * 256) + (Part3 * 256) + Part4
+		in
+		    ConvertIPToDecimal
+	lineageTag: 38c2da26-893d-4a9f-9f86-2b0b27c0210a
+	queryGroup: 'Child Queries\Functions'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression 'Qualys Assets_Source_Detailed_2025-09-19_17:11' = ```
+		let
+		    Source = Json.Document(File.Contents("C:\Users\GDVSHB\AppData\Local\Microsoft\Power BI Desktop\Traces\Diagnostics\Diagnostics_Detailed_20250919T171157.380-35b93d68-f20a-4543-a830-240c59fdc1e7.json")),
+		    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1",
+		        {"Id", "Query", "Step", "Category", "DataSourceKind", "Operation", "StartTime", "EndTime", "ExclusiveDurationPct", "ExclusiveDuration", "Resource", "DataSourceQuery", "AdditionalInfo", "RowCount", "ContentLength", "IsUserQuery", "Path", "GroupId", "PartitionKey", "Process", "ActivityId", "DataSourceOperationIds"},
+		        {"Id", "Query", "Step", "Category", "Data Source Kind", "Operation", "Start Time", "End Time", "Exclusive Duration (%)", "Exclusive Duration", "Resource", "Data Source Query", "Additional Info", "Row Count", "Content Length", "Is User Query", "Path", "Group Id", "Partition Key", "Process", "Activity Id", "Data Source Operation Identifiers"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Column1", 
+		        {{"Id", type text}, {"Query", type text}, {"Step", type text}, {"Category", type text}, {"Data Source Kind", type text}, {"Operation", type text}, {"Start Time", type datetime}, {"End Time", type datetime}, {"Exclusive Duration (%)", Percentage.Type}, {"Exclusive Duration", type duration}, {"Resource", type text}, {"Data Source Query", type text}, {"Additional Info", type any}, {"Row Count", Int64.Type}, {"Content Length", Int64.Type}, {"Is User Query", type logical}, {"Path", type text}, {"Group Id", type number}, {"Partition Key", type text}, {"Process", type text}, {"Activity Id", type text}, {"Data Source Operation Identifiers", type any}})
+		in
+		    #"Changed Type"
+		```
+	lineageTag: c4896e37-e192-4fd1-a9d0-fb5a31978e5d
+	queryGroup: Diagnostics
+
+expression 'Qualys Assets_Source_Aggregated_2025-09-19_17:11' = ```
+		let
+		    Source = Json.Document(File.Contents("C:\Users\GDVSHB\AppData\Local\Microsoft\Power BI Desktop\Traces\Diagnostics\Diagnostics_Aggregated_20250919T171157.380-35b93d68-f20a-4543-a830-240c59fdc1e7.json")),
+		    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1",
+		        {"Id", "Query", "Step", "Category", "DataSourceKind", "Operation", "StartTime", "EndTime", "ExclusiveDurationPct", "ExclusiveDuration", "Resource", "DataSourceQuery", "AdditionalInfo", "RowCount", "ContentLength", "IsUserQuery", "Path", "GroupId", "PartitionKey"},
+		        {"Id", "Query", "Step", "Category", "Data Source Kind", "Operation", "Start Time", "End Time", "Exclusive Duration (%)", "Exclusive Duration", "Resource", "Data Source Query", "Additional Info", "Row Count", "Content Length", "Is User Query", "Path", "Group Id", "Partition Key"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Column1", 
+		        {{"Id", type text}, {"Query", type text}, {"Step", type text}, {"Category", type text}, {"Data Source Kind", type text}, {"Operation", type text}, {"Start Time", type datetime}, {"End Time", type datetime}, {"Exclusive Duration (%)", Percentage.Type}, {"Exclusive Duration", type duration}, {"Resource", type text}, {"Data Source Query", type text}, {"Additional Info", type any}, {"Row Count", Int64.Type}, {"Content Length", Int64.Type}, {"Is User Query", type logical}, {"Path", type text}, {"Group Id", type number}, {"Partition Key", type text}})
+		in
+		    #"Changed Type"
+		```
+	lineageTag: 2816e09a-0056-497b-bffd-6f7f3dd754eb
+	queryGroup: Diagnostics
+
+expression 'Qualys Assets_Source_Partitions_2025-09-19_17:11' = ```
+		let
+		    Source = Json.Document(File.Contents("C:\Users\GDVSHB\AppData\Local\Microsoft\Power BI Desktop\Traces\Diagnostics\Diagnostics_Partitions_20250919T171157.380-35b93d68-f20a-4543-a830-240c59fdc1e7.json")),
+		    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1",
+		        {"Id", "PartitionKey", "FirewallGroup", "AccessedResources", "PartitionInputs", "Expression", "StartTime", "EndTime", "Duration", "ExclusiveDuration", "ExclusiveDurationPct"},
+		        {"Id", "Partition Key", "Firewall Group", "Accessed Resources", "Partition Inputs", "Expression", "Start Time", "End Time", "Duration", "Exclusive Duration", "Exclusive Duration (%)"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Column1", 
+		        {{"Id", type text}, {"Partition Key", type text}, {"Firewall Group", type text}, {"Accessed Resources", type any}, {"Partition Inputs", type any}, {"Expression", type text}, {"Start Time", type datetime}, {"End Time", type datetime}, {"Duration", type duration}, {"Exclusive Duration", type duration}, {"Exclusive Duration (%)", Percentage.Type}}),
+		    AddPartitionId = (targetTable as table) => Table.AddColumn(targetTable, "PartitionId", each Text.Combine({[Id], ".", [Partition Key]}), type text),
+		    RemovePartitionId = (column as any) => if column is table then Table.RemoveColumns(column, {"PartitionId"}) else column,
+		    AddedDiagnosticsColumn = Table.NestedJoin(AddPartitionId(#"Changed Type"), {"PartitionId"}, AddPartitionId(#"Qualys Assets_Source_Detailed_2025-09-19_17:11"), {"PartitionId"}, "Diagnostics", JoinKind.LeftOuter),
+		    RemovedPartitionIdOnDiagnostics = Table.TransformColumns(AddedDiagnosticsColumn, {"Diagnostics", RemovePartitionId}, null, MissingField.UseNull),
+		    RemovedPartitionId = RemovePartitionId(RemovedPartitionIdOnDiagnostics)
+		in
+		    RemovedPartitionId
+		```
+	lineageTag: dc76ca26-5226-4356-8b75-6b855d800d57
+	queryGroup: Diagnostics
+

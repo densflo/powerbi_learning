@@ -1,0 +1,52 @@
+table 'QRadar Log Sources'
+	lineageTag: d2aca8ac-566b-4a65-b431-feac9afd03dd
+
+	column Name
+		dataType: string
+		lineageTag: ed9af882-902b-48a1-b21e-8edc100ff8bd
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 521cbb0a-3642-4d51-b5e3-5dbe8a1657c4
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Log Source Type'
+		dataType: string
+		lineageTag: be03573e-84bc-4959-8a1e-ae4a135fa698
+		summarizeBy: none
+		sourceColumn: Log Source Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Log Source Identifier(IP/Hostname)'
+		dataType: string
+		lineageTag: 02c2a152-504a-4a2a-834b-1e24e98c2b90
+		summarizeBy: none
+		sourceColumn: Log Source Identifier(IP/Hostname)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'QRadar Log Sources' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/QRadar_All_Devices.xlsx"), null, true),
+				    #"QRadar Logsources_Sheet" = Source{[Item="QRadar Logsources",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"QRadar Logsources_Sheet",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"Description", type text}, {"Log Source Type", type text}, {"Log Source Identifier(IP/Hostname)", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

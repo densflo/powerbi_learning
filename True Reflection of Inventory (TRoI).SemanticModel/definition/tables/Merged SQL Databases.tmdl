@@ -1,0 +1,102 @@
+table 'Merged SQL Databases'
+	lineageTag: 491f554a-3402-4be6-94b3-6590a82ff720
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: 70eac5a8-4e12-441c-b7ce-c14547cb970f
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System' = LOOKUPVALUE('_All Devices'[Operating System],'_All Devices'[Name],'Merged SQL Databases'[Server Name])
+		lineageTag: 17d6cd28-798a-4948-b910-4d65581a6e99
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server In Model' =
+			
+			IF(
+			    NOT ISBLANK(
+			        LOOKUPVALUE('_All Devices'[Name], '_All Devices'[Name], 'Merged SQL Databases'[Server Name])
+			    ),
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9d0e6190-77d8-46b9-ac7c-ae2c4f79c19c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application = LOOKUPVALUE('_All Devices'[Application],'_All Devices'[Name],'Merged SQL Databases'[Server Name])
+		lineageTag: abd19846-7e15-4436-98d3-02b42b3ace82
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: d727b273-1571-4ce8-b0f0-96374542284a
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Database Name'
+		dataType: string
+		lineageTag: e70e6dd2-e072-4c00-b2e0-8d64d2d1d3fb
+		summarizeBy: none
+		sourceColumn: Database Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 4a7d8dee-14f9-4257-9689-3ff26c815df7
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Version'
+		dataType: string
+		lineageTag: 3984ba90-e9c9-45f0-89ef-2e1e1560c815
+		summarizeBy: none
+		sourceColumn: SQL Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Edition'
+		dataType: string
+		lineageTag: 19232fa5-16f4-4629-bee8-e11639b40bcc
+		summarizeBy: none
+		sourceColumn: SQL Edition
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Merged SQL Databases' = m
+		mode: import
+		queryGroup: 'Child Queries\Merged'
+		source =
+				let
+				    CombinedTable = Table.Combine({
+				        Table.SelectColumns(#"Azure Arc SQL Databases", {"Full Instance Name", "Database Name", "Source"}),
+				        Table.SelectColumns(#"ServiceNow MSSQL Databases", {"Full Instance Name", "Database Name", "Source"}),
+				        Table.SelectColumns(#"DB Inventory System Databases", {"Full Instance Name", "Database Name", "Source"})
+				    }),
+				    #"Added Conditional Column" = Table.AddColumn(CombinedTable, "Sort Index", each if [Source] = "Azure Arc" then 1 else if [Source] = "DB Inventory System" then 2 else if [Source] = "ServiceNow" then 3 else null),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Added Conditional Column",{{"Full Instance Name", Order.Ascending}, {"Database Name", Order.Ascending}, {"Sort Index", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Full Instance Name", "Database Name"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates", {"Full Instance Name"}, #"Merged SQL Instances", {"Full Instance Name"}, "Merged SQL Instances", JoinKind.LeftOuter),
+				    #"Expanded Merged SQL Instances" = Table.ExpandTableColumn(#"Merged Queries", "Merged SQL Instances", {"Server Name", "SQL Version", "SQL Edition"}, {"Server Name", "SQL Version", "SQL Edition"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Merged SQL Instances",{"Sort Index"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Columns", {"Full Instance Name", "Database Name", "Server Name", "SQL Version", "SQL Edition"})
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

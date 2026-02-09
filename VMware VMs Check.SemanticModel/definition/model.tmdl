@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["VMware VMs","Mapping VM to ServerName"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.146.1254.0 (25.08)+791a7518fadc83da883d79322a2658aff57c8db3
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'VMware VMs'
+ref table DateTableTemplate_e12b49e1-225c-4543-9363-e5937de7cbd2
+ref table LocalDateTable_05ae2485-30f1-49b9-81a7-ca255bd0d489
+ref table LocalDateTable_335744f9-c750-4d79-90b5-9b4e6146c56a
+ref table LocalDateTable_09194dea-3569-43ab-998e-5a5ec5981c01
+ref table 'Mapping VM to ServerName'
+
+ref cultureInfo en-US
+

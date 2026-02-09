@@ -1,0 +1,408 @@
+table 'ServiceNow CMDB'
+	lineageTag: 86842a61-a95d-4323-bce0-ddd160121762
+
+	column Name
+		dataType: string
+		lineageTag: a0c7d1ad-89b3-4e9e-82ac-c26e240009c8
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS Domain'
+		dataType: string
+		lineageTag: 79a68ffc-caec-4cb3-ba2f-0640a7ede4e4
+		summarizeBy: none
+		sourceColumn: OS Domain
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: cd7ab16b-b47d-4ec0-b7b5-2d04619b15c3
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Model ID'
+		dataType: string
+		lineageTag: f96e9147-4f5e-4672-890c-2020818f5692
+		summarizeBy: none
+		sourceColumn: Model ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		dataType: string
+		lineageTag: 570eea55-3b99-416f-9f25-c3292be23db6
+		summarizeBy: none
+		sourceColumn: Operating System
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS Version'
+		dataType: string
+		lineageTag: 047ebce3-d74d-4a1c-9868-8ba6c1be77d3
+		summarizeBy: none
+		sourceColumn: OS Version
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: ba9ebe07-5255-4968-9743-912e4896b33f
+		summarizeBy: none
+		sourceColumn: Description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application name'
+		dataType: string
+		lineageTag: 119bc3af-578f-4b03-ae8d-877c0a48ed95
+		summarizeBy: none
+		sourceColumn: Application name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: d72a41f1-ed46-4394-aac6-ddcc86d59545
+		summarizeBy: none
+		sourceColumn: Location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Class
+		dataType: string
+		lineageTag: f6401357-4fc2-408f-9b24-433a6ddc1264
+		summarizeBy: none
+		sourceColumn: Class
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Virtual'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0d7cc9d0-5594-4180-bf93-158f5ad95065
+		summarizeBy: none
+		sourceColumn: Is Virtual
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Physical/Virtual
+		dataType: string
+		lineageTag: 472a2742-f03e-4915-bd19-d5a068b7a78c
+		summarizeBy: none
+		sourceColumn: Physical/Virtual
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server type'
+		dataType: string
+		lineageTag: b2d36ea9-8861-4c58-b2ea-6052da4061c7
+		summarizeBy: none
+		sourceColumn: Server type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Serial number'
+		dataType: string
+		lineageTag: e91811fc-b002-463a-83f8-c071f33f8ded
+		summarizeBy: none
+		sourceColumn: Serial number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Discovery source'
+		dataType: string
+		lineageTag: 1a4bad70-d42e-432d-b1de-df8f256b5922
+		summarizeBy: none
+		sourceColumn: Discovery source
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Environment
+		dataType: string
+		lineageTag: 2afe8aa0-5297-4508-a2a9-9f5d72b4be6f
+		summarizeBy: none
+		sourceColumn: Environment
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Environment3
+		dataType: string
+		lineageTag: c33f9ecb-971d-40c5-a93a-d945f70f4d7c
+		summarizeBy: none
+		sourceColumn: Environment3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 6e23ea7c-67a7-476b-a820-54a44fd2a785
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Install Status'
+		dataType: string
+		lineageTag: d173bc55-bf24-4685-8d1f-40a4e1b30f24
+		summarizeBy: none
+		sourceColumn: Install Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Most recent discovery'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4d70b215-f1f3-4c79-9c42-e1490242a70c
+		summarizeBy: none
+		sourceColumn: Most recent discovery
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network
+		dataType: string
+		lineageTag: c6d44c06-3f62-45e2-b79f-84fe859ae777
+		summarizeBy: none
+		sourceColumn: Network
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Asset Criticality'
+		dataType: string
+		lineageTag: 52a94c40-56eb-4c00-9c01-5d81fc38c983
+		summarizeBy: none
+		sourceColumn: Asset Criticality
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tower or Team'
+		dataType: string
+		lineageTag: 7f10ba44-d6fc-4866-b3d6-2cd0e24522c4
+		summarizeBy: none
+		sourceColumn: Tower or Team
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Owned by'
+		dataType: string
+		lineageTag: 6ed1ddd5-8dee-4ee3-8ad3-faec22b20b0e
+		summarizeBy: none
+		sourceColumn: Owned by
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support group'
+		dataType: string
+		lineageTag: b2ae9c6f-bfa2-4282-b875-319b64065f18
+		summarizeBy: none
+		sourceColumn: Support group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server status'
+		dataType: string
+		lineageTag: 044d4dbf-cb59-4148-a5e4-96db45430a4b
+		summarizeBy: none
+		sourceColumn: Server status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Life Cycle Stage'
+		dataType: string
+		lineageTag: ef6fbce0-e097-447b-896a-5f3763ef6cb1
+		summarizeBy: none
+		sourceColumn: Life Cycle Stage
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operational status'
+		dataType: string
+		lineageTag: 8e7110cd-b8ae-41d6-a0b4-ba1751f58efc
+		summarizeBy: none
+		sourceColumn: Operational status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU name'
+		dataType: string
+		lineageTag: 6464a56c-45c4-4d89-ac58-66b8f36827ae
+		summarizeBy: none
+		sourceColumn: CPU name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU type'
+		dataType: string
+		lineageTag: b2b4bf11-fdc2-4fa4-9e77-d3666c4a2410
+		summarizeBy: none
+		sourceColumn: CPU type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU core count'
+		dataType: int64
+		formatString: 0
+		lineageTag: e7e5a04e-4998-4dd1-9d80-766c462f83c9
+		summarizeBy: sum
+		sourceColumn: CPU core count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RAM (MB)'
+		dataType: int64
+		formatString: 0
+		lineageTag: aa3312c6-d6df-406f-908c-1034da1d69cf
+		summarizeBy: sum
+		sourceColumn: RAM (MB)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Updated
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 48bed881-6de9-4c1a-a55f-ac5775b2d9c9
+		summarizeBy: none
+		sourceColumn: Updated
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Updated by'
+		dataType: string
+		lineageTag: 09f12048-5cbf-456a-ad8c-75ffe07cc62a
+		summarizeBy: none
+		sourceColumn: Updated by
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Default Gateway'
+		dataType: string
+		lineageTag: ed5f3d92-ae73-41bb-ab7e-ddcff0e1882d
+		summarizeBy: none
+		sourceColumn: Default Gateway
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Discovery source_1'
+		dataType: string
+		lineageTag: 39138a08-c0b0-41f7-91c4-59cbc66eb03d
+		summarizeBy: none
+		sourceColumn: Discovery source_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location_3
+		dataType: string
+		lineageTag: 57511eff-24a0-4d67-b6be-513039099989
+		summarizeBy: none
+		sourceColumn: Location_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Updated_4
+		dataType: string
+		lineageTag: 2dd341d2-a577-4fe8-92b2-f03e76e18202
+		summarizeBy: none
+		sourceColumn: Updated_4
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ServiceNow CMDB' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/cmdb_ci_server.xlsx"), null, true),
+				    #"Page 1_Sheet" = Source{[Item="Page 1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Page 1_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"OS Domain", type text}, {"Manufacturer", type text}, {"Model ID", type text}, {"Operating System", type text}, {"OS Version", type text}, {"Description", type text}, {"Application name", type text}, {"Location", type text}, {"Class", type text}, {"Is Virtual", type logical}, {"Physical/Virtual", type text}, {"Server type", type text}, {"Serial number", type text}, {"Discovery source", type text}, {"Environment", type text}, {"Environment_2", type text}, {"IP Address", type text}, {"Install Status", type text}, {"Most recent discovery", type datetime}, {"Network", type text}, {"Asset Criticality", type text}, {"Tower or Team", type text}, {"Owned by", type text}, {"Support group", type text}, {"Server status", type text}, {"Life Cycle Stage", type text}, {"Operational status", type text}, {"CPU name", type text}, {"CPU type", type text}, {"CPU core count", Int64.Type}, {"RAM (MB)", Int64.Type}, {"Updated", type datetime}, {"Updated by", type text}}),
+				    #"Merged Queries" = Table.FuzzyNestedJoin(#"Changed Type", {"OS Domain"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "DomainList", JoinKind.LeftOuter, [IgnoreCase=true, IgnoreSpace=true, Threshold=1]),
+				    #"Expanded DomainList" = Table.ExpandTableColumn(#"Merged Queries", "DomainList", {"NetBIOS"}, {"DomainList.NetBIOS"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded DomainList",{"OS Domain"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"DomainList.NetBIOS", "OS Domain"}, {"Environment_2", "Environment3"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Name", "OS Domain", "Manufacturer", "Model ID", "Operating System", "OS Version", "Description", "Application name", "Location", "Class", "Is Virtual", "Physical/Virtual", "Server type", "Serial number", "Discovery source", "Environment", "Environment3", "IP Address", "Install Status", "Most recent discovery", "Network", "Asset Criticality", "Tower or Team", "Owned by", "Support group", "Server status", "Life Cycle Stage", "Operational status", "CPU name", "CPU type", "CPU core count", "RAM (MB)", "Updated", "Updated by"}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Reordered Columns",{{"Name", Order.Ascending}, {"Install Status", Order.Ascending}, {"Updated", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed Duplicates",{{"Name", Text.Upper, type text}}),
+				    #"Replaced blank IP addresses with null" = Table.ReplaceValue(#"Uppercased Text","",null,Replacer.ReplaceValue,{"IP Address"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Replaced blank IP addresses with null", {"Name"})
+				in
+				    #"Removed Duplicates1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

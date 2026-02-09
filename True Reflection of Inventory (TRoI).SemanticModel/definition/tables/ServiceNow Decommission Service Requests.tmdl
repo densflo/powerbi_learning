@@ -1,0 +1,60 @@
+table 'ServiceNow Decommission Service Requests'
+	lineageTag: fe76bf74-8113-42a8-9d7e-3f726be85b74
+
+	column 'Parent Item'
+		dataType: string
+		lineageTag: daea3b6c-a36b-4c9c-a4d6-b19ae03349b5
+		summarizeBy: none
+		sourceColumn: Parent Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 46250b3f-b992-49d6-b697-9c587b2f0855
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opened by'
+		dataType: string
+		lineageTag: 7bac91c8-baed-45bb-a7db-833bf7371dbc
+		summarizeBy: none
+		sourceColumn: Opened by
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 90358e32-f9a3-48be-88f5-dbd401c1e026
+		summarizeBy: none
+		sourceColumn: Created
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: string
+		lineageTag: 54df88a4-6b18-483f-b8e5-e04dd6facd2d
+		summarizeBy: none
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ServiceNow Decommission Service Requests' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/sc_item_option_mtom.xlsx"), null, true),
+				    #"Page 1_Sheet" = Source{[Item="Page 1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Page 1_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Parent Item", type text}, {"State", type text}, {"Opened by", type text}, {"Created", type datetime}, {"Value", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

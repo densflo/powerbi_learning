@@ -1,0 +1,68 @@
+table 'Snow SQL Servers'
+	lineageTag: a0b26053-e4d8-469f-be56-acc37829da53
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 7a2c1bb6-2d90-4ea5-a6d9-09774b586f18
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		dataType: string
+		lineageTag: 4606f7e9-d238-4b12-bb18-e7e08b81e39f
+		summarizeBy: none
+		sourceColumn: Operating System
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Version'
+		dataType: string
+		lineageTag: 895dc80a-d592-424a-9022-e04757bf375f
+		summarizeBy: none
+		sourceColumn: SQL Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Edition'
+		dataType: string
+		lineageTag: bd1eecc3-d0e4-4aa6-ac4c-6c6c7ee557ec
+		summarizeBy: none
+		sourceColumn: SQL Edition
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: e4e363df-0761-4845-bdaa-6c1025240ae2
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Snow SQL Servers' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/StockReport.xlsx"), null, true),
+				    Report0_Sheet = Source{[Item="Report0",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Report0_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Computer name", type text}, {"Operating system", type text}, {"Application", type text}, {"Edition (Name)", type text}, {"Part of bundle", type text}, {"Default metric", type text}, {"License required", type text}, {"Last scanned", Int64.Type}, {"Status", type text}, {"Processors", Int64.Type}, {"Total cores", Int64.Type}, {"Logical processors", Int64.Type}, {"Most frequent user", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([Part of bundle] = "No") and ([Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2012" and [Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2013" and [Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2015" and [Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2017" and [Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2019" and [Application] <> "Microsoft SQL Server Data Tools for Visual Studio 2022" and [Application] <> "Microsoft SQL Server IaaS Agent 1" and [Application] <> "Microsoft SQL Server System CLR Types 10" and [Application] <> "Microsoft SQL Server System CLR Types 2012" and [Application] <> "Microsoft SQL Server System CLR Types 2014" and [Application] <> "Microsoft SQL Server System CLR Types 2016" and [Application] <> "Microsoft SQL Server System CLR Types 2017") and ([#"Edition (Name)"] <> "Compact" and [#"Edition (Name)"] <> "CTP2" and [#"Edition (Name)"] <> "Management Studio" and [#"Edition (Name)"] <> "MDS Addin for Excel" and [#"Edition (Name)"] <> "Native Client")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Edition (Name)", "Application", "Operating system", "Computer name"}),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Removed Other Columns", "Version", each Text.BetweenDelimiters([Application], "Server ", " "), type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Text Between Delimiters",{"Application"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns",{"Computer name", "Operating system", "Version", "Edition (Name)"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Computer name", "Server Name"}, {"Operating system", "Operating System"}, {"Version", "SQL Version"}, {"Edition (Name)", "SQL Edition"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Source", each "Snow License Manager"),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom","",null,Replacer.ReplaceValue,{"SQL Edition"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value",{{"Server Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

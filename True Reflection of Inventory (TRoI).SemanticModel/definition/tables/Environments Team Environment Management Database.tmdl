@@ -1,0 +1,195 @@
+table 'Environments Team Environment Management Database'
+	lineageTag: 97b19b42-e3d3-46ea-9d00-b096dd2ef948
+
+	column 'Environment ID'
+		dataType: string
+		lineageTag: 779d3a7d-f349-4e82-bd47-244c28505904
+		summarizeBy: none
+		sourceColumn: Environment ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Environment Name'
+		dataType: string
+		lineageTag: 260d1001-532a-4ffb-9821-82aa4b982751
+		summarizeBy: none
+		sourceColumn: Environment Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Name'
+		dataType: string
+		lineageTag: f6120546-b5ca-41c4-8023-300b1c5d65d8
+		summarizeBy: none
+		sourceColumn: Application Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stack Name'
+		dataType: string
+		lineageTag: e7c63e86-770a-4db0-b334-3e8b33f8fc9b
+		summarizeBy: none
+		sourceColumn: Stack Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Component ID'
+		dataType: string
+		lineageTag: 99ddc6ce-81e7-46b2-8847-eece1535761e
+		summarizeBy: none
+		sourceColumn: Component ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Component Name'
+		dataType: string
+		lineageTag: 044b5920-846d-4cbb-9bd6-1302aaa57570
+		summarizeBy: none
+		sourceColumn: Component Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Component Type'
+		dataType: string
+		lineageTag: 721f7bbd-c7ed-43f1-8d8e-0b377d5e1ee4
+		summarizeBy: none
+		sourceColumn: Component Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 917bdb2e-04f1-430b-ac8b-b522cac94c3a
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server Location'
+		dataType: string
+		lineageTag: 410d901f-8065-41c2-858e-fd4336477f73
+		summarizeBy: none
+		sourceColumn: Server Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocation ID'
+		dataType: string
+		lineageTag: e3372d68-c26c-440c-8698-a8af231f50ea
+		summarizeBy: none
+		sourceColumn: Allocation ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocated Environment Type'
+		dataType: string
+		lineageTag: c52ae4af-0733-4a0f-a565-149bfbef2c4f
+		summarizeBy: none
+		sourceColumn: Allocated Environment Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocated Environment Purpose'
+		dataType: string
+		lineageTag: f72f57f8-cafd-4cd3-9df6-505e034bbe43
+		summarizeBy: none
+		sourceColumn: Allocated Environment Purpose
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocated To Project'
+		dataType: string
+		lineageTag: 40aaa8f2-a958-4c0d-bd13-a07017c24198
+		summarizeBy: none
+		sourceColumn: Allocated To Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocation Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d4a70a6a-e3f1-4c3d-8d8e-40dbbeff1ae1
+		summarizeBy: none
+		sourceColumn: Allocation Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Allocation End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: def1930e-bf4b-468d-9c58-bf0aed57c255
+		summarizeBy: none
+		sourceColumn: Allocation End Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Permanent In Nature?'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7a9558f1-332f-4bac-bc56-bb0100165410
+		summarizeBy: none
+		sourceColumn: Permanent In Nature?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GDPR Control Flag'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 356b4093-1677-4893-91eb-214be93a5d68
+		summarizeBy: none
+		sourceColumn: GDPR Control Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Env Data Exception ID'
+		dataType: string
+		lineageTag: 3f1868c4-6098-4b9e-b501-465e31d2f904
+		summarizeBy: none
+		sourceColumn: Env Data Exception ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Env Data Exception Status'
+		dataType: string
+		lineageTag: 617055b2-a14d-45f3-b689-0a8d1e302819
+		summarizeBy: none
+		sourceColumn: Env Data Exception Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocated Owner(Primary)'
+		dataType: string
+		lineageTag: f8644cbf-b901-4187-919d-f57bff60fe9a
+		summarizeBy: none
+		sourceColumn: Allocated Owner(Primary)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Environment Request ID'
+		dataType: string
+		lineageTag: 12cf7de2-b5a1-4d5f-84d5-0e889b87f2b4
+		summarizeBy: none
+		sourceColumn: Environment Request ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Environments Team Environment Management Database' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/data.xlsx"), null, true),
+				    Export_Sheet = Source{[Item="Export",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Export_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Environment ID", type text}, {"Environment Name", type text}, {"Application Name", type text}, {"Stack Name", type text}, {"Component ID", type text}, {"Component Name", type text}, {"Component Type", type text}, {"Server Name", type text}, {"Server Location", type text}, {"Allocation ID", type text}, {"Allocated Environment Type", type text}, {"Allocated Environment Purpose", type text}, {"Allocated To Project", type text}, {"Allocation Start Date", type date}, {"Allocation End Date", type date}, {"Permanent In Nature?", type logical}, {"GDPR Control Flag", type logical}, {"Env Data Exception ID", type text}, {"Env Data Exception Status", type text}, {"Allocated Owner(Primary)", type text}, {"Environment Request ID", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

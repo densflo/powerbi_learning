@@ -1,0 +1,74 @@
+table 'Mapping Server to Application'
+	lineageTag: 7e056bdf-e5d9-49ca-a77f-f13620589348
+
+	column Server
+		dataType: string
+		lineageTag: 43197770-fd78-4fbb-9613-d31cca396389
+		summarizeBy: none
+		sourceColumn: Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 1a6bc7c0-bdb4-4b36-b67b-12404f0d35f9
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application
+		dataType: string
+		lineageTag: faab9a52-6b1f-4c33-9765-97d285cf2000
+		summarizeBy: none
+		sourceColumn: Application
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 14557e75-1fc0-4427-b01a-e5be7b133ee4
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DNS Canonical Name'
+		dataType: string
+		lineageTag: 8eb715a5-b233-4423-b6aa-256ba43f5c75
+		summarizeBy: none
+		sourceColumn: DNS Canonical Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address Helper'
+		dataType: string
+		lineageTag: 165d7bf4-f078-4f89-8992-cef60f365a50
+		summarizeBy: none
+		sourceColumn: IP Address Helper
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: 00712d8a-25bd-4873-90c7-9a58470d5e89
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping Server to Application' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Server%20&%20Application%20Mapping.xlsx"), null, true),
+				    ServerToApplication_Table = Source{[Item="ServerToApplication",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(ServerToApplication_Table,{{"Server", type text}, {"IP Address", type text}, {"Application", type text}, {"Location", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","",null,Replacer.ReplaceValue,{"Application"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value",{{"Server", Text.Upper, type text}, {"DNS Canonical Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Exception
+

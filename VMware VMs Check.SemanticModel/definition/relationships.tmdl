@@ -1,0 +1,21 @@
+relationship c8a31d06-f1e6-4061-a02c-7b1aad54d2c3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'VMware VMs'.PowerOn
+	toColumn: LocalDateTable_05ae2485-30f1-49b9-81a7-ca255bd0d489.Date
+
+relationship d86aeabc-dd2c-436f-bdf3-ddef3fb3bc49
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'VMware VMs'.'Creation date'
+	toColumn: LocalDateTable_335744f9-c750-4d79-90b5-9b4e6146c56a.Date
+
+relationship 730afce7-4e47-443a-90ba-52f259086f1a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'VMware VMs'.'Change Version'
+	toColumn: LocalDateTable_09194dea-3569-43ab-998e-5a5ec5981c01.Date
+
+relationship 61030e77-75bf-4fde-9a81-13dfa55fbe46
+	fromColumn: 'Mapping VM to ServerName'.VM
+	toColumn: 'VMware VMs'.VM
+
+	annotation PBI_IsFromSource = FS
+

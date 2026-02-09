@@ -1,0 +1,1079 @@
+table '_All Devices'
+	lineageTag: d91adfde-ecc4-48bf-82b3-a8ebc89ad8c5
+
+	measure 'No. of Devices' = COUNTA([Name])
+		formatString: 0
+		lineageTag: 4cc17134-748e-4992-8b46-712a45f37d6d
+
+	measure 'Has Mounted Media' =
+			
+			VAR HasMountedMediaCount =
+			CALCULATE(
+				COUNTA('_All Devices'[Mounted Media]),
+				'_All Devices'[Mounted Media] IN { TRUE }
+			)
+			RETURN
+			IF(
+			    HasMountedMediaCount = BLANK(),
+			    0,
+			    HasMountedMediaCount
+			)
+		formatString: 0
+		lineageTag: 1d5a85e6-7556-4b18-b5a9-ca87c2b460cc
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "FilteredMeasure"
+				}
+
+	measure 'Has Encrypted Drives' =
+			
+			VAR HasEncryptedDrivesCount =
+			CALCULATE(
+				COUNTA('_All Devices'[Encrypted Drives]),
+				'_All Devices'[Encrypted Drives] IN { TRUE }
+			)
+			RETURN
+			IF(
+			    HasEncryptedDrivesCount = BLANK(),
+			    0,
+			    HasEncryptedDrivesCount
+			)
+		formatString: 0
+		lineageTag: a2a008e9-7096-435b-a83c-c1b475cd2740
+
+	measure 'No. of Networks' =
+			
+			VAR NoOfNetworks =
+				DISTINCTCOUNTNOBLANK('_All Devices'[Network])
+			RETURN
+			IF(
+			    NoOfNetworks = BLANK(),
+			    0,
+			    NoOfNetworks
+			)
+		formatString: 0
+		lineageTag: 572e1ebc-6497-490f-bc62-72250bf1a760
+
+	measure 'Has Snapshots' =
+			
+			VAR HasSnapshotsCount =
+			CALCULATE(
+				COUNTA('_All Devices'[Snapshots]),
+				'_All Devices'[Snapshots] IN { TRUE }
+			)
+			RETURN
+			IF(
+			    HasSnapshotsCount = BLANK(),
+			    0,
+			    HasSnapshotsCount
+			)
+		formatString: 0
+		lineageTag: 7b8a3abc-3d5f-4db4-8d6c-379815fd0be6
+
+	measure 'Not In Qualys' =
+			
+			VAR NotInQualysCount =
+			CALCULATE(
+				COUNTA('_All Devices'[In Qualys]),
+				'_All Devices'[In Qualys] IN { FALSE }
+			)
+			RETURN
+			IF(
+			    NotInQualysCount = BLANK(),
+			    0,
+			    NotInQualysCount
+			)
+		formatString: 0
+		lineageTag: ecb219f1-bc38-4318-9845-dfb7e29f8db0
+
+	measure 'Not In SEP' =
+			
+			VAR NotInSEPCount =
+			CALCULATE(
+				COUNTA('_All Devices'[In SEP]),
+				'_All Devices'[In SEP] IN { FALSE }
+			)
+			RETURN
+			IF(
+			    NotInSEPCount = BLANK(),
+			    0,
+			    NotInSEPCount
+			)
+		formatString: 0
+		lineageTag: 442b53b4-7e59-4161-8864-1a98c7d361db
+
+	measure 'Not In CMDB' =
+			
+			VAR NotInCMDBCount =
+			CALCULATE(
+				COUNTA('_All Devices'[In CMDB]),
+				'_All Devices'[In CMDB] IN { FALSE }
+			)
+			RETURN
+			IF(
+			    NotInCMDBCount = BLANK(),
+			    0,
+			    NotInCMDBCount
+			)
+		formatString: 0
+		lineageTag: 1acb0c32-4ca6-4767-a4ec-90f7b1dc019d
+
+	measure 'Not In SWO Nodes' =
+			
+			VAR NotInSWONodesCount =
+			CALCULATE(
+				COUNTA('_All Devices'[In SolarWinds Nodes]),
+				'_All Devices'[In SolarWinds Nodes] IN { FALSE }
+			)
+			RETURN
+			IF(
+			    NotInSWONodesCount = BLANK(),
+			    0,
+			    NotInSWONodesCount
+			)
+		formatString: 0
+		lineageTag: 71c95e40-7fa3-4c5c-bdf9-0b35166a8183
+
+	measure 'Not In SWO VMs' =
+			
+			VAR NotInSWOVMsCount =
+			CALCULATE(
+				COUNTA('_All Devices'[In SolarWinds VMs]),
+				'_All Devices'[In SolarWinds VMs] IN { FALSE }
+			)
+			RETURN
+			IF(
+			    NotInSWOVMsCount = BLANK(),
+			    0,
+			    NotInSWOVMsCount
+			)
+		formatString: 0
+		lineageTag: e8048814-bc03-4327-9fe8-27bf62522794
+
+	column Name
+		lineageTag: 4575f69b-63ff-47de-8de4-dab1d86f2e44
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain =
+			
+			COALESCE(
+			    LOOKUPVALUE('Active Directory Computers'[Domain], 'Active Directory Computers'[Name], [Name]),
+			    LOOKUPVALUE('Snow Computers'[Domain], 'Snow Computers'[Name], [Name]),
+			    LOOKUPVALUE('SolarWinds Nodes'[Domain], 'SolarWinds Nodes'[Name], [Name])
+			)
+		lineageTag: ed161458-80f8-4632-b952-3f14770b9bf6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In AD' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('Active Directory Computers'[Name], 'Active Directory Computers'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a019d43b-8dc5-4d2c-8676-2e47f04ee1e7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In CM' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('ConfigMgr All Devices'[Name], 'ConfigMgr All Devices'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 55280572-397d-450e-a7f2-25dcb0f75965
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type' = ```
+			
+			VAR VMName = '_All Devices'[Name]
+			RETURN 
+			SWITCH(
+			    TRUE(),
+			    NOT(ISBLANK(LOOKUPVALUE('VMware VMs'[Name], 'VMware VMs'[Name], VMName))), "VMware",
+			    NOT(ISBLANK(LOOKUPVALUE('Azure VMs'[Name], 'Azure VMs'[Name], VMName))), "Azure",
+			    NOT(ISBLANK(
+			        CALCULATE(
+			            SELECTEDVALUE('SolarWinds VMs'[Name]),
+			            'SolarWinds VMs'[Virtualization Platform] = "Hyper-V",
+			            'SolarWinds VMs'[Name] = VMName
+			        )
+			    )), "Hyper-V",
+			    [Manufacturer] IN {"Dell Inc.", "HP", "HPE", "IBM"}, "Physical",
+			    BLANK()
+			)
+			```
+		lineageTag: b8346cb9-d263-404f-a593-2debe37a0dbc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application = ```
+			
+			    VAR CurrentName = '_All Devices'[Name]
+			    VAR RelatedValues = 
+			        CALCULATETABLE(
+			            VALUES('Mapping Server to Application'[Application]),
+			            'Mapping Server to Application'[Server] = CurrentName
+			        )
+			    VAR SortedUniqueValues = 
+			        CONCATENATEX(
+			            DISTINCT(RelatedValues),
+			            'Mapping Server to Application'[Application],
+			            ", ",
+			            'Mapping Server to Application'[Application],
+			            ASC
+			        )
+			    RETURN
+			        SortedUniqueValues
+			```
+		lineageTag: 5bb3cd47-5c6f-40ac-9483-e74f002ee8c6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System' =
+			
+			COALESCE(
+			    LOOKUPVALUE('Active Directory Computers'[OS], 'Active Directory Computers'[Name], [Name]),
+			    LOOKUPVALUE('ConfigMgr All Devices'[Operating System], 'ConfigMgr All Devices'[Name], [Name]),
+			    LOOKUPVALUE('Snow Computers'[Operating System], 'Snow Computers'[Name], [Name]),
+			    LOOKUPVALUE('SolarWinds Nodes'[Machine Type], 'SolarWinds Nodes'[Name], [Name])
+			)
+		lineageTag: 049671b4-7d4d-4c92-891c-97b6a721c463
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address' = ```
+			
+			VAR AzureIP = LOOKUPVALUE('Azure VMs'[IPAddress], 'Azure VMs'[Name], [Name])
+			VAR VMwareIPs = 
+			    FILTER(
+			        'VMware VMs',
+			        'VMware VMs'[VM] = '_All Devices'[VM]
+			    )
+			VAR VMwareIPString = 
+			    CONCATENATEX(
+			        VMwareIPs,
+			        'VMware VMs'[Primary IP Address],
+			        ", "
+			    )
+			VAR MergedIPs = 
+			    FILTER(
+			        'Merged IP Addresses',
+			        'Merged IP Addresses'[Name] = '_All Devices'[Name] &&
+			        LEFT('Merged IP Addresses'[IP Address], 3) <> "192" &&
+			        LEFT('Merged IP Addresses'[IP Address], 3) <> "169"
+			    )
+			VAR MergedIPString = 
+			    CONCATENATEX(
+			        MergedIPs,
+			        'Merged IP Addresses'[IP Address],
+			        ", "
+			    )
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        NOT ISBLANK(AzureIP), AzureIP,
+			        NOT ISBLANK(VMwareIPString), VMwareIPString,
+			        NOT ISBLANK(MergedIPString), MergedIPString,
+			        BLANK()
+			    )
+			```
+		lineageTag: 8c786602-f864-4fd5-9a6b-23e266619457
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Subnet' =
+			
+			LOOKUPVALUE('Merged Subnets Expanded'[Subnet],'Merged Subnets Expanded'[IP Address],[IP Address])
+		lineageTag: bbd085f8-cda4-4bf8-884d-d32559faaa61
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network = ```
+			
+			VAR VMwareNetwork = 
+			    CALCULATE(
+			        FIRSTNONBLANK('VMware VMs'[Network], 'VMware VMs'[Network] <> BLANK()),
+			        FILTER(
+			            'VMware VMs',
+			            'VMware VMs'[Name] = EARLIER('_All Devices'[Name])
+			        )
+			    )
+			RETURN
+			COALESCE(
+			    LOOKUPVALUE('Network Team Network Switch Traffic'[VLAN],'Network Team Network Switch Traffic'[IP Address],[IP Address]),
+			    VMwareNetwork,
+			    BLANK()
+			)
+			```
+		lineageTag: f44146de-bad9-4f5e-857e-fbdb82d7ad52
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Encrypted Drives' =
+			
+			IF(
+			    CONTAINS(
+			        'ConfigMgr Encryption Status',
+			        'ConfigMgr Encryption Status'[Name],
+			        [Name]
+			    ),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: cc703c05-2329-4c42-affd-6160659c7022
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshots =
+			
+			IF(
+			    CONTAINS(
+			        'VMware Snapshots',
+			        'VMware Snapshots'[Name],
+			        [Name]
+			    ),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 98f6dad6-738c-4100-ae8a-8c5132590a4d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disk Capacity' = ```
+			
+			VAR ServerName = [Name]
+			VAR VMName = [VM]
+			VAR DeviceType = [Device Type]
+			VAR VMwareTotalMiB = 
+			    CALCULATE(
+			        SUM('VMware Disks'[Capacity MiB]),
+			        'VMware Disks'[VM] = VMName
+			    )
+			VAR AzureTotalGiB = 
+			    CALCULATE(
+			        SUM('Azure Disks'[diskSizeGB]),
+			        'Azure Disks'[managedBy] = ServerName
+			    )
+			VAR TotalMiB = 
+			    VMwareTotalMiB +
+			    (AzureTotalGiB * 1024)
+			VAR TotalGiB = TotalMiB / 1024
+			VAR TotalTiB = TotalMiB / (1024 * 1024)
+			RETURN
+			IF(
+			    OR(
+			        AND(DeviceType = "VMware", ISBLANK(VMName)),
+			        NOT(DeviceType IN {"VMware", "Hyper-V"})
+			    ),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        TotalTiB >= 1, FORMAT(TotalTiB, "#,##0.00") & " TB",
+			        TotalGiB >= 1, FORMAT(TotalGiB, "#,##0.00") & " GB",
+			        FORMAT(TotalMiB, "#,##0.00") & " MB"
+			    )
+			)
+			```
+		lineageTag: 0fd019da-bb09-45a0-9f41-874962a0a518
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cores =
+			
+			COALESCE(
+			    LOOKUPVALUE('VMware VMs'[CPUs], 'VMware VMs'[VM],[VM]),
+			    LOOKUPVALUE('Azure VMs'[Cores], 'Azure VMs'[Name], [Name]),
+			    LOOKUPVALUE('Snow Computers'[Processor cores], 'Snow Computers'[Name], [Name]),
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 8f303cc8-b1eb-449b-b82a-6949c9dfec07
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Memory =
+			
+			COALESCE(
+			    LOOKUPVALUE('VMware VMs'[Memory], 'VMware VMs'[VM],[VM]),
+			    LOOKUPVALUE('Azure VMs'[Memory], 'Azure VMs'[Name], [Name]),
+			    LOOKUPVALUE('Snow Computers'[Memory], 'Snow Computers'[Name], [Name]),
+			    BLANK()
+			)
+		lineageTag: e69434b8-868e-4b9c-a6f5-62c9224650c4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location =
+			
+			IF(
+			    [Device Type] = "VMware",
+			    VAR vmLocation = LOOKUPVALUE('VMware VMs'[Location], 'VMware VMs'[VM], [VM])
+			    RETURN IF(
+			        ISBLANK(vmLocation),
+			        IF(
+			            [Device Type] = "Azure",
+			            VAR azureLocation = LOOKUPVALUE('Azure VMs'[Location], 'Azure VMs'[Name], [Name])
+			            RETURN IF(
+			                ISBLANK(azureLocation),
+			                IF(
+			                    [Application] = "VMware ESXi",
+			                    VAR esxiLocation = LOOKUPVALUE('VMware Hosts'[Location], 'VMware Hosts'[Name], [Name])
+			                    RETURN IF(
+			                        ISBLANK(esxiLocation),
+			                        IF(
+			                            NOT(ISBLANK([IP Subnet])),
+			                            VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                            RETURN IF(
+			                                ISBLANK(subnetLocation),
+			                                LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                                subnetLocation
+			                            ),
+			                            LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                        ),
+			                        esxiLocation
+			                    ),
+			                    IF(
+			                        NOT(ISBLANK([IP Subnet])),
+			                        VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                        RETURN IF(
+			                            ISBLANK(subnetLocation),
+			                            LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                            subnetLocation
+			                        ),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                    )
+			                ),
+			                azureLocation
+			            ),
+			            IF(
+			                [Application] = "VMware ESXi",
+			                VAR esxiLocation = LOOKUPVALUE('VMware Hosts'[Location], 'VMware Hosts'[Name], [Name])
+			                RETURN IF(
+			                    ISBLANK(esxiLocation),
+			                    IF(
+			                        NOT(ISBLANK([IP Subnet])),
+			                        VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                        RETURN IF(
+			                            ISBLANK(subnetLocation),
+			                            LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                            subnetLocation
+			                        ),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                    ),
+			                    esxiLocation
+			                ),
+			                IF(
+			                    NOT(ISBLANK([IP Subnet])),
+			                    VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                    RETURN IF(
+			                        ISBLANK(subnetLocation),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                        subnetLocation
+			                    ),
+			                    LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                )
+			            )
+			        ),
+			        vmLocation
+			    ),
+			    IF(
+			        [Device Type] = "Azure",
+			        VAR azureLocation = LOOKUPVALUE('Azure VMs'[Location], 'Azure VMs'[Name], [Name])
+			        RETURN IF(
+			            ISBLANK(azureLocation),
+			            IF(
+			                [Application] = "VMware ESXi",
+			                VAR esxiLocation = LOOKUPVALUE('VMware Hosts'[Location], 'VMware Hosts'[Name], [Name])
+			                RETURN IF(
+			                    ISBLANK(esxiLocation),
+			                    IF(
+			                        NOT(ISBLANK([IP Subnet])),
+			                        VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                        RETURN IF(
+			                            ISBLANK(subnetLocation),
+			                            LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                            subnetLocation
+			                        ),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                    ),
+			                    esxiLocation
+			                ),
+			                IF(
+			                    NOT(ISBLANK([IP Subnet])),
+			                    VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                    RETURN IF(
+			                        ISBLANK(subnetLocation),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                        subnetLocation
+			                    ),
+			                    LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                )
+			            ),
+			            azureLocation
+			        ),
+			        IF(
+			            [Application] = "VMware ESXi",
+			            VAR esxiLocation = LOOKUPVALUE('VMware Hosts'[Location], 'VMware Hosts'[Name], [Name])
+			            RETURN IF(
+			                ISBLANK(esxiLocation),
+			                IF(
+			                    NOT(ISBLANK([IP Subnet])),
+			                    VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                    RETURN IF(
+			                        ISBLANK(subnetLocation),
+			                        LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                        subnetLocation
+			                    ),
+			                    LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			                ),
+			                esxiLocation
+			            ),
+			            IF(
+			                NOT(ISBLANK([IP Subnet])),
+			                VAR subnetLocation = LOOKUPVALUE('Merged Subnets'[Location], 'Merged Subnets'[Subnet], [IP Subnet])
+			                RETURN IF(
+			                    ISBLANK(subnetLocation),
+			                    LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name]),
+			                    subnetLocation
+			                ),
+			                LOOKUPVALUE('Mapping Manual Server To Location'[Location], 'Mapping Manual Server To Location'[Name], [Name])
+			            )
+			        )
+			    )
+			)
+		lineageTag: 136350e7-e271-4cf6-8b2a-ebe0079ea485
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Environment = ```
+			
+			VAR ServiceNowCMDBEnvironment = 
+			    CALCULATE(
+			        FIRSTNONBLANK('ServiceNow CMDB'[Environment],'ServiceNow CMDB'[Environment] <> BLANK()),
+			        FILTER(
+			            'ServiceNow CMDB',
+			            'ServiceNow CMDB'[Name] = EARLIER('_All Devices'[Name])
+			        )
+			    )
+			RETURN
+			COALESCE(
+			    ServiceNowCMDBEnvironment,
+			    BLANK()
+			)
+			```
+		lineageTag: 5562131b-7cd1-4ea6-8cb4-dbc71e15d15b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mounted Media' =
+			
+			IF(
+			    CONTAINS(
+			        'VMware CD',
+			        'VMware CD'[VM],
+			        [VM]
+			    ),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 70d223b8-6cb4-41fc-bbf8-d23908858a1e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'E1000 Adapter' =
+			
+			IF(
+			    COUNTROWS(
+			        FILTER(
+			            'VMware Network',
+			            'VMware Network'[VM] = EARLIER('_All Devices'[VM]) &&
+			            'VMware Network'[Adapter] <> "Vmxnet3"
+			        )
+			    ) > 0,
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 084cb2db-9df3-48ae-9464-f72e6fabd40f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VMware Tools Version' = LOOKUPVALUE('VMware Tools'[Tools Version], 'VMware Tools'[VM], [VM])
+		formatString: 0
+		lineageTag: ee784c9b-ad90-4978-833f-4fd79bcd1889
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SEP Status' = LOOKUPVALUE('Symantec Endpoint Protection Devices'[Security Status],'Symantec Endpoint Protection Devices'[Name],[Name])
+		lineageTag: d7019f5f-b062-4633-8782-7fa3000e452d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In CMDB' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('ServiceNow CMDB'[Name], 'ServiceNow CMDB'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2740b14b-f643-42d4-a29e-1ca1b18e85da
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CMDB Status' = ```
+			
+			VAR CurrentName = '_All Devices'[Name]
+			VAR RelatedStatuses = 
+			    CALCULATETABLE(
+			        VALUES('ServiceNow CMDB'[Install Status]),
+			        'ServiceNow CMDB'[Name] = CurrentName
+			    )
+			VAR SortedUniqueStatuses = 
+			    CONCATENATEX(
+			        DISTINCT(RelatedStatuses),
+			        'ServiceNow CMDB'[Install Status],
+			        ", ",
+			        'ServiceNow CMDB'[Install Status],
+			        ASC
+			    )
+			RETURN
+			    SortedUniqueStatuses
+			```
+		lineageTag: c867c394-6510-467e-9be3-2b70598e30ca
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Power State' = ```
+			
+			SWITCH(
+			    TRUE(),
+			    [Device Type] = "Physical",
+			        BLANK(),
+			    [Device Type] = "VMware",
+			        SWITCH(
+			            IF(NOT(ISBLANK([VM])), 
+			                LOOKUPVALUE('VMware VMs'[Powerstate], 'VMware VMs'[VM], [VM]), 
+			                LOOKUPVALUE('VMware VMs'[Powerstate], 'VMware VMs'[VM], [Name])
+			            ),
+			            "poweredOn", "ON",
+			            "poweredOff", "OFF",
+			            IF(NOT(ISBLANK([VM])), 
+			                LOOKUPVALUE('VMware VMs'[Powerstate], 'VMware VMs'[VM], [VM]), 
+			                LOOKUPVALUE('VMware VMs'[Powerstate], 'VMware VMs'[VM], [Name])
+			            )
+			        ),
+			    [Device Type] = "Azure",
+			        SWITCH(
+			            LOOKUPVALUE('Azure VMs'[PowerState], 'Azure VMs'[Name], [Name]),
+			            "VM running", "ON",
+			            "VM deallocated", "OFF",
+			            LOOKUPVALUE('Azure VMs'[PowerState], 'Azure VMs'[Name], [Name])
+			        ),
+			    BLANK()
+			)
+			```
+		lineageTag: 7726726f-3b00-4f2d-902c-b046ad5cf516
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer =
+			
+			COALESCE(
+			    LOOKUPVALUE('Snow Computers'[Manufacturer], 'Snow Computers'[Name], [Name]),
+			    LOOKUPVALUE('ConfigMgr All Devices'[Manufacturer], 'ConfigMgr All Devices'[Name], [Name]),
+			    LOOKUPVALUE('SolarWinds Nodes'[Manufacturer],'SolarWinds Nodes'[Name],[Name]),
+			    BLANK()
+			)
+		lineageTag: e5a49526-79c4-414c-81ba-1fd6ce22ba3e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model =
+			
+			COALESCE(
+			    LOOKUPVALUE('Snow Computers'[Model], 'Snow Computers'[Name], [Name]),
+			    LOOKUPVALUE('ConfigMgr All Devices'[Model], 'ConfigMgr All Devices'[Name], [Name]),
+			    LOOKUPVALUE('SolarWinds Nodes'[Model],'SolarWinds Nodes'[Name],[Name]),
+			    BLANK()
+			)
+		lineageTag: fe62011d-5116-4df6-aba6-a4e325810123
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In SolarWinds Nodes' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('SolarWinds Nodes'[Name], 'SolarWinds Nodes'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8928e5be-c5f5-430c-b1a2-2c0f867f3d14
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In SolarWinds VMs' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('SolarWinds VMs'[Name], 'SolarWinds VMs'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c76ff0a4-b1a5-485b-b37d-d51e6204f279
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In Snow' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('Snow Computers'[Name], 'Snow Computers'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6a5d4351-55fc-446e-b202-9b040e72f13c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In Qualys' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('Qualys Assets'[Name], 'Qualys Assets'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: eca61757-2323-4a37-8b28-334e7e790acf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In SEP' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('Symantec Endpoint Protection Devices'[Name], 'Symantec Endpoint Protection Devices'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 291d6b85-797d-44cf-b175-65933c4cc6c3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application (CMDB)' = LOOKUPVALUE('ServiceNow CMDB'[Application name],'ServiceNow CMDB'[Name],'_All Devices'[Name])
+		lineageTag: dc716dfa-c143-412b-86f6-675712d6cef4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application (Environment Management Database)' = ```
+			
+			VAR CurrentName = '_All Devices'[Name]
+			VAR RelatedValues = 
+			    CALCULATETABLE(
+			        VALUES('Environments Team Environment Management Database'[Application Name]),
+			        'Environments Team Environment Management Database'[Server Name] = CurrentName
+			    )
+			VAR SortedUniqueValues = 
+			    CONCATENATEX(
+			        DISTINCT(RelatedValues),
+			        'Environments Team Environment Management Database'[Application Name],
+			        ", ",
+			        'Environments Team Environment Management Database'[Application Name],
+			        ASC
+			    )
+			RETURN
+			    SortedUniqueValues
+			```
+		lineageTag: 0ceee621-ed33-4957-be04-6624f11994cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host = LOOKUPVALUE('VMware VMs'[Host],'VMware VMs'[VM],[VM])
+		lineageTag: 9c06f3a0-bf6a-4a24-96e0-660dc8df3ed9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster = LOOKUPVALUE('VMware VMs'[Cluster],'VMware VMs'[VM],[VM])
+		lineageTag: 109589c3-c39d-4d17-93e5-2c6b8ebf2cc7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Addresses' = ```
+			
+			VAR CurrentName = '_All Devices'[Name]
+			VAR ipAddresses = 
+			    CALCULATETABLE(
+			        VALUES('Merged IP Addresses'[IP Address]),
+			        'Merged IP Addresses'[Name] = CurrentName
+			    )
+			
+			VAR filteredIPAddresses = 
+			    FILTER(
+			        ipAddresses,
+			        NOT(ISBLANK([IP Address]))
+			    )
+			
+			VAR SortedUniqueIPAddresses = 
+			    CONCATENATEX(
+			        DISTINCT(filteredIPAddresses),
+			        [IP Address],
+			        ", ",
+			        [IP Address],
+			        ASC
+			    )
+			RETURN
+			    SortedUniqueIPAddresses
+			```
+		lineageTag: a0d530d4-6d01-40c4-bb20-30d4b8ebdfb0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In Panaseer' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('Panaseer All Devices'[Name], 'Panaseer All Devices'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 460aa460-5d0d-4c73-adb1-886d8d985bcf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column VM
+		lineageTag: ba6b6a50-ceaf-4c6e-8394-25cfb9c701bc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [VM]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decom CHG Number' =
+			
+			VAR MatchedRows =
+			    FILTER(
+			        'ServiceNow Decommission Change Requests',
+			        CONTAINSSTRING('ServiceNow Decommission Change Requests'[Description], '_All Devices'[Name])
+			    )
+			VAR UniqueSortedCHGs =
+			    CONCATENATEX(
+			        DISTINCT(MatchedRows),
+			        'ServiceNow Decommission Change Requests'[Number],
+			        ", ",
+			        'ServiceNow Decommission Change Requests'[Number],
+			        ASC
+			    )
+			RETURN
+			    IF(
+			        COUNTROWS(MatchedRows) > 0,
+			        UniqueSortedCHGs,
+			        BLANK()
+			    )
+		lineageTag: e1baa443-936f-4ee3-b541-aa6baa88ec7a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System (VMware Tools)' = LOOKUPVALUE('VMware VMs'[OS according to the VMware Tools], 'VMware VMs'[VM], [VM])
+		lineageTag: 2e151588-71f2-4882-8896-27f44631403c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Has Matching AVS Server' = ```
+			
+			VAR CurrentServer = '_All Devices'[Name]
+			VAR IsRomfordOrHemel = '_All Devices'[Location] IN {"Romford", "Hemel Hempstead"}
+			VAR MatchingAVS = 
+			    CALCULATE(
+			        COUNTROWS('_All Devices'),
+			        FILTER(
+			            '_All Devices',
+			            '_All Devices'[Name] = CurrentServer &&
+			            '_All Devices'[Location] IN {"AVS - UK South", "AVS - UK West"}
+			        )
+			    )
+			RETURN
+			    IF(IsRomfordOrHemel && MatchingAVS > 0, TRUE, FALSE)
+			```
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3c2ac75e-ccf9-438b-9067-90551f32f040
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Owner = LOOKUPVALUE('ServiceNow CMDB'[Owned by],'ServiceNow CMDB'[Name],[Name])
+		lineageTag: 5849e332-1af2-4e2a-989c-b22571d41c38
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Azure vNet' = ```
+			
+			    VAR CurrentName = '_All Devices'[IP Subnet]
+			    VAR RelatedValues = 
+			        CALCULATETABLE(
+			            VALUES('Azure VirtualNetworks'[name]),
+			            'Azure VirtualNetworks'[subnetAddressPrefix] = CurrentName
+			        )
+			    VAR SortedUniqueValues = 
+			        CONCATENATEX(
+			            DISTINCT(RelatedValues),
+			            'Azure VirtualNetworks'[name],
+			            ", ",
+			            'Azure VirtualNetworks'[name],
+			            ASC
+			        )
+			    RETURN
+			        SortedUniqueValues
+			```
+		lineageTag: 51a27482-0e18-4d5e-a998-e99f72bf35d6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_All Devices' = calculated
+		mode: import
+		source = ```
+				
+				VAR AllDevices = 
+				    UNION(
+				        SELECTCOLUMNS('VMware VMs', "Name", 'VMware VMs'[Name], "VM", 'VMware VMs'[VM]),
+				        SELECTCOLUMNS('VMware Hosts', "Name", 'VMware Hosts'[Name], "VM", BLANK()),
+				        SELECTCOLUMNS('Azure VMs', "Name", 'Azure VMs'[Name], "VM", BLANK())
+				    )
+				VAR SolarWindsVMsFiltered = 
+				    EXCEPT(
+				        SELECTCOLUMNS(
+				            FILTER('SolarWinds VMs', 'SolarWinds VMs'[Virtualization Platform] = "Hyper-V"),
+				            "Name", 'SolarWinds VMs'[Name], "VM", BLANK()
+				        ),
+				        SELECTCOLUMNS(
+				            AllDevices,
+				            "Name", [Name],
+				            "VM", BLANK()
+				        )
+				    )
+				VAR SnowComputersFiltered = 
+				    EXCEPT(
+				        SELECTCOLUMNS(
+				            FILTER('Snow Computers', 'Snow Computers'[Hypervisor] = ""),
+				            "Name", 'Snow Computers'[Name], "VM", BLANK()
+				        ),
+				        SELECTCOLUMNS(
+				            AllDevices,
+				            "Name", [Name],
+				            "VM", BLANK()
+				        )
+				    )
+				VAR SolarWindsNodesFiltered = 
+				    EXCEPT(
+				        SELECTCOLUMNS(
+				            FILTER(
+				                'SolarWinds Nodes', 
+				                (
+				                    (
+				                        'SolarWinds Nodes'[Node Category] = "Network" &&
+				                        'SolarWinds Nodes'[DeviceType] = "Server"
+				                    ) || (
+				                        'SolarWinds Nodes'[Node Category] = "Other" &&
+				                        'SolarWinds Nodes'[DeviceType] = "Server"
+				                    ) || (
+				                        'SolarWinds Nodes'[Node Category] = "Server"
+				                    )
+				                ) &&
+				                NOT RIGHT('SolarWinds Nodes'[Name], 2) = "-R"
+				            ),
+				            "Name", 'SolarWinds Nodes'[Name],
+				            "VM", BLANK()
+				        ),
+				        SELECTCOLUMNS(
+				            AllDevices,
+				            "Name", [Name],
+				            "VM", BLANK()
+				        )
+				    )
+				VAR CombinedDevices = 
+				    UNION(
+				        AllDevices,
+				        SolarWindsVMsFiltered,
+				        SnowComputersFiltered,
+				        SolarWindsNodesFiltered
+				    )
+				VAR FilteredDevices = 
+				    FILTER(
+				        CombinedDevices,
+				        NOT (
+				            [VM] = BLANK() &&
+				            COUNTROWS(
+				                FILTER(
+				                    CombinedDevices,
+				                    [Name] = EARLIER([Name]) &&
+				                    NOT(ISBLANK([VM]))
+				                )
+				            ) > 0
+				        )
+				    )
+				
+				RETURN
+				SUMMARIZE(
+				    FilteredDevices,
+				    [Name],
+				    [VM]
+				)
+				```
+
+	annotation PBI_Id = 5c12f8120c784c9b920dede66889b2b1
+

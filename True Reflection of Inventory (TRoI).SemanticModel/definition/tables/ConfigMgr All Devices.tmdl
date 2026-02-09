@@ -1,0 +1,176 @@
+table 'ConfigMgr All Devices'
+	lineageTag: d18252dd-41d9-4f1d-91bf-055d7145c61a
+
+	column Name
+		dataType: string
+		lineageTag: 321e8ad4-aa10-4957-9431-7f0f728a4917
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resource ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: db81aa4b-29a5-4901-9f0e-78be8329c581
+		summarizeBy: count
+		sourceColumn: Resource ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: 30b28c33-4518-469a-b12c-67cfe9f2eab5
+		summarizeBy: none
+		sourceColumn: Domain
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AD Site'
+		dataType: string
+		lineageTag: 61b7e67f-3871-4cd2-acad-c89634794e09
+		summarizeBy: none
+		sourceColumn: AD Site
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		dataType: string
+		lineageTag: 13ffc3fb-ecb7-4039-94b3-bb8c55d626db
+		summarizeBy: none
+		sourceColumn: Operating System
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: 3970467e-3d6a-4227-86d8-8eab4ac98239
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: e2861e70-9ffa-42ba-aa99-b17be6c809fc
+		summarizeBy: none
+		sourceColumn: Model
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type'
+		dataType: string
+		lineageTag: 4c0617c7-c934-4433-b2d2-aabdcf305c5e
+		summarizeBy: none
+		sourceColumn: Device Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cores
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e639ff5-5bc5-47e3-8dc2-a5cd3704df83
+		summarizeBy: sum
+		sourceColumn: Cores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Logical Processors'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bea8322-d6ed-4c31-98b5-3303d9f00688
+		summarizeBy: sum
+		sourceColumn: Logical Processors
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RAM
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b57f005-7e46-4400-94c0-11d253a80f0c
+		summarizeBy: sum
+		sourceColumn: RAM
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Client Status'
+		dataType: string
+		lineageTag: 65e6acce-5347-4a93-9cb1-34b2a5568358
+		summarizeBy: none
+		sourceColumn: Client Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Hardware Scan'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 42fb2d78-a897-4e27-a88a-866a5739efd3
+		summarizeBy: none
+		sourceColumn: Last Hardware Scan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Client Status Index'
+		dataType: string
+		lineageTag: 157463b3-ef1d-4862-bb3b-bda2bd1649b5
+		summarizeBy: none
+		sourceColumn: Client Status Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 756d3444-cda3-4465-a1d6-50892464e754
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ConfigMgr All Devices' = m
+		mode: import
+		queryGroup: 'Child Queries\Resource Management'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/CM.xlsx"), null, true),
+				    CM_Table = Source{[Item="CM",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(CM_Table,{{"Name", type text}, {"Resource ID", Int64.Type}, {"Domain", type text}, {"AD Site", type text}, {"Operating System", type text}, {"Manufacturer", type text}, {"Model", type text}, {"Device Type", type text}, {"Cores", Int64.Type}, {"Logical Processors", Int64.Type}, {"RAM", Int64.Type}, {"Client Status", type text}, {"Last Hardware Scan", type datetime}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Client Status Index", each if [Client Status] = "Active" then 1 else if [Client Status] = "Inactive" then 2 else 3),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Added Conditional Column",{{"Name", Order.Ascending}, {"Client Status Index", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed Duplicates",{{"Name", Text.Upper, type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"IP Addresses", "IP Address"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

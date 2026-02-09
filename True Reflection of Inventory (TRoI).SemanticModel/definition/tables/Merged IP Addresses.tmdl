@@ -1,0 +1,84 @@
+table 'Merged IP Addresses'
+	lineageTag: 37317988-c57e-4ed8-af5f-6a60e78c995d
+
+	column Name
+		dataType: string
+		lineageTag: 66506908-3770-42d3-b986-7a6da04e21e2
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 7f2aaef4-b853-4576-8375-c7210c890e6c
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 1876ff4d-a15f-4935-8080-30068bc57d2d
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: f5bf3e38-e0ea-47ae-b16f-fd6f371d28eb
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address (Decimal)'
+		dataType: int64
+		formatString: 0
+		lineageTag: f5e81f88-6717-4252-afcc-55ee9d9f1bf7
+		summarizeBy: sum
+		sourceColumn: IP Address (Decimal)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subnet
+		dataType: string
+		lineageTag: 2e211600-3ebf-4199-afec-34739ffbe43d
+		summarizeBy: none
+		sourceColumn: Subnet
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Merged IP Addresses' = m
+		mode: import
+		queryGroup: 'Child Queries\Merged'
+		source =
+				let
+				    #"Source-VMware VMs" = Table.RenameColumns(#"VMware VMs",{{"Primary IP Address", "IP Address"}}),
+				    Source = Table.Combine({#"Source-VMware VMs", #"VMware Network", #"Azure VMs", #"Snow Computers", #"ConfigMgr All Devices", #"Qualys Assets", #"ServiceNow CMDB"}),
+				    #"Added Source Column" = Table.AddColumn(Source, "Source", each if [SMBIOS UUID] <> null then "VMware VMs" else if [Adapter] <> null then "VMware Network" else if [ResourceGroup] <> null then "Azure VMs" else if [Last scanned] <> null then "Snow Computers" else if [Resource ID] <> null then "ConfigMgr All Devices" else if [Asset ID] <> null then "Qualys Assets" else if [Install Status] <> null then "ServiceNow CMDB" else null),
+				    #"Added Source Index Column" = Table.AddColumn(#"Added Source Column", "Source Index", each if [Source] = "VMware VMs" then 1 else if [Source] = "VMware Network" then 2 else if [Source] = "Azure VMs" then 3 else if [Source] = "Snow Computers" then 4 else if [Source] = "ConfigMgr All Devices" then 5 else if [Source] = "Qualys Assets" then 6 else if [Source] = "ServiceNow CMDB" then 7 else null),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Source Index Column",{"Name", "IP Address", "Source", "Source Index"}),
+				    #"Split Column by Comma" = Table.ExpandListColumn(Table.TransformColumns(#"Removed Other Columns", {{"IP Address", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "IP Address"),
+				    #"Split Column by Semicolon" = Table.ExpandListColumn(Table.TransformColumns(#"Split Column by Comma", {{"IP Address", Splitter.SplitTextByDelimiter(";", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "IP Address"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Semicolon",{{"IP Address", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"IP Address", Text.Trim, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Trimmed Text", each not Text.Contains([IP Address], ":")),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Filtered Rows",{{"Name", Order.Ascending}, {"IP Address", Order.Ascending}, {"Source Index", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name", "IP Address"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates", {"IP Address"}, #"Merged Subnets Expanded", {"IP Address"}, "Merged Subnets Expanded", JoinKind.LeftOuter),
+				    #"Expanded Merged Subnets" = Table.ExpandTableColumn(#"Merged Queries", "Merged Subnets Expanded", {"Location", "Subnet"}, {"Location", "Subnet"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded Merged Subnets",{"Name", "IP Address", "Source", "Subnet", "Location"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Reordered Columns","",null,Replacer.ReplaceValue,{"IP Address"}),
+				    #"Removed Source Index Column" = Table.RemoveColumns(#"Replaced Value",{"Source Index"}),
+				    #"Added IP Address (Decimal) Column" = Table.AddColumn(#"Removed Source Index Column", "IP Address (Decimal)", each ConvertIPToDecimal([IP Address]), Int64.Type),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Added IP Address (Decimal) Column", {"IP Address (Decimal)"}),
+				    #"Sorted by IP Address (Decimal)" = Table.Sort(#"Removed Errors",{{"IP Address (Decimal)", Order.Ascending}})
+				in
+				    #"Sorted by IP Address (Decimal)"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

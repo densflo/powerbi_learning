@@ -1,0 +1,63 @@
+table 'Azure SQL Virtual Machines'
+	lineageTag: 1354c85d-15fc-4039-b90f-540c70de0e4b
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 4f9c56ab-e70e-4289-9915-8cfce5ce266c
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Version'
+		dataType: string
+		lineageTag: 0b363af6-2a6c-4e42-b0b6-0aba924e4ca3
+		summarizeBy: none
+		sourceColumn: SQL Version
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Edition'
+		dataType: string
+		lineageTag: 0dabe203-2cac-415e-ba46-438b9901cf60
+		summarizeBy: none
+		sourceColumn: SQL Edition
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'License Type'
+		dataType: string
+		lineageTag: 41f96497-95ac-4867-b3e6-9281e22b8f6a
+		summarizeBy: none
+		sourceColumn: License Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: e9eaa755-e337-4ead-b896-51ec9d844faa
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure SQL Virtual Machines' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-Azure%20SQL%20Virtual%20Machines.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"SQL Version", Int64.Type}, {"SQL Edition", type text}, {"License Type", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Name", "Server Name"}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Renamed Columns",{{"Server Name", Text.Upper, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Source", each "Azure")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

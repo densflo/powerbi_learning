@@ -1,0 +1,47 @@
+table 'DB Inventory System Databases'
+	lineageTag: 95f4d51c-5021-4e56-8ccb-224ba8d92c72
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: 444535b1-c91b-462c-bbcd-395eeb376390
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Database Name'
+		dataType: string
+		lineageTag: b737a74a-a2d1-4371-85b2-930340914bac
+		summarizeBy: none
+		sourceColumn: Database Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: a8f99f19-cd0d-4e08-a5a3-6f63ed1dcf89
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DB Inventory System Databases' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/DBInventorySystem-Export.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ServerName", type text}, {"InstanceName", type text}, {"FullInstanceName", type text}, {"Database", type text}, {"Status", Int64.Type}, {"Owner", type text}, {"AppContact", type text}, {"AppName", type text}, {"CreateDate", type datetime}, {"Recovery", type text}, {"Collation", type text}, {"CompatibilityLevel", Int64.Type}, {"MirrorFlag", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"FullInstanceName", "Database"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"FullInstanceName", "Full Instance Name"}, {"Database", "Database Name"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","\","_",Replacer.ReplaceText,{"Full Instance Name"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value",{{"Full Instance Name", Text.Upper, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Source", each "DB Inventory System")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

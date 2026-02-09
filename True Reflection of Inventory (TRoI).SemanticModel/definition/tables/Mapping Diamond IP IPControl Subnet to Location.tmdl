@@ -1,0 +1,33 @@
+table 'Mapping Diamond IP IPControl Subnet to Location'
+	lineageTag: e2bd0ca8-7553-441f-b64e-92665e119e09
+
+	column Container
+		dataType: string
+		lineageTag: 281b77b6-39d5-49d6-9455-6c4b08a09828
+		summarizeBy: none
+		sourceColumn: Container
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 0d9f0e2e-7322-4f74-aa30-360e84f35354
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping Diamond IP IPControl Subnet to Location' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bZJNSwMxEIb/StizQvHiuR/QomsVVylYe5ia2TaQbJZ8WOqvN5lsS0d7zPs8L5kMWa+rsUEfvhE7cSuauO0w+OompT6gznG1uUlSFw7oeq6UrPCf6FBMtY1SZMnGsOcyCe+PBV3rrNIY1yuZUGPioveoPdNOIRlT6FUA0fROdbsEy3k4ZmEWt6BYnxJi81Keu/zqU7ecMl6A2Ua3Y+UhKxwNaLEwwA00mFI0fVooSDIfoAe+bkqI1UnCbg9aiyaku/lOLugkKi1Pz6r10crPOBrd3fPt1Noez8C2oradtMNNR8uHyAGRF3DKiyUexHPbqi9kFkHSXq1prZOJzp4+LgyW/zHr8fK/OTghoJNg2G3nlJwmvRd66/hE55ScldI6Tf9m0+dk2iWoNptf", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Container = _t, Location = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Container", type text}, {"Location", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

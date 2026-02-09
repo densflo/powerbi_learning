@@ -1,0 +1,74 @@
+table 'Network Team Network Switch Traffic'
+	lineageTag: efdb3fef-6f6c-4a2a-9e51-ce1e095e3a10
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 38a7f1c9-0de1-4f04-8857-027fecfa8a5a
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MAC Address'
+		dataType: string
+		lineageTag: bf70af91-cee4-4b17-a1bf-7cfd8cd03793
+		summarizeBy: none
+		sourceColumn: MAC Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column VLAN
+		dataType: string
+		lineageTag: d148af61-438f-4b63-aeef-4a908f08cf68
+		summarizeBy: none
+		sourceColumn: VLAN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacentre
+		dataType: string
+		lineageTag: ea21b35a-d066-4fde-b083-8c0560773191
+		summarizeBy: none
+		sourceColumn: Datacentre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Server
+		dataType: string
+		lineageTag: 510020d6-0a3f-4bb6-a99a-cd519ecdaa75
+		summarizeBy: none
+		sourceColumn: Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application
+		dataType: string
+		lineageTag: b467b69f-de10-463e-a961-77259de48a59
+		summarizeBy: none
+		sourceColumn: Application
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Network Team Network Switch Traffic' = m
+		mode: import
+		queryGroup: 'Child Queries\Other Teams'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Networking/vlan-analysis/vlan-switch-export.xlsx"), null, true),
+				    #"Switch Connected Devices_Sheet" = Source{[Item="Switch Connected Devices",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"Switch Connected Devices_Sheet",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Address        ", type text}, {"MAC Address", type text}, {"VLAN", type text}}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Changed Type1", "MAC Address Reformatted", each ConvertToMACAddress([MAC Address])),
+				    #"Removed Columns" = Table.RemoveColumns(#"Invoked Custom Function",{"MAC Address"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"MAC Address Reformatted", "MAC Address"}, {"Address        ", "IP Address"}, {"DC", "Datacentre"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"IP Address", "MAC Address", "VLAN", "Datacentre"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Reordered Columns",{{"MAC Address", Text.Upper, type text}, {"VLAN", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"IP Address"}, #"Mapping Server to Application", {"IP Address"}, "Mapping Server to Application", JoinKind.LeftOuter),
+				    #"Expanded Mapping Server to Application" = Table.ExpandTableColumn(#"Merged Queries", "Mapping Server to Application", {"Server", "Application"}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Expanded Mapping Server to Application",{"Server", "IP Address", "MAC Address", "VLAN", "Datacentre", "Application"})
+				in
+				    #"Reordered Columns1"
+
+	annotation PBI_ResultType = Exception
+

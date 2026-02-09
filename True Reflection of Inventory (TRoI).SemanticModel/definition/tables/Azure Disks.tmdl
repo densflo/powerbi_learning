@@ -1,0 +1,85 @@
+table 'Azure Disks'
+	lineageTag: fe490d3b-da89-4d68-924a-013429ab15ab
+
+	column managedBy
+		dataType: string
+		lineageTag: bc43fe6a-feaf-47e2-8107-0aaab98f6718
+		summarizeBy: none
+		sourceColumn: managedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 3d5aa9d9-e854-4d6c-b9b0-ef35f859f693
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column osType
+		dataType: string
+		lineageTag: 6960afbb-1a76-4584-b79f-10cf38a52e6a
+		summarizeBy: none
+		sourceColumn: osType
+
+		annotation SummarizationSetBy = Automatic
+
+	column disktype
+		dataType: string
+		lineageTag: c2cb5004-9fee-4c2c-aa60-e40474edb297
+		summarizeBy: none
+		sourceColumn: disktype
+
+		annotation SummarizationSetBy = Automatic
+
+	column diskSizeGB
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ae937bf-59a3-460c-97fe-cbf3b4df23ac
+		summarizeBy: sum
+		sourceColumn: diskSizeGB
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier
+		dataType: string
+		lineageTag: 2b1518ec-7eab-45d8-9c67-88aa2171d2f7
+		summarizeBy: none
+		sourceColumn: tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column diskState
+		dataType: string
+		lineageTag: 26ec3292-d032-457b-9ab3-04e354656a68
+		summarizeBy: none
+		sourceColumn: diskState
+
+		annotation SummarizationSetBy = Automatic
+
+	column timeCreated
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a209b9e6-e257-4b76-bfdb-c6aa59925df6
+		summarizeBy: none
+		sourceColumn: timeCreated
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure Disks' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-All%20Azure%20Disks.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"managedBy", type text}, {"name", type text}, {"osType", type text}, {"disktype", type text}, {"diskSizeGB", Int64.Type}, {"tier", type text}, {"diskState", type text}, {"timeCreated", type datetime}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"managedBy", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

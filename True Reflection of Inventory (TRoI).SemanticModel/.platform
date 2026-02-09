@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "True Reflection of Inventory (TRoI)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "53bfd42e-5390-4d1b-9cc5-bedaaf65f807"
+  }
+}

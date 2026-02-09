@@ -1,0 +1,56 @@
+table 'DB Inventory System Instances'
+	lineageTag: 2e6f271f-182f-4da2-b66b-86ae75493e94
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 14abba9b-8b72-4736-8b34-06ba8aac2bda
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: 544b5ca3-905f-4f11-a4e1-7b04433cd8eb
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instance Name'
+		dataType: string
+		lineageTag: 624e442d-92bd-4b67-9b78-3fda6c02d57e
+		summarizeBy: none
+		sourceColumn: Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 918ba271-b805-48b0-b0be-f6ca1f17bc4b
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DB Inventory System Instances' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/DBInventorySystem-Export.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ServerName", type text}, {"InstanceName", type text}, {"FullInstanceName", type text}, {"Database", type text}, {"Status", Int64.Type}, {"Owner", type text}, {"AppContact", type text}, {"AppName", type text}, {"CreateDate", type datetime}, {"Recovery", type text}, {"Collation", type text}, {"CompatibilityLevel", Int64.Type}, {"MirrorFlag", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"ServerName", "FullInstanceName", "InstanceName"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"ServerName", "Server Name"}, {"InstanceName", "Instance Name"}, {"FullInstanceName", "Full Instance Name"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","\","_",Replacer.ReplaceText,{"Full Instance Name"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value",{{"Server Name", Text.Upper, type text}, {"Instance Name", Text.Upper, type text}, {"Full Instance Name", Text.Upper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"Server Name", "Full Instance Name", "Instance Name"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Duplicates", "Source", each "DB Inventory System")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

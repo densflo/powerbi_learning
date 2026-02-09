@@ -1,0 +1,684 @@
+table 'VMware Hosts'
+	lineageTag: 8df7514c-e2ef-4448-a214-6ca440526f03
+
+	column Host
+		dataType: string
+		lineageTag: 2256ff31-968e-4f9c-a684-496909192b95
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: 7ed66fcd-f8a5-47af-9cd1-aa00b5832744
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: 4ef0f62b-1f6a-4f36-ae4d-94a416e2f157
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Config status'
+		dataType: string
+		lineageTag: 209804bc-2656-4cd4-bc0e-f60a0442b0ab
+		summarizeBy: none
+		sourceColumn: Config status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Compliance Check State'
+		dataType: string
+		lineageTag: 7aee3624-2bd2-4877-96e3-112e4f9f61fc
+		summarizeBy: none
+		sourceColumn: Compliance Check State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'in Maintenance Mode'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0c044245-b811-41dd-85f2-95514af8c96c
+		summarizeBy: none
+		sourceColumn: in Maintenance Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'in Quarantine Mode'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 441ddc1f-de8e-46cc-b783-4fe092bec589
+		summarizeBy: none
+		sourceColumn: in Quarantine Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'vSAN Fault Domain Name'
+		dataType: string
+		lineageTag: 4d34ef65-f405-474e-973d-5ed72b132ffc
+		summarizeBy: none
+		sourceColumn: vSAN Fault Domain Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU Model'
+		dataType: string
+		lineageTag: 338ae97d-86f7-4287-9935-961e298cc456
+		summarizeBy: none
+		sourceColumn: CPU Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Speed
+		dataType: int64
+		formatString: 0
+		lineageTag: 579cb8f4-604b-4d96-bf34-5773e220c792
+		summarizeBy: sum
+		sourceColumn: Speed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HT Available'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ca46e2fb-393d-48bd-9fea-aa266e4f6155
+		summarizeBy: none
+		sourceColumn: HT Available
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HT Active'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6a532863-e425-41dd-a67a-80aa4933d86f
+		summarizeBy: none
+		sourceColumn: HT Active
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# CPU'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b7c35c4-afe3-4c99-a1e4-4f76a551e12c
+		summarizeBy: sum
+		sourceColumn: # CPU
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cores per CPU'
+		dataType: int64
+		formatString: 0
+		lineageTag: dd901caa-38db-4cc2-8467-e9e30643baa4
+		summarizeBy: sum
+		sourceColumn: Cores per CPU
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# Cores'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a20e293-0644-470e-b7d7-3fd598175f40
+		summarizeBy: sum
+		sourceColumn: # Cores
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU usage %'
+		dataType: int64
+		formatString: 0
+		lineageTag: c50cb948-09b7-44bf-9aaf-b4030ad192c0
+		summarizeBy: sum
+		sourceColumn: CPU usage %
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# Memory'
+		dataType: int64
+		formatString: 0
+		lineageTag: a3896df3-e447-4b79-be34-17956f50e887
+		summarizeBy: sum
+		sourceColumn: # Memory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Memory Tiering Type'
+		dataType: string
+		lineageTag: 5a413a76-b86e-4eb4-9387-8440a1f60004
+		summarizeBy: none
+		sourceColumn: Memory Tiering Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Memory usage %'
+		dataType: int64
+		formatString: 0
+		lineageTag: 07ecf4fe-be67-4049-b2df-a0f14caed139
+		summarizeBy: sum
+		sourceColumn: Memory usage %
+
+		annotation SummarizationSetBy = Automatic
+
+	column Console
+		dataType: int64
+		formatString: 0
+		lineageTag: d689eeb1-21dc-42f7-b1a5-67feceee00c1
+		summarizeBy: sum
+		sourceColumn: Console
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# NICs'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1eae62fb-6b5d-483f-a4bc-ca726a1b3c32
+		summarizeBy: sum
+		sourceColumn: # NICs
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# HBAs'
+		dataType: int64
+		formatString: 0
+		lineageTag: 99e4fb53-46d9-4cb4-b732-092c6a8be911
+		summarizeBy: sum
+		sourceColumn: # HBAs
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# VMs total'
+		dataType: int64
+		formatString: 0
+		lineageTag: a3ad1f8f-d68f-496a-8356-4281d3e74f72
+		summarizeBy: sum
+		sourceColumn: # VMs total
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# VMs'
+		dataType: int64
+		formatString: 0
+		lineageTag: 13258d2c-1f06-4c4e-989b-b1aa368d4626
+		summarizeBy: sum
+		sourceColumn: # VMs
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VMs per Core'
+		dataType: double
+		lineageTag: 0f4e37ae-7217-4052-a50e-09f098229987
+		summarizeBy: sum
+		sourceColumn: VMs per Core
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '# vCPUs'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ace5d3b-2bf3-4881-ac2d-3d4c0ab1797e
+		summarizeBy: sum
+		sourceColumn: # vCPUs
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'vCPUs per Core'
+		dataType: double
+		lineageTag: 5f88d6ea-1fdb-4004-ad0c-1d923dbc5069
+		summarizeBy: sum
+		sourceColumn: vCPUs per Core
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vRAM
+		dataType: int64
+		formatString: 0
+		lineageTag: f8052135-ae66-4501-80ee-afc18ee7ffd6
+		summarizeBy: sum
+		sourceColumn: vRAM
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Used memory'
+		dataType: int64
+		formatString: 0
+		lineageTag: 87653b97-a5ae-4bc7-a678-6d603ce681f4
+		summarizeBy: sum
+		sourceColumn: VM Used memory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Memory Swapped'
+		dataType: int64
+		formatString: 0
+		lineageTag: ce96175d-dd55-4c78-b3e3-7b00cfdaea13
+		summarizeBy: sum
+		sourceColumn: VM Memory Swapped
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Memory Ballooned'
+		dataType: int64
+		formatString: 0
+		lineageTag: a1498f21-4d40-45a1-bbe0-b5e7e94977ea
+		summarizeBy: sum
+		sourceColumn: VM Memory Ballooned
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VMotion support'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ddee9c45-7b03-4f1f-991f-52b0b546b2c1
+		summarizeBy: none
+		sourceColumn: VMotion support
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Storage VMotion support'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2ef79684-0526-4627-b597-21b7813f819c
+		summarizeBy: none
+		sourceColumn: Storage VMotion support
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current EVC'
+		dataType: string
+		lineageTag: a5c2c06c-36dc-457b-bcf4-e5b474ae1f81
+		summarizeBy: none
+		sourceColumn: Current EVC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max EVC'
+		dataType: string
+		lineageTag: a777c7b8-1a0b-457a-8fa6-94fcd8aa6a64
+		summarizeBy: none
+		sourceColumn: Max EVC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Assigned License(s)'
+		dataType: string
+		lineageTag: ae970039-dc52-4b65-bfcc-196ccb5307e2
+		summarizeBy: none
+		sourceColumn: Assigned License(s)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ATS Heartbeat'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c92b959-d93d-439f-bdd3-d96351eb30fa
+		summarizeBy: sum
+		sourceColumn: ATS Heartbeat
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ATS Locking'
+		dataType: int64
+		formatString: 0
+		lineageTag: d9bbe5fc-43b5-4b90-ae48-94a7c54a03d6
+		summarizeBy: sum
+		sourceColumn: ATS Locking
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current CPU power man. policy'
+		dataType: string
+		lineageTag: 4c2cd53e-e98b-4516-b9c9-3b735b24c32a
+		summarizeBy: none
+		sourceColumn: Current CPU power man. policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supported CPU power man.'
+		dataType: string
+		lineageTag: bb7e1829-1581-4691-9a4d-fc8c26eb3ede
+		summarizeBy: none
+		sourceColumn: Supported CPU power man.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Host Power Policy'
+		dataType: string
+		lineageTag: 981c4e3e-4694-448c-8db4-b0940b1f88fa
+		summarizeBy: none
+		sourceColumn: Host Power Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ESX Version'
+		dataType: string
+		lineageTag: 1be9632a-c4e8-479e-bbf7-298854a083da
+		summarizeBy: none
+		sourceColumn: ESX Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 40d25137-1b5b-4c0b-b892-de32289b470e
+		summarizeBy: none
+		sourceColumn: Boot time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DNS Servers'
+		dataType: string
+		lineageTag: 7a65d1ff-1602-4689-90af-6e82777f0d58
+		summarizeBy: none
+		sourceColumn: DNS Servers
+
+		annotation SummarizationSetBy = Automatic
+
+	column DHCP
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b9b8fc3a-0dcc-46d2-aa37-8ba9cc1a0958
+		summarizeBy: none
+		sourceColumn: DHCP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: 41c3fb93-5dec-4b07-ac24-2e7a45801462
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Domain List'
+		dataType: string
+		lineageTag: 988242ab-6507-4d2f-a998-0013989a7352
+		summarizeBy: none
+		sourceColumn: Domain List
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DNS Search Order'
+		dataType: string
+		lineageTag: 15441109-7a5f-4648-be31-4d8c5e2dae71
+		summarizeBy: none
+		sourceColumn: DNS Search Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NTP Server(s)'
+		dataType: string
+		lineageTag: da8bfa5e-6342-41a8-a053-64cb0404c4d7
+		summarizeBy: none
+		sourceColumn: NTP Server(s)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NTPD running'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 21498450-ad03-4691-abef-e357029252c6
+		summarizeBy: none
+		sourceColumn: NTPD running
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time Zone'
+		dataType: string
+		lineageTag: 422fbd70-27e7-4c69-a3e2-94e368566279
+		summarizeBy: none
+		sourceColumn: Time Zone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time Zone Name'
+		dataType: string
+		lineageTag: 0e64e84b-543f-43b8-8fd1-79b97c87b924
+		summarizeBy: none
+		sourceColumn: Time Zone Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GMT Offset'
+		dataType: int64
+		formatString: 0
+		lineageTag: da4b72a7-e8e0-4282-9240-4b02afc64905
+		summarizeBy: sum
+		sourceColumn: GMT Offset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendor
+		dataType: string
+		lineageTag: b89ab160-b451-4c1b-94a5-8c45c76a39f7
+		summarizeBy: none
+		sourceColumn: Vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: 81349cd1-38f7-4ed3-8303-12b2d033d122
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Serial number'
+		dataType: string
+		lineageTag: 8bb462e5-ef53-46f1-8cce-7969998f6bdb
+		summarizeBy: none
+		sourceColumn: Serial number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service tag'
+		dataType: string
+		lineageTag: 16ba5902-4fbc-41ba-877c-89002245df63
+		summarizeBy: none
+		sourceColumn: Service tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OEM specific string'
+		dataType: string
+		lineageTag: 73537baa-3908-4296-add2-da1333021b96
+		summarizeBy: none
+		sourceColumn: OEM specific string
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Vendor'
+		dataType: string
+		lineageTag: c02db982-c27e-4064-bc7d-19ba95718f0b
+		summarizeBy: none
+		sourceColumn: BIOS Vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Version'
+		dataType: string
+		lineageTag: 251f50e6-d168-441a-b387-0a6aabcf5e36
+		summarizeBy: none
+		sourceColumn: BIOS Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 33e258c9-ee31-4f35-ba29-cf3ac0c960ed
+		summarizeBy: none
+		sourceColumn: BIOS Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Issuer'
+		dataType: string
+		lineageTag: 90d294e0-ee48-49d2-a6e3-aa07a9b1aac8
+		summarizeBy: none
+		sourceColumn: Certificate Issuer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Start Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 99e63f00-cc09-445f-99bd-337f332d6642
+		summarizeBy: none
+		sourceColumn: Certificate Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Expiry Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 31c2e1cc-d649-42cb-a17e-d011ccee618b
+		summarizeBy: none
+		sourceColumn: Certificate Expiry Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Status'
+		dataType: string
+		lineageTag: 1b6c34fb-b8b7-4147-8ad3-0f2ca8c043dd
+		summarizeBy: none
+		sourceColumn: Certificate Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Subject'
+		dataType: string
+		lineageTag: 7d8c7dd1-d320-4851-ac80-de128c26f911
+		summarizeBy: none
+		sourceColumn: Certificate Subject
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Object ID'
+		dataType: string
+		lineageTag: 73223e5a-803c-4f7b-a131-b65c2cc20c16
+		summarizeBy: none
+		sourceColumn: Object ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AutoDeploy.MachineIdentity'
+		dataType: string
+		lineageTag: 8da0b001-7eee-4d7f-b357-7c1dce856cd0
+		summarizeBy: none
+		sourceColumn: AutoDeploy.MachineIdentity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UUID
+		dataType: string
+		lineageTag: f38ce366-db2d-4ce1-aeb0-84ee3cedb315
+		summarizeBy: none
+		sourceColumn: UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Infrastructre - ESXI'
+		dataType: string
+		lineageTag: 06674083-e6d8-410c-bd3b-f42e1e5c2a5f
+		summarizeBy: none
+		sourceColumn: Infrastructre - ESXI
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: 5d632305-1461-4424-9368-627f51217474
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 35985230-c12b-447e-92ab-cb573bb41f56
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name =
+			
+			VAR DeviceName = [Host]
+			VAR FirstChar = LEFT(DeviceName, 1)
+			VAR StartsWithNumber = FirstChar >= "0" && FirstChar <= "9"
+			VAR LookupIP = LOOKUPVALUE('VMware VMs'[Name], 'VMware VMs'[Primary IP Address], DeviceName)
+			VAR PeriodPosition = FIND(".", DeviceName, 1, LEN(DeviceName) + 1)
+			VAR ExtractedText = IF(PeriodPosition <= LEN(DeviceName), LEFT(DeviceName, PeriodPosition - 1), DeviceName)
+			RETURN
+			IF(
+			    StartsWithNumber,
+			    IF(
+			        ISBLANK(LookupIP),
+			        DeviceName,
+			        LookupIP
+			    ),
+			    ExtractedText
+			)
+		lineageTag: 50978b93-8bca-4198-8c35-ac1bd6eeb390
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location =
+			
+			SWITCH(
+			    TRUE(),
+			    CONTAINSSTRING([Host], "uksouth"), "AVS - UK South",
+			    CONTAINSSTRING([Host], "ukwest"), "AVS - UK West",
+			    [Datacenter] = "Paris Garden - HH3", "Hemel Hempstead",
+			    [Datacenter] = "Amlin-BranchOffices", "Leadenhall Building",
+			    [Datacenter]
+			)
+		lineageTag: bc6e2e30-027f-4e80-9a24-f84ec7805a39
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware Hosts' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vHost",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"Host", type text}, {"Datacenter", type text}, {"Cluster", type text}, {"Config status", type text}, {"Compliance Check State", type any}, {"in Maintenance Mode", type logical}, {"in Quarantine Mode", type logical}, {"vSAN Fault Domain Name", type any}, {"CPU Model", type text}, {"Speed", Int64.Type}, {"HT Available", type logical}, {"HT Active", type logical}, {"# CPU", Int64.Type}, {"Cores per CPU", Int64.Type}, {"# Cores", Int64.Type}, {"CPU usage %", Int64.Type}, {"# Memory", Int64.Type}, {"Memory Tiering Type", type text}, {"Memory usage %", Int64.Type}, {"Console", Int64.Type}, {"# NICs", Int64.Type}, {"# HBAs", Int64.Type}, {"# VMs total", Int64.Type}, {"# VMs", Int64.Type}, {"VMs per Core", type number}, {"# vCPUs", Int64.Type}, {"vCPUs per Core", type number}, {"vRAM", Int64.Type}, {"VM Used memory", Int64.Type}, {"VM Memory Swapped", Int64.Type}, {"VM Memory Ballooned", Int64.Type}, {"VMotion support", type logical}, {"Storage VMotion support", type logical}, {"Current EVC", type text}, {"Max EVC", type text}, {"Assigned License(s)", type text}, {"ATS Heartbeat", Int64.Type}, {"ATS Locking", Int64.Type}, {"Current CPU power man. policy", type text}, {"Supported CPU power man.", type text}, {"Host Power Policy", type text}, {"ESX Version", type text}, {"Boot time", type datetime}, {"DNS Servers", type text}, {"DHCP", type logical}, {"Domain", type text}, {"Domain List", type any}, {"DNS Search Order", type text}, {"NTP Server(s)", type text}, {"NTPD running", type logical}, {"Time Zone", type text}, {"Time Zone Name", type text}, {"GMT Offset", Int64.Type}, {"Vendor", type text}, {"Model", type text}, {"Serial number", type text}, {"Service tag", type text}, {"OEM specific string", type text}, {"BIOS Vendor", type text}, {"BIOS Version", type text}, {"BIOS Date", type datetime}, {"Certificate Issuer", type text}, {"Certificate Start Date", type datetime}, {"Certificate Expiry Date", type datetime}, {"Certificate Status", type text}, {"Certificate Subject", type text}, {"Object ID", type text}, {"AutoDeploy.MachineIdentity", type any}, {"UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"Host", Text.Upper, type text}}),
+				    #"Renamed ESX10-R14-UKS" = Table.ReplaceValue(#"Uppercased Text","ESX10-R14.P10.B0953C07F562489ABF4911.UKSOUTH.AVS.AZURE.COM","ESX10-R14-UKS.P10.B0953C07F562489ABF4911.UKSOUTH.AVS.AZURE.COM",Replacer.ReplaceText,{"Host"}),
+				    #"Renamed ESX10-R14-UKW" = Table.ReplaceValue(#"Renamed ESX10-R14-UKS","ESX10-R14.P01.2CFA284EC2AD46C38072A3.UKWEST.AVS.AZURE.COM","ESX10-R14-UKW.P01.2CFA284EC2AD46C38072A3.UKWEST.AVS.AZURE.COM",Replacer.ReplaceText,{"Host"})
+				in
+				    #"Renamed ESX10-R14-UKW"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

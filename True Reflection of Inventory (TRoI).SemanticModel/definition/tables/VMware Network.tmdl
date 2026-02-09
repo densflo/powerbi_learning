@@ -1,0 +1,280 @@
+table 'VMware Network'
+	lineageTag: 6d01326c-629c-4b96-8de6-39125437bf15
+
+	column VM
+		dataType: string
+		lineageTag: 1d0a2286-d399-40b8-a6e8-84e76fb9065d
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: 3fefcecd-407e-486d-9648-d2b1c21e0709
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Template
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 156bca23-9fcb-4a23-a450-a3c152d1c937
+		summarizeBy: none
+		sourceColumn: Template
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SRM Placeholder'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dd5b2ccb-fa0e-468a-8cc7-74f372152293
+		summarizeBy: none
+		sourceColumn: SRM Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NIC label'
+		dataType: string
+		lineageTag: 9697b135-dada-4113-b63c-028bb0682c9e
+		summarizeBy: none
+		sourceColumn: NIC label
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adapter
+		dataType: string
+		lineageTag: 4afd2f65-8938-4b42-a115-01f7c97ed57a
+		summarizeBy: none
+		sourceColumn: Adapter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network
+		dataType: string
+		lineageTag: 1a207049-dddf-4ae4-9ff3-4508a4d91b95
+		summarizeBy: none
+		sourceColumn: Network
+
+		annotation SummarizationSetBy = Automatic
+
+	column Switch
+		dataType: string
+		lineageTag: b8f13e7c-96e7-4386-a4a6-8753cbf725a1
+		summarizeBy: none
+		sourceColumn: Switch
+
+		annotation SummarizationSetBy = Automatic
+
+	column Connected
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: eefd237c-a608-4b1a-a4b5-458f6d2677fc
+		summarizeBy: none
+		sourceColumn: Connected
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Starts Connected'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ce2c4ae7-cec3-40fa-b964-4612f5ad8bb6
+		summarizeBy: none
+		sourceColumn: Starts Connected
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mac Address'
+		dataType: string
+		lineageTag: 184e221d-7ce0-4e41-939f-b21c97d78438
+		summarizeBy: none
+		sourceColumn: Mac Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 797163d8-8189-4932-957e-4ef197a77ba9
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 1325a05e-0967-431d-a61c-ed927e68c134
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Direct Path IO'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4857ed99-cf22-4d1a-8e8f-e1b200097298
+		summarizeBy: none
+		sourceColumn: Direct Path IO
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internal Sort Column'
+		dataType: string
+		lineageTag: fe89da0c-7d43-46ce-9861-a97220f5a74e
+		summarizeBy: none
+		sourceColumn: Internal Sort Column
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 6b500026-ea2a-46de-b932-5f64a091187f
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: d376f0f1-30a1-487f-b429-842a91f820d6
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: d291b7cc-7866-41ca-8b8f-89928a4d3f37
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: bb559aac-e144-4749-8726-4f62aa4f06e6
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: b0fd0b93-b0b6-4bc9-856c-22cc3c605b92
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: 6051be64-cf35-4b92-893b-6ead55a586e3
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: 819d43ed-498b-4aca-8016-3f0de96f4e11
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: 18dd0a3b-bffb-48f6-ad5f-bfb2f3ac6b4e
+		summarizeBy: none
+		sourceColumn: Folder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: 9313c9e3-c615-4ebb-8bd1-1f0b29828aac
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 06613c44-adcc-4893-af21-014ecfa0e29f
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: b7a9ca96-dc6d-4d35-9e6d-d3ea21d29e62
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: c9407f6f-ea41-4798-bc6f-707cb77f7f19
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: 8a02722f-559a-4267-8047-b9390f377194
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 5f112935-68ce-45c7-981c-7f3e6c2fa557
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 26d16eae-f95d-4a95-b638-dd170eebbd3b
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware Network' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let    
+				    Sheet = "vNetwork",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"VM", type text}, {"Powerstate", type text}, {"Template", type logical}, {"SRM Placeholder", type logical}, {"NIC label", type text}, {"Adapter", type text}, {"Network", type text}, {"Switch", type text}, {"Connected", type logical}, {"Starts Connected", type logical}, {"Mac Address", type text}, {"Type", type text}, {"IPv4 Address", type text}, {"IPv6 Address", type text}, {"Direct Path IO", type logical}, {"Internal Sort Column", type text}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"Folder", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"VM ID", type text}, {"VM UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}, {"Mac Address", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping VM to ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping VM to ServerName", {"Name"}, {"Name"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded Mapping-VMwareVM-ServerName",{"Name", "VM", "Powerstate", "Template", "SRM Placeholder", "NIC label", "Adapter", "Network", "Switch", "Connected", "Starts Connected", "Mac Address", "Type", "IPv4 Address", "IPv6 Address", "Direct Path IO", "Internal Sort Column", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "Folder", "OS according to the configuration file", "OS according to the VMware Tools", "VM ID", "VM UUID", "VI SDK Server", "VI SDK UUID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"IPv4 Address", "IP Address"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"IPv6 Address"})
+				in
+				    #"Removed Columns"
+				```
+
+	annotation PBI_ResultType = Table
+

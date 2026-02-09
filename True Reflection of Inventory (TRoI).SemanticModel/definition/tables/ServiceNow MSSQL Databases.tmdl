@@ -1,0 +1,56 @@
+table 'ServiceNow MSSQL Databases'
+	lineageTag: 2a312372-31ec-40fb-8eea-92cf9d244679
+
+	column 'Database Name'
+		dataType: string
+		lineageTag: e51904aa-6a70-4981-be97-e7bda560da10
+		summarizeBy: none
+		sourceColumn: Database Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: b6ea40c4-61e5-410b-8d11-3c070e98d6b7
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 896976b9-78a1-443d-b66c-8eebf2a5e284
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ServiceNow MSSQL Databases' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/cmdb_ci_db_mssql_database.xlsx"), null, true),
+				    #"Page 1_Sheet" = Source{[Item="Page 1",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"Page 1_Sheet",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"Instance name", type text}, {"Description", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type1","",null,Replacer.ReplaceValue,{"Instance name", "Description"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value", "Merged Instance Name", each if [Instance name] = null then [Description] else [Instance name]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Instance name", "Description"}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Removed Columns", "Merged Instance Name", Splitter.SplitTextByDelimiter("@", QuoteStyle.Csv), {"Instance Name", "Server Name"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Instance Name", type text}, {"Server Name", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type2",{{"Name", "Database Name"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Server Name", "Instance Name", "Database Name"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each ([Server Name] <> null)),
+				    #"Sorted Rows" = Table.Sort(#"Filtered Rows",{{"Server Name", Order.Ascending}, {"Instance Name", Order.Ascending}, {"Database Name", Order.Ascending}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Sorted Rows", "Full Instance Name", each if [Instance Name] = "MSSQLSERVER" then [Server Name] else [Server Name] & "_" & [Instance Name]),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Conditional Column1",{"Full Instance Name", "Database Name"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Source", each "ServiceNow")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

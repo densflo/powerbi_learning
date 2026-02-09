@@ -1,0 +1,155 @@
+table 'SolarWinds Nodes'
+	lineageTag: a1d35339-5469-4a94-98f4-2f3f3ae48bb6
+
+	column 'Node Name'
+		dataType: string
+		lineageTag: 282fbb9c-a196-4e77-824e-7146e43740e2
+		summarizeBy: none
+		sourceColumn: Node Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNS
+		dataType: string
+		lineageTag: 90a30175-7837-4ade-bfba-2a9455d54390
+		summarizeBy: none
+		sourceColumn: DNS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: 9d13261e-cec0-452f-a4d4-29ce9e7b6ef4
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Machine Type'
+		dataType: string
+		lineageTag: 4938b11f-ea0b-4126-8693-15f6bfb8b3cd
+		summarizeBy: none
+		sourceColumn: Machine Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 3ab86834-8405-40e3-b168-c289c91bc5da
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendor
+		dataType: string
+		lineageTag: d30cfbef-5b2a-4d1c-9e31-31cc46228d3a
+		summarizeBy: none
+		sourceColumn: Vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Node Category'
+		dataType: string
+		lineageTag: 55f33a54-17c7-4a4b-a8f1-95f38d10a1d0
+		summarizeBy: none
+		sourceColumn: Node Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeviceType
+		dataType: string
+		lineageTag: 95de2343-f46e-4ad4-9eb8-4dbad1f139aa
+		summarizeBy: none
+		sourceColumn: DeviceType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: a3ee0858-2bea-4902-9347-34f18710364a
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: fb309bf2-086c-4fa7-9d1f-0e50b33bd3c4
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: b2dfa567-38b6-4ddd-847a-e9d4e0044502
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 6c8bb5e0-cfba-49ab-a88f-df6c963a6c78
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mac Address'
+		dataType: string
+		lineageTag: 3cdde4bf-4449-4150-8136-03aefd378598
+		summarizeBy: none
+		sourceColumn: Mac Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastSystemUpTimePollUtc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ddfce0cc-d25b-44ac-a7e6-91938dbea395
+		summarizeBy: none
+		sourceColumn: LastSystemUpTimePollUtc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Applications
+		dataType: string
+		lineageTag: b14e9a96-3771-416d-a5d7-fa43d0347f60
+		summarizeBy: none
+		sourceColumn: Applications
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'SolarWinds Nodes' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source = ```
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Report_All_Nodes_(Servers).xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(Sheet1_Sheet,2),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Node Name", type text}, {"DNS", type text}, {"Domain", type any}, {"Machine Type", type text}, {"IP Address", type text}, {"Vendor", type text}, {"Node Category", type text}, {"DeviceType", type text}, {"Manufacturer", type any}, {"Model", type any}, {"LastSystemUpTimePollUtc", type datetime}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Node Name", Text.Trim, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Trimmed Text"),
+				    #"Added Custom" = Table.AddColumn(#"Removed Duplicates", "TempName", each if Text.Start([Node Name], 1) >= "0" and Text.Start([Node Name], 1) <= "9" then [Node Name] 
+				    else Text.BeforeDelimiter([Node Name], ".")),
+				    #"Added Conditional Column" = Table.AddColumn(#"Added Custom", "Name", each if [TempName] <> "" then [TempName] else [Node Name]),
+				    #"Removed TempName" = Table.RemoveColumns(#"Added Conditional Column",{"TempName"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed TempName",{{"Name", Text.Upper, type text}, {"Domain", Text.Upper, type text}}),
+				    #"Remove IPv6 Nodes" = Table.SelectRows(#"Uppercased Text", each not Text.Contains([IP Address], ":") or [IP Address] = null),
+				    #"Renamed Columns" = Table.RenameColumns(#"Remove IPv6 Nodes",{{"Domain", "TempDomain"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns", {"TempDomain"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "Mapping DomainFQDN to DomainNetBIOS", JoinKind.LeftOuter),
+				    #"Expanded Mapping DomainFQDN to DomainNetBIOS" = Table.ExpandTableColumn(#"Merged Queries", "Mapping DomainFQDN to DomainNetBIOS", {"NetBIOS"}, {"Domain"}),
+				    #"Removed TempDomain" = Table.RemoveColumns(#"Expanded Mapping DomainFQDN to DomainNetBIOS",{"TempDomain"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed TempDomain",{"Node Name", "Name", "DNS", "Status", "LastSystemUpTimePollUtc", "Mac Address", "Domain", "Machine Type", "IP Address", "Vendor", "Node Category", "DeviceType", "Manufacturer", "Applications", "Model"})
+				in
+				    #"Reordered Columns"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

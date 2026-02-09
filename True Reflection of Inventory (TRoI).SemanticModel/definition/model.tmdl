@@ -1,0 +1,122 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Child Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Child Queries\Mapping'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'Child Queries\Functions'
+
+	annotation PBI_QueryGroupOrder = 9
+
+queryGroup 'Child Queries\Merged'
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup 'Child Queries\Resource Management'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Child Queries\Hosting Platforms'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Child Queries\Asset Management & Inventory'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup 'Child Queries\Monitoring Tools'
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup 'Child Queries\Other Teams'
+
+	annotation PBI_QueryGroupOrder = 10
+
+/// Query group for diagnostics
+queryGroup Diagnostics
+
+	annotation PBI_QueryGroupOrder = 9
+
+annotation PBI_QueryOrder = ["Active Directory Computers","Mapping Application to Application Catalogue","Mapping Diamond IP IPControl Subnet to Location","Mapping DomainFQDN to DomainNetBIOS","Mapping DomainNetBIOS to DomainFQDN","Mapping Location","Mapping Manual Server To Location","Mapping Manual Missing Subnets","Mapping Server to Application","ConfigMgr All Devices","ConfigMgr Encryption Status","ApplicationCataloguePath","Application Catalogue Wave Plan","Application Catalogue Working Catalogue","Application Catalogue Discrepancies","Application Catalogue Missing From Data Model","DB Inventory System Databases","DB Inventory System Instances","Diamond IP IPControl Subnets","Environments Team Environment Management Database","Ops Theater RAETSMARINE Apps","ServiceNow CMDB","Azure VirtualNetworks","Azure Arc SQL Databases","Azure Arc SQL Instances","Azure Arc Machines","Azure Disks","Azure SQL Virtual Machines","Azure VMs","Azure VM Sizes","VMware CD","VMware Disks","VMware Network","QRadar Log Sources","Qualys Assets","Panaseer All Devices","SolarWinds Nodes","Citrix Team Published Applications","DR Manager Important Business Services","Network Team Global IP Address Allocation","Network Team Network Switch Traffic","VMware Snapshots","VMware Tools","VMware VMs","Mapping VLAN to Application","Mapping VM to ServerName","ConvertToMACAddress","ExpandSubnet","SolarWinds VMs","Symantec Endpoint Protection Devices","ServiceNow Decommission Change Requests","ServiceNow Decommission Service Requests","ServiceNow MSSQL Databases","ServiceNow MSSQL Instances","Snow Computers","Snow SQL Servers","Merged IP Addresses","VMware Hosts","Merged Subnets","Merged Subnets Expanded","ConvertIPToDecimal","Merged SQL Databases","Merged SQL Instances","Qualys Assets_Source_Detailed_2025-09-19_17:11","Qualys Assets_Source_Aggregated_2025-09-19_17:11","Qualys Assets_Source_Partitions_2025-09-19_17:11"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+annotation PBIDesktopVersion = 2.146.1254.0 (25.08)+791a7518fadc83da883d79322a2658aff57c8db3
+
+ref table 'ConfigMgr All Devices'
+ref table 'Snow Computers'
+ref table 'ServiceNow CMDB'
+ref table 'Mapping DomainFQDN to DomainNetBIOS'
+ref table 'Azure VMs'
+ref table 'VMware VMs'
+ref table 'Azure Arc Machines'
+ref table 'Azure VM Sizes'
+ref table 'VMware Disks'
+ref table 'ConfigMgr Encryption Status'
+ref table 'Qualys Assets'
+ref table 'Network Team Global IP Address Allocation'
+ref table 'SolarWinds Nodes'
+ref table 'VMware Snapshots'
+ref table 'VMware CD'
+ref table 'VMware Tools'
+ref table 'VMware Network'
+ref table 'Mapping VLAN to Application'
+ref table 'Application Catalogue Wave Plan'
+ref table 'Mapping VM to ServerName'
+ref table 'Network Team Network Switch Traffic'
+ref table 'Mapping Server to Application'
+ref table 'Mapping DomainNetBIOS to DomainFQDN'
+ref table 'SolarWinds VMs'
+ref table '_All Devices'
+ref table 'Application Catalogue Working Catalogue'
+ref table 'Symantec Endpoint Protection Devices'
+ref table 'DR Manager Important Business Services'
+ref table 'ServiceNow Decommission Change Requests'
+ref table 'Application Catalogue Discrepancies'
+ref table 'QRadar Log Sources'
+ref table 'Application Catalogue Missing From Data Model'
+ref table '_All Projects Scope'
+ref table 'Azure Disks'
+ref table 'Environments Team Environment Management Database'
+ref table 'Mapping Application to Application Catalogue'
+ref table 'Merged IP Addresses'
+ref table 'Panaseer All Devices'
+ref table 'Active Directory Computers'
+ref table 'Mapping Location'
+ref table 'ServiceNow Decommission Service Requests'
+ref table 'VMware Hosts'
+ref table 'Citrix Team Published Applications'
+ref table 'ServiceNow MSSQL Databases'
+ref table 'Azure Arc SQL Databases'
+ref table 'Diamond IP IPControl Subnets'
+ref table 'Mapping Diamond IP IPControl Subnet to Location'
+ref table 'Merged Subnets'
+ref table 'Mapping Manual Server To Location'
+ref table 'Mapping Manual Missing Subnets'
+ref table 'Merged Subnets Expanded'
+ref table 'DB Inventory System Databases'
+ref table 'Snow SQL Servers'
+ref table 'Merged SQL Databases'
+ref table 'Merged SQL Instances'
+ref table 'Azure SQL Virtual Machines'
+ref table 'Azure Arc SQL Instances'
+ref table 'DB Inventory System Instances'
+ref table 'ServiceNow MSSQL Instances'
+ref table '_All Applications by Server'
+ref table 'Azure VirtualNetworks'
+
+ref cultureInfo en-US
+

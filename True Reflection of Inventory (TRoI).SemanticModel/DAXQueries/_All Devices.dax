@@ -1,0 +1,83 @@
+EVALUATE
+VAR AllDevices = 
+    UNION(
+        SELECTCOLUMNS('VMware VMs', "Name", 'VMware VMs'[Name], "VM", 'VMware VMs'[VM]),
+        SELECTCOLUMNS('VMware Hosts', "Name", 'VMware Hosts'[Name], "VM", BLANK()),
+        SELECTCOLUMNS('Azure VMs', "Name", 'Azure VMs'[Name], "VM", BLANK())
+    )
+VAR SolarWindsVMsFiltered = 
+    EXCEPT(
+        SELECTCOLUMNS(
+            FILTER('SolarWinds VMs', 'SolarWinds VMs'[Virtualization Platform] = "Hyper-V"),
+            "Name", 'SolarWinds VMs'[Name], "VM", BLANK()
+        ),
+        SELECTCOLUMNS(
+            AllDevices,
+            "Name", [Name],
+            "VM", BLANK()
+        )
+    )
+VAR SnowComputersFiltered = 
+    EXCEPT(
+        SELECTCOLUMNS(
+            FILTER('Snow Computers', 'Snow Computers'[Hypervisor] = ""),
+            "Name", 'Snow Computers'[Name], "VM", BLANK()
+        ),
+        SELECTCOLUMNS(
+            AllDevices,
+            "Name", [Name],
+            "VM", BLANK()
+        )
+    )
+VAR SolarWindsNodesFiltered = 
+    EXCEPT(
+        SELECTCOLUMNS(
+            FILTER(
+                'SolarWinds Nodes', 
+                (
+                    'SolarWinds Nodes'[Node Category] = "Network" && 
+                    'SolarWinds Nodes'[DeviceType] = "Server"
+                ) || (
+                    'SolarWinds Nodes'[Node Category] = "Other" && 
+                    'SolarWinds Nodes'[DeviceType] = "Server"
+                ) || (
+                    'SolarWinds Nodes'[Node Category] = "Server"
+                )
+            ),
+            "Name", 'SolarWinds Nodes'[Name], "VM", BLANK()
+        ),
+        SELECTCOLUMNS(
+            AllDevices,
+            "Name", [Name],
+            "VM", BLANK()
+        )
+    )
+VAR CombinedDevices = 
+    UNION(
+        AllDevices,
+        SolarWindsVMsFiltered,
+        //SnowComputersFiltered,
+        SolarWindsNodesFiltered
+    )
+VAR FilteredDevices = 
+    FILTER(
+        CombinedDevices,
+        NOT (
+            [VM] = BLANK() &&
+            COUNTROWS(
+                FILTER(
+                    CombinedDevices,
+                    [Name] = EARLIER([Name]) &&
+                    NOT(ISBLANK([VM]))
+                )
+            ) > 0
+        )
+    )
+
+RETURN
+SUMMARIZE(
+    FilteredDevices,
+    [Name],
+    [VM]
+)
+ORDER BY [Name]

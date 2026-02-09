@@ -1,0 +1,98 @@
+table 'Symantec Endpoint Protection Devices'
+	lineageTag: 5b087531-de39-4dd7-bd71-369f4ebd3a7f
+
+	column Name
+		dataType: string
+		lineageTag: 279b2d8a-b444-49da-ae1c-56fe320e827d
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column OS
+		dataType: string
+		lineageTag: eb1d60f3-3318-4a9d-bc8e-021a241fd0ac
+		summarizeBy: none
+		sourceColumn: OS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS Version'
+		dataType: string
+		lineageTag: 90f416f3-d441-4d0b-9ffb-2e42a32c149f
+		summarizeBy: none
+		sourceColumn: OS Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Client Version'
+		dataType: string
+		lineageTag: 7ad20d9f-2f0c-43e7-a725-77cbc8b64c7f
+		summarizeBy: none
+		sourceColumn: Client Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IPV4 Address'
+		dataType: string
+		lineageTag: 4a871f4c-47da-49cd-bdaf-33d335a88d6f
+		summarizeBy: none
+		sourceColumn: IPV4 Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Security Status'
+		dataType: string
+		lineageTag: 19819aff-9b7e-483a-88dd-2c19d6b51629
+		summarizeBy: none
+		sourceColumn: Security Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Reason'
+		dataType: string
+		lineageTag: 5d9ab3b0-380e-4df4-875c-a91873c0cde3
+		summarizeBy: none
+		sourceColumn: Status Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Connection Status'
+		dataType: string
+		lineageTag: f9ce3375-36c7-4bd7-8c2a-dd16dfd6e904
+		summarizeBy: none
+		sourceColumn: Connection Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Updated'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 877d8aab-58f2-4a0e-adef-4909953319cd
+		summarizeBy: none
+		sourceColumn: Last Updated
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Symantec Endpoint Protection Devices' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/SEP_Device_status.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column10"}),
+				    #"Removed Leading Spaces" = Table.TransformColumns(#"Removed Columns",{{"Column1", Text.Trim, type text}, {"Column2", Text.Trim, type text}, {"Column3", Text.Trim, type text}, {"Column4", Text.Trim, type text}, {"Column5", Text.Trim, type text}, {"Column6", Text.Trim, type text}, {"Column7", Text.Trim, type text}, {"Column8", Text.Trim, type text}, {"Column9", Text.Trim, type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Leading Spaces", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Device Name", type text}, {"OS", type text}, {"OS Version", type text}, {"Client Version", type text}, {"IPV4 Address", type text}, {"Security Status", type text}, {"Status Reason", type text}, {"Connection Status", type text}, {"Last Updated", type datetime}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Device Name", "Name"}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Renamed Columns",{{"Name", Order.Ascending}, {"Last Updated", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Duplicates","_"," ",Replacer.ReplaceText,{"Security Status"}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Replaced Value",{{"Security Status", Text.Proper, type text}})
+				in
+				    #"Capitalized Each Word"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

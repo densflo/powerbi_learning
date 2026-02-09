@@ -1,0 +1,59 @@
+table 'Azure VirtualNetworks'
+	lineageTag: 00514b7a-2723-4a0d-954d-32c9ed37407c
+
+	column name
+		dataType: string
+		lineageTag: 304b33b5-df3b-4690-940e-2c00b75fb762
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subscription
+		dataType: string
+		lineageTag: c329d183-e421-48a7-9ff8-4ec26545de0b
+		summarizeBy: none
+		sourceColumn: Subscription
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resource group'
+		dataType: string
+		lineageTag: 2fe47a48-2a28-44fd-aa26-d127e1120084
+		summarizeBy: none
+		sourceColumn: Resource group
+
+		annotation SummarizationSetBy = Automatic
+
+	column subnetAddressPrefix
+		dataType: string
+		lineageTag: 50b65d26-0680-44e8-8695-462c2a24fd94
+		summarizeBy: none
+		sourceColumn: subnetAddressPrefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 4e28f757-8638-46c1-ad89-0cacbdd3e243
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure VirtualNetworks' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-Virtual%20Networks.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"name", type text}, {"Subscription", type text}, {"Resource group", type text}, {"subnetAddressPrefix", type text}, {"Location", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,35 @@
+table 'Mapping VM to ServerName'
+	lineageTag: 053d2955-5eaa-4a59-be75-0d53f47db4ea
+
+	column VM
+		dataType: string
+		lineageTag: d1f9dc7f-6662-4cab-ac76-d275a303cd75
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: d0b97936-4022-4f19-a87c-4e8148396081
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping VM to ServerName' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Mapping-VM-ServerName.xlsx"), null, true),
+				    #"Mapping-VM-ServerName_Sheet" = Source{[Item="Mapping-VM-ServerName",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"Mapping-VM-ServerName_Sheet",{{"Column1", type text}, {"Column2", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"VM", type text}, {"Name", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type1",{{"VM", Text.Upper, type text}, {"Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Table
+

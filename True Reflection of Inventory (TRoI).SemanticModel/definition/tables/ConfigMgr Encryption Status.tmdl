@@ -1,0 +1,67 @@
+table 'ConfigMgr Encryption Status'
+	lineageTag: b6630385-3dde-4d9e-bee9-8f62328cb0bc
+
+	column Name
+		dataType: string
+		lineageTag: 0e8d6dc1-3728-4f76-be8b-ef3512ab679c
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drive Letter'
+		dataType: string
+		lineageTag: 75bd5622-098d-4b4d-858e-f4ce86bf490a
+		summarizeBy: none
+		sourceColumn: Drive Letter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: e3c6ea19-18ae-4dd5-93bc-619b85066eb7
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		dataType: string
+		lineageTag: 3936c260-ac8a-4304-ae7e-c796cf05e580
+		summarizeBy: none
+		sourceColumn: Operating System
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: 0f786ec2-609d-4cec-b34d-acb839c3ad45
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: 8f5f557d-807a-42a2-865a-041863cabdbe
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ConfigMgr Encryption Status' = m
+		mode: import
+		queryGroup: 'Child Queries\Resource Management'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Encryption%20Status.xlsx"), null, true),
+				    EncryptionStatus_Table = Source{[Item="EncryptionStatus",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(EncryptionStatus_Table,{{"Name", type text}, {"Drive Letter", type text}, {"Status", type text}, {"Operating System", type text}, {"Manufacturer", type text}, {"Model", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,199 @@
+table '_All Applications by Server'
+	lineageTag: 20933d19-f14f-4822-8fef-0f2df19e6c38
+
+	column Name
+		lineageTag: 13146b41-1868-4b81-b5d5-51a9968a95b9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Name'
+		lineageTag: 75d55ace-672d-4e1e-b702-651dd10f005e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [VM Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type'
+		lineageTag: c6cffdbf-911e-4c2f-9aba-7f61a6323396
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Device Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Power State'
+		lineageTag: a03d893c-8c33-4047-995f-a4b7e777bf6f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Power State]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		lineageTag: 26b79033-84dd-4140-b53a-85a8cc6d4339
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Location]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CMDB Status'
+		lineageTag: 7ffea1db-4f6c-4c72-b98c-f46c9b28ece0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CMDB Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decom CHG'
+		lineageTag: dbcb6c22-edfc-4249-99d3-05fafdb7c150
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Decom CHG]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application
+		lineageTag: e59d86e2-73bb-4d97-ac3b-55ddb872d1df
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Application]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		lineageTag: b2648b95-3715-45fe-8860-a5d5d319809b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IP Address]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Environment
+		lineageTag: cc061efa-dd31-4657-b69c-411de42d1ccd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Environment]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		lineageTag: 80500044-2942-42a1-a4b2-f635393922b6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Operating System]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Life'
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 183f1f90-3fed-4660-8238-5bd9e12ad495
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [End of Life]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application (Application Catalogue)' =
+			
+			LOOKUPVALUE('Mapping Application to Application Catalogue'[Name (Application Catalogue)],'Mapping Application to Application Catalogue'[Name],[Application])
+		lineageTag: a52929eb-d225-4cda-80e8-754782f08655
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Reference (Application Catalogue)' = LOOKUPVALUE('Mapping Application to Application Catalogue'[Reference],'Mapping Application to Application Catalogue'[Name],[Application])
+		lineageTag: a0e63737-3236-417a-ab8a-5659082324a9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBS = LOOKUPVALUE('Application Catalogue Working Catalogue'[IBS],'Application Catalogue Working Catalogue'[Application Reference],'_All Applications by Server'[Application Reference (Application Catalogue)])
+		lineageTag: 2138dfd9-9115-4581-b029-6b6634c3d2b5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Owner = LOOKUPVALUE('ServiceNow CMDB'[Owned by],'ServiceNow CMDB'[Name],[Name])
+		lineageTag: 272ddf7e-26a0-4297-b6e8-74cb329fd127
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposed DC Migration Path' =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    LOOKUPVALUE(
+			        'Application Catalogue Working Catalogue'[Proposed DC Handling],
+			        'Application Catalogue Working Catalogue'[Application Reference],
+			        [Application Reference (Application Catalogue)]
+			    ),
+			    BLANK()
+			)
+		lineageTag: 4390b521-51d0-4698-b74c-c1c673b2561f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    SWITCH(
+			        LOOKUPVALUE(
+			            'Application Catalogue Working Catalogue'[Business or Technology],
+			            'Application Catalogue Working Catalogue'[Application Reference],
+			            [Application Reference (Application Catalogue)]
+			        ),
+			        "Business Application", "Business Application",
+			        "Technology Component", "Infrastructure",
+			        BLANK()
+			    ),
+			    BLANK()
+			)
+		lineageTag: cdf41963-25cb-46cd-a948-9e780cd848cf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_All Applications by Server' = calculated
+		mode: import
+		source = ```
+				
+				DISTINCT(
+				    SELECTCOLUMNS(
+				        GENERATE(
+				            '_All Devices',
+				            FILTER(
+				                'Mapping Server To Application',
+				                'Mapping Server To Application'[Server] = '_All Devices'[Name] &&
+				                NOT CONTAINSSTRING('Mapping Server To Application'[Application], "Client Endpoint")
+				            )
+				        ),
+				        "Name", '_All Devices'[Name],
+				        "VM Name", '_All Devices'[VM],
+				        "Device Type", '_All Devices'[Device Type],
+				        "Power State", '_All Devices'[Power State],
+				        "Operating System", '_All Devices'[Operating System],
+				        "End of Life", 
+				            OR(
+				                CONTAINSSTRING('_All Devices'[Operating System], "2008"),
+				                CONTAINSSTRING('_All Devices'[Operating System], "2012")
+				            ),
+				        "Location", '_All Devices'[Location],
+				        "CMDB Status", '_All Devices'[CMDB Status],
+				        "Decom CHG", '_All Devices'[Decom CHG Number],
+				        "Application", 'Mapping Server To Application'[Application],
+				        "IP Address", '_All Devices'[IP Address],
+				        "Environment", '_All Devices'[Environment]
+				    )
+				)
+				```
+
+	annotation PBI_Id = 23a978a2795a4a279ea082059cdcd829
+

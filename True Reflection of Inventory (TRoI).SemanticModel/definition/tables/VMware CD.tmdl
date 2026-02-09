@@ -1,0 +1,234 @@
+table 'VMware CD'
+	lineageTag: 79a5ac06-6c51-48be-a34f-bd59371469b8
+
+	column VM
+		dataType: string
+		lineageTag: 7bea857d-9320-4f2d-a400-bb29811350b1
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: 44bfcb64-bb66-45a1-b787-06f47febaa50
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Template
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 244b2e46-98d8-4b1f-86fa-da16411671ed
+		summarizeBy: none
+		sourceColumn: Template
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SRM Placeholder'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dc54979e-c2de-4280-8c5b-217ff398d396
+		summarizeBy: none
+		sourceColumn: SRM Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Node'
+		dataType: string
+		lineageTag: 2de0fd02-7740-4964-8558-53b00c3bfaf4
+		summarizeBy: none
+		sourceColumn: Device Node
+
+		annotation SummarizationSetBy = Automatic
+
+	column Connected
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 931255d3-8199-4c86-947e-7b8f71ee8ecd
+		summarizeBy: none
+		sourceColumn: Connected
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Starts Connected'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d898e90e-c26c-4279-8194-0611a0aa6a16
+		summarizeBy: none
+		sourceColumn: Starts Connected
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type'
+		dataType: string
+		lineageTag: 1230fbb0-5cf8-490e-a46c-4da478389155
+		summarizeBy: none
+		sourceColumn: Device Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 7cd9269f-02f6-47be-8a7c-3a815db81099
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: ea7d0362-47e7-4874-a236-76e8c8305f6d
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: b18de9df-c0ce-4ae9-adc1-1afe9a7eaa1b
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: eae3c60a-0baf-4c72-9d2c-20212f54374f
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: b8768f5f-3ffd-4048-8aaa-81de5276c6d4
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: e456703e-6dd6-4a9b-a51e-ef053e9599be
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: 4ce766a4-e664-405d-a977-e3ff5c1b0f7a
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: 54b14679-74d6-41d4-9329-f6bb879850fe
+		summarizeBy: none
+		sourceColumn: Folder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: 70ee2518-3be2-4bfb-9e93-41fc9fa0d81a
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 02fc2ee2-370c-47c9-96bb-24932aa7208d
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column VMRef
+		dataType: int64
+		formatString: 0
+		lineageTag: 9adc655b-998e-4380-88c3-0290ba287c0d
+		summarizeBy: sum
+		sourceColumn: VMRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: 5e47c337-6ba8-4718-9b56-9ea08f9ae738
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: 26fc3510-f602-4cbe-a6e2-a62a6eff6edd
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: f1ea189a-0271-4230-948b-38d6e15469f5
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: e8df9d73-63fc-45a4-89be-2028fe645622
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 3df68706-d356-4b2b-aa2b-56492e2e44f7
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware CD' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vCD",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"VM", type text}, {"Powerstate", type text}, {"Template", type logical}, {"SRM Placeholder", type logical}, {"Device Node", type text}, {"Connected", type logical}, {"Starts Connected", type logical}, {"Device Type", type text}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"Folder", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"VMRef", Int64.Type}, {"VM ID", type text}, {"VM UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping-VMwareVM-ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping-VMwareVM-ServerName", {"Name"}, {"Name"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded Mapping-VMwareVM-ServerName",{"Name", "VM", "Powerstate", "Template", "SRM Placeholder", "Device Node", "Connected", "Starts Connected", "Device Type", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "Folder", "OS according to the configuration file", "OS according to the VMware Tools", "VMRef", "VM ID", "VM UUID", "VI SDK Server", "VI SDK UUID"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns",{{"Name", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each Text.EndsWith(Text.Lower([Device Type]), ".iso"))
+				in
+				    #"Filtered Rows"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,40 @@
+table 'Mapping DomainFQDN to DomainNetBIOS'
+	lineageTag: df829ed5-4edf-4e4b-9c03-cd49d07aac91
+
+	column FQDN
+		dataType: string
+		lineageTag: fa297122-f650-4f5c-ac6c-dd496421f2b3
+		summarizeBy: none
+		sourceColumn: FQDN
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetBIOS
+		dataType: string
+		lineageTag: 64d2b32d-9c7e-47d5-8b77-b3c024ae97c7
+		summarizeBy: none
+		sourceColumn: NetBIOS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping DomainFQDN to DomainNetBIOS' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("fZRNk6IwEIb/ytacxxSgM6PHgFGpIWABjlU75YFRVGr42IJ42H+/6QQYEqi9SPfzvt1pOurn5xPeHHwSPz13wem5YwivNXx9lCmL04YhrzonOag6Ej43moVBIJp2IfAka2Z1VTF0rgpdw1wLuaZ2H0PhLfKs/GWndfG4JGCjnuvPbCoPAbE9gXr7fvbOo9lFr9lX0c001myqzjSGvVewfGgcEHA5Oy7wD4jPd6QtpBWcO5rcxjSHikvCAMgugwS06zlD16pmWcM1148x/ei4xGx4xhQF9+2Cbl/8fa7tIdt1JDg8f7LbpZE2zdXzifJWUHk7pzJwVrK0LpMcFU2Wd/dFqSvE9qaVK5ehssIREj7eY9Apcj2q52oTjYAr8In4tcinIGWK1/2XQeNKP52Aa3//22RS7kPgISZxRHHo+oRLw0yoScoamtRZmfYn/8ejTDHNoYLxbLhzNQfHkdOjjLYQbmVc1d/bunr8AdTH4u0ME1nOBlvLBXEsvF68OvOl8WbhOTq8H0nE/3o+IoR/H0KCnABug1fIStNAtrF6mTvG2+bl1VosV9jeLFamySuj4BDvxqWmIRe/j+IdwTEJkRc42IPN6+h0+gc=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [FQDN = _t, NetBIOS = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"FQDN", type text}, {"NetBIOS", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"FQDN", Text.Upper, type text}, {"NetBIOS", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

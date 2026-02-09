@@ -1,0 +1,202 @@
+table 'Snow Computers'
+	lineageTag: 44d2c229-47ba-4129-8040-dbb48483a88a
+
+	column Name
+		dataType: string
+		lineageTag: 7516a086-9a96-4d8a-b2c7-603821918184
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: a165ff6e-aa33-4f79-88ed-e04203e5bc17
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: e2d44dc7-c49e-4728-badc-1643f7e49df0
+		summarizeBy: none
+		sourceColumn: Model
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hypervisor
+		dataType: string
+		lineageTag: c9c8d9f3-4152-4b6f-b295-8abb057246e7
+		summarizeBy: none
+		sourceColumn: Hypervisor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating system'
+		dataType: string
+		lineageTag: 4f312557-ff9c-48fd-aac8-c7671147c843
+		summarizeBy: none
+		sourceColumn: Operating system
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 24ce6cac-aa95-487d-b8d8-5fdb7b4cf165
+		summarizeBy: none
+		sourceColumn: Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last scanned'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 587e83af-240d-4b8f-bb28-76b88f8fbcd3
+		summarizeBy: none
+		sourceColumn: Last scanned
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Processors
+		dataType: int64
+		formatString: 0
+		lineageTag: b103c051-4c20-481a-bc0d-c52584d531d3
+		summarizeBy: sum
+		sourceColumn: Processors
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Processor cores'
+		dataType: int64
+		formatString: 0
+		lineageTag: ca48c096-2918-47bf-a967-25d5c2ad061d
+		summarizeBy: sum
+		sourceColumn: Processor cores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Logical processors'
+		dataType: int64
+		formatString: 0
+		lineageTag: c44cef8d-5420-4aec-a1f1-491e63e4e3af
+		summarizeBy: sum
+		sourceColumn: Logical processors
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Memory (MB)'
+		dataType: int64
+		formatString: 0
+		lineageTag: b550b621-68b2-4e96-8f12-41423f45a5c0
+		summarizeBy: sum
+		sourceColumn: Memory (MB)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last logged on user'
+		dataType: string
+		lineageTag: 4ebac78b-86dd-4c52-a6bc-81fba3a0c105
+		summarizeBy: none
+		sourceColumn: Last logged on user
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Most frequent user'
+		dataType: string
+		lineageTag: 419dae5f-70b3-4521-9c3e-757337abb318
+		summarizeBy: none
+		sourceColumn: Most frequent user
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: ebcf1c45-41b3-4b9c-911d-5999a8e5ca3b
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Memory =
+			
+			VAR MemoryMB = [Memory (MB)]
+			VAR MemoryGB = MemoryMB / 1024
+			VAR MemoryTB = MemoryMB / (1024 * 1024)
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    MemoryTB >= 1, FORMAT(MemoryTB, "#,##0") & " TB",
+			    MemoryGB >= 1, FORMAT(MemoryGB, "#,##0") & " GB",
+			    FORMAT(MemoryMB, "#,##0") & " MB"
+			)
+		lineageTag: eda6a261-5026-495f-8a65-b5340f5d9966
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: 02c7b33f-ac2b-4dde-849a-f53a7be6722e
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Snow Computers' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/ComputersList.xlsx"), null, true),
+				    Report0_Sheet = Source{[Item="Report0",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Report0_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Computer name", type text}, {"Domain name", type text}, {"Manufacturer", type text}, {"Model", type text}, {"Hypervisor", type text}, {"Operating system", type text}, {"Status", type text}, {"Last scanned", type date}, {"Processors", Int64.Type}, {"Processor cores", Int64.Type}, {"Logical processors", Int64.Type}, {"Memory (MB)", Int64.Type}, {"Last logged on user", type text}, {"Most frequent user", type text}}),
+				    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Changed Type", {{"Computer name", each Text.BeforeDelimiter(_, "."), type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Extracted Text Before Delimiter",{{"Computer name", "Name"}, {"IP-address", "IP Address"}, {"Domain name", "Domain"}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Renamed Columns",{{"Name", Order.Ascending}, {"Last scanned", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed Duplicates",{{"Name", Text.Upper, type text}, {"Domain", Text.Upper, type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Uppercased Text","",null,Replacer.ReplaceValue,{"IP Address"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value",{{"Domain", "TempDomain"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns1", {"TempDomain"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "Mapping DomainFQDN to DomainNetBIOS", JoinKind.LeftOuter),
+				    #"Expanded Mapping DomainFQDN to DomainNetBIOS" = Table.ExpandTableColumn(#"Merged Queries", "Mapping DomainFQDN to DomainNetBIOS", {"NetBIOS"}, {"Domain"}),
+				    #"Removed TempDomain" = Table.RemoveColumns(#"Expanded Mapping DomainFQDN to DomainNetBIOS",{"TempDomain"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed TempDomain",{"Name", "Domain", "Manufacturer", "Model", "Hypervisor", "Operating system", "IP Address", "Status", "Last scanned", "Processors", "Processor cores", "Logical processors", "Memory (MB)", "Last logged on user", "Most frequent user"})
+				in
+				    #"Reordered Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

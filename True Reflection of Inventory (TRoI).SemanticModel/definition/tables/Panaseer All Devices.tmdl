@@ -1,0 +1,242 @@
+table 'Panaseer All Devices'
+	lineageTag: b43a1971-bf11-4922-b828-356d96d6b202
+
+	column Name = ```
+			
+			VAR DeviceName = [Device Name]
+			VAR FirstChar = LEFT(DeviceName, 1)
+			VAR StartsWithNumber = FirstChar >= "0" && FirstChar <= "9"
+			VAR LookupIP = 
+			    CONCATENATEX(
+			        DISTINCT(
+			            FILTER(
+			                'Merged IP Addresses',
+			                'Merged IP Addresses'[IP Address] = DeviceName
+			            )
+			        ),
+			        'Merged IP Addresses'[Name],
+			        ", ",
+			        'Merged IP Addresses'[Name],
+			        ASC
+			    )
+			VAR PeriodPosition = FIND(".", DeviceName, 1, LEN(DeviceName) + 1)
+			VAR ExtractedText = IF(PeriodPosition <= LEN(DeviceName), LEFT(DeviceName, PeriodPosition - 1), DeviceName)
+			RETURN
+			IF(
+			    StartsWithNumber,
+			    IF(
+			        ISBLANK(LookupIP),
+			        DeviceName,
+			        LookupIP
+			    ),
+			    ExtractedText
+			)
+			```
+		lineageTag: e56fa7da-8085-4f24-941a-2b64d7685ebf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In All Devices' =
+			
+			IF(
+			    NOT(ISBLANK(LOOKUPVALUE('_All Devices'[Name], '_All Devices'[Name], [Name]))),
+			    TRUE,
+			    FALSE
+			)
+		lineageTag: 138f84e9-58cc-4a9a-88f3-d3f6bdaf28f7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Name'
+		dataType: string
+		lineageTag: bf144089-651b-4db1-b23d-d8443615f2b3
+		summarizeBy: none
+		sourceColumn: Device Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Host List'
+		dataType: string
+		lineageTag: 6ab312c1-a116-4926-a48b-2ad7faa9f97e
+		summarizeBy: none
+		sourceColumn: Host List
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NetBIOS List'
+		dataType: string
+		lineageTag: 9fccc8ca-dd5c-4ca5-9e0b-9d6922198dff
+		summarizeBy: none
+		sourceColumn: NetBIOS List
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DNS List'
+		dataType: string
+		lineageTag: 5d517cfd-d314-4a41-adf6-7416e61fdd3a
+		summarizeBy: none
+		sourceColumn: DNS List
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address List'
+		dataType: string
+		lineageTag: 1069b8a5-25d8-4143-9fca-560041fec36a
+		summarizeBy: none
+		sourceColumn: IP Address List
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network Location'
+		dataType: string
+		lineageTag: 77e4670f-edc5-45b3-8da5-5d7e0e724830
+		summarizeBy: none
+		sourceColumn: Network Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type'
+		dataType: string
+		lineageTag: 71bc7572-d6ff-4372-8fac-87d5f223af4c
+		summarizeBy: none
+		sourceColumn: Device Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type Original'
+		dataType: string
+		lineageTag: 98ab0ffb-c6c5-495e-95c6-7cbd4133d70c
+		summarizeBy: none
+		sourceColumn: Device Type Original
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Subtype'
+		dataType: string
+		lineageTag: 108bb78b-e1cc-4715-bda2-4cfc74c3566c
+		summarizeBy: none
+		sourceColumn: Device Subtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 7a47e413-3c1c-4902-afb7-54aaa5a5d66f
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column OS
+		dataType: string
+		lineageTag: b494b714-35b6-4dca-a270-5f41d5473ba5
+		summarizeBy: none
+		sourceColumn: OS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS Type'
+		dataType: string
+		lineageTag: 95e24f8c-b29a-45d5-afe5-7abfab474e70
+		summarizeBy: none
+		sourceColumn: OS Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Connection Timestamp'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d0ca789d-59c6-4355-b0bc-b04beded5599
+		summarizeBy: none
+		sourceColumn: Last Connection Timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Asset Status (comb. Hardware & Install status)'
+		dataType: string
+		lineageTag: 4ab453eb-d5e7-46cc-a11f-b555e34ef840
+		summarizeBy: none
+		sourceColumn: Asset Status (comb. Hardware & Install status)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Install Status (SNOW)'
+		dataType: string
+		lineageTag: 0fa238e7-70ed-4d77-ab45-297d60183e66
+		summarizeBy: none
+		sourceColumn: Install Status (SNOW)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Since Last Connect'
+		dataType: int64
+		formatString: 0
+		lineageTag: f07f7d8e-1e36-4ff1-88ad-f78ab731a75e
+		summarizeBy: sum
+		sourceColumn: Days Since Last Connect
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: e1c5fbbc-7216-456d-ad43-228e21048ee3
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Environment Type'
+		dataType: string
+		lineageTag: 479ca45b-47bd-43c8-8387-c6e8ccf6bea7
+		summarizeBy: none
+		sourceColumn: Environment Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Found In Sources'
+		dataType: string
+		lineageTag: bb5b1c2a-6653-45ab-b4e1-b466c1ee7485
+		summarizeBy: none
+		sourceColumn: Found In Sources
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Missing from Sources'
+		dataType: string
+		lineageTag: a3420960-74e7-4e7e-a8f9-2444410c1d4d
+		summarizeBy: none
+		sourceColumn: Missing from Sources
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Serial Number List'
+		dataType: string
+		lineageTag: d983ff5e-7228-4653-b446-0a0db9200d6d
+		summarizeBy: none
+		sourceColumn: Serial Number List
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Panaseer All Devices' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Panaseer%20Export%20-%20prod_inv_msr_n-device.csv"),[Delimiter=",", Columns=111, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Name", "IP Address List", "Device Type", "Office", "OS", "OS Type", "Last Connection Timestamp", "Asset Status (comb. Hardware & Install status)", "DNS List", "Days Since Last Connect", "Device Subtype", "Domain", "Environment Type", "Found In Sources", "Host List", "Install Status (SNOW)", "Missing from Sources", "NetBIOS List", "Network Location", "Serial Number List"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Name", type text}, {"IP Address List", type text}, {"Device Type", type text}, {"Office", type text}, {"OS", type text}, {"OS Type", type text}, {"Last Connection Timestamp", type datetime}, {"Asset Status (comb. Hardware & Install status)", type text}, {"DNS List", type text}, {"Days Since Last Connect", Int64.Type}, {"Device Subtype", type text}, {"Domain", type text}, {"Environment Type", type text}, {"Found In Sources", type text}, {"Host List", type text}, {"Install Status (SNOW)", type text}, {"Missing from Sources", type text}, {"NetBIOS List", type text}, {"Network Location", type text}, {"Serial Number List", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Name", "Device Name"}, {"Office", "Location"}, {"Device Type", "Device Type Original"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns", each [Location], each
+				        if Text.Contains([Location], "Hemel Hampstead") or Text.Contains([Location], "Data Centre, HH3 - NTT") then "Hemel Hempstead"
+				        else [Location] ,Replacer.ReplaceText,{"Location"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value", "Device Type", each if [OS] = "HP iLO" then "HP iLO" else [Device Subtype])
+				in
+				    #"Added Conditional Column"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

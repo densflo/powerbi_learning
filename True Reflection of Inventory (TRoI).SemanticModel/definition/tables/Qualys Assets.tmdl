@@ -1,0 +1,305 @@
+table 'Qualys Assets'
+	lineageTag: 136ce320-b029-4ada-9730-1c4e0afc0e17
+
+	column 'Asset ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: bfca7ddf-afba-4d30-b524-f118ec9c9fe5
+		summarizeBy: count
+		sourceColumn: Asset ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Host ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a86f86a-2087-4384-b980-9a8520cc62fe
+		summarizeBy: count
+		sourceColumn: Host ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 155c8cee-2199-4100-a579-f299afa51ae8
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Asset Name'
+		dataType: string
+		lineageTag: a6c845cd-7e33-48d0-abd5-8055cdc71cfe
+		summarizeBy: none
+		sourceColumn: Asset Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NetBIOS Name'
+		dataType: string
+		lineageTag: 18526365-5ca0-4463-8fd1-8d8db3eb19d2
+		summarizeBy: none
+		sourceColumn: NetBIOS Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MAC Address'
+		dataType: string
+		lineageTag: 1a3a2968-a309-4d32-aba9-6be26bd352ee
+		summarizeBy: none
+		sourceColumn: MAC Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 31b769b6-25a2-4b77-9521-e6dfa8100661
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System Category'
+		dataType: string
+		lineageTag: 7084edb5-b59a-4b2a-bed8-88cb615434e2
+		summarizeBy: none
+		sourceColumn: Operating System Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System'
+		dataType: string
+		lineageTag: 1835cd92-0dd9-400f-94b6-ac1dda1b45b0
+		summarizeBy: none
+		sourceColumn: Operating System
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System Version'
+		dataType: string
+		lineageTag: 55eb961a-9a41-412e-90d1-040da363821a
+		summarizeBy: none
+		sourceColumn: Operating System Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating System Lifecycle Stage'
+		dataType: string
+		lineageTag: 726058f0-d88c-4987-a096-7ab66473e27b
+		summarizeBy: none
+		sourceColumn: Operating System Lifecycle Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hardware Category'
+		dataType: string
+		lineageTag: fd649116-5045-4427-9daa-9911809eae6f
+		summarizeBy: none
+		sourceColumn: Hardware Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hardware
+		dataType: string
+		lineageTag: fa2d44cc-cfd5-4e86-9d3f-6d16b42bd482
+		summarizeBy: none
+		sourceColumn: Hardware
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hardware Lifecycle Stage'
+		dataType: string
+		lineageTag: a3f5ce13-74a3-4e9e-826c-e5a7b124753d
+		summarizeBy: none
+		sourceColumn: Hardware Lifecycle Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU Count'
+		dataType: int64
+		formatString: 0
+		lineageTag: 694c83b5-7007-45d8-906e-d13206bbbbb3
+		summarizeBy: sum
+		sourceColumn: CPU Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU Speed (MHz)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c255de8-6e53-4cab-9c49-a4580945e063
+		summarizeBy: sum
+		sourceColumn: CPU Speed (MHz)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPU Description'
+		dataType: string
+		lineageTag: 63a99a50-ad48-45b4-bd90-61afac68ed3e
+		summarizeBy: none
+		sourceColumn: CPU Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Memory (MB)'
+		dataType: int64
+		formatString: 0
+		lineageTag: c891a60f-f8ff-4333-af48-7d7bf4209550
+		summarizeBy: sum
+		sourceColumn: Total Memory (MB)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Description'
+		dataType: string
+		lineageTag: b80a1b10-f639-4c53-9805-514b66ce3454
+		summarizeBy: none
+		sourceColumn: BIOS Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Serial Number'
+		dataType: string
+		lineageTag: 35beb80a-d43f-4893-91c1-7d9a61ed9215
+		summarizeBy: none
+		sourceColumn: BIOS Serial Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BIOS Asset Tag'
+		dataType: string
+		lineageTag: 1f5630e4-e8ca-41b7-b59f-4d01ac43f7e1
+		summarizeBy: none
+		sourceColumn: BIOS Asset Tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Timezone
+		dataType: string
+		lineageTag: 91216015-46a7-48f6-9369-aac8f3f7d541
+		summarizeBy: none
+		sourceColumn: Timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last System Boot'
+		dataType: string
+		lineageTag: faef65f4-b30b-4275-8d6d-bf54e1d4331b
+		summarizeBy: none
+		sourceColumn: Last System Boot
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Logged On User'
+		dataType: string
+		lineageTag: 3d4f6cb2-6f7f-4028-a56a-881f298aebe5
+		summarizeBy: none
+		sourceColumn: Last Logged On User
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inventory Source'
+		dataType: string
+		lineageTag: ec570351-9f0c-4103-b576-a9593e3ffe6c
+		summarizeBy: none
+		sourceColumn: Inventory Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agent ID'
+		dataType: string
+		lineageTag: dd8b795c-f2be-4cf3-a787-56fd3414b5e8
+		summarizeBy: none
+		sourceColumn: Agent ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inventory Created On'
+		dataType: string
+		lineageTag: 59c80909-0957-4675-9532-59705bba8d00
+		summarizeBy: none
+		sourceColumn: Inventory Created On
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inventory Last Updated On'
+		dataType: string
+		lineageTag: 4f9ba650-b1d1-4550-8716-d484533e106b
+		summarizeBy: none
+		sourceColumn: Inventory Last Updated On
+
+		annotation SummarizationSetBy = Automatic
+
+	column Architecture
+		dataType: string
+		lineageTag: dfea57b5-63ac-4d20-b7ef-9c5901b9549f
+		summarizeBy: none
+		sourceColumn: Architecture
+
+		annotation SummarizationSetBy = Automatic
+
+	column CriticalityScore
+		dataType: int64
+		formatString: 0
+		lineageTag: f63798b0-c266-46cd-913b-c6b30ce01abc
+		summarizeBy: sum
+		sourceColumn: CriticalityScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column Modules
+		dataType: string
+		lineageTag: 18c97116-c265-49d3-84ae-d278de9a4078
+		summarizeBy: none
+		sourceColumn: Modules
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TruRisk Score'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b5e71f6-dd41-492e-bd1e-2b9420f5ae02
+		summarizeBy: sum
+		sourceColumn: TruRisk Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: eb05663f-2480-4ab0-8423-79c8dfa9d782
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Qualys Assets' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AI_Asset_List_amncr-vs1.csv"),[Delimiter=",", Columns=33, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Asset ID", Int64.Type}, {"Host ID", Int64.Type}, {"Asset Name", type text}, {"NetBIOS Name", type text}, {"MAC Address", type text}, {"IPV4 Address", type text}, {"IPV6 Address", type text}, {"Operating System Category", type text}, {"Operating System", type text}, {"Operating System Version", type text}, {"Operating System Lifecycle Stage", type text}, {"Hardware Category", type text}, {"Hardware", type text}, {"Hardware Lifecycle Stage", type text}, {"CPU Count", Int64.Type}, {"CPU Speed (MHz)", Int64.Type}, {"CPU Description", type text}, {"Total Memory (MB)", Int64.Type}, {"BIOS Description", type text}, {"BIOS Serial Number", type text}, {"BIOS Asset Tag", type text}, {"Timezone", type text}, {"Last System Boot", type text}, {"Last Logged On User", type text}, {"Inventory Source", type text}, {"Agent ID", type text}, {"Inventory Created On", type text}, {"Inventory Last Updated On", type text}, {"Architecture", type text}, {"CriticalityScore", Int64.Type}, {"Modules", type text}, {"TruRisk Score", Int64.Type}}),
+				    #"Added Asset Name Domain Suffix" = Table.AddColumn(#"Changed Type", "Asset Name Domain Suffix", each Text.AfterDelimiter([Asset Name], "."), type text),
+				    #"Uppercased Text1" = Table.TransformColumns(#"Added Asset Name Domain Suffix",{{"Asset Name Domain Suffix", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text1", {"Asset Name Domain Suffix"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "Mapping DomainFQDN to DomainNetBIOS", JoinKind.LeftOuter),
+				    #"Expanded Mapping DomainFQDN to DomainNetBIOS" = Table.ExpandTableColumn(#"Merged Queries", "Mapping DomainFQDN to DomainNetBIOS", {"NetBIOS"}, {"Domain"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Mapping DomainFQDN to DomainNetBIOS",{"Asset Name Domain Suffix", "", "IPV6 Address"}),
+				    #"Added Name Column" = Table.AddColumn(#"Removed Columns", "Name", each
+				    if [Domain] <> null then Text.BeforeDelimiter(Text.From([Asset Name], "en-GB"), ".")
+				    else [Asset Name]),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added Name Column",{"Asset ID", "Host ID", "Name", "Domain", "Asset Name", "NetBIOS Name", "MAC Address", "IPV4 Address", "Operating System Category", "Operating System", "Operating System Version", "Operating System Lifecycle Stage", "Hardware Category", "Hardware", "Hardware Lifecycle Stage", "CPU Count", "CPU Speed (MHz)", "CPU Description", "Total Memory (MB)", "BIOS Description", "BIOS Serial Number", "BIOS Asset Tag", "Timezone", "Last System Boot", "Last Logged On User", "Inventory Source", "Agent ID", "Inventory Created On", "Inventory Last Updated On", "Architecture", "CriticalityScore", "Modules", "TruRisk Score"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns",{{"Name", type text}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Changed Type1",{{"Name", Order.Ascending}, {"Agent ID", Order.Descending}, {"Last System Boot", Order.Descending}, {"MAC Address", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each not Text.Contains([Name], ".")),
+				    #"Uppercased Text" = Table.TransformColumns(#"Filtered Rows",{{"Name", Text.Upper, type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"IPV4 Address", "IP Address"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([IP Address] <> ""))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

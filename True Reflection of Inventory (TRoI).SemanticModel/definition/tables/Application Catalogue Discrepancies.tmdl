@@ -1,0 +1,86 @@
+table 'Application Catalogue Discrepancies'
+	lineageTag: 204b2d9f-4bb4-4fef-a2f1-df440762926f
+
+	column 'Discovery Data Model'
+		dataType: string
+		lineageTag: 0674e39f-9439-4bda-ab43-21f4e521b445
+		summarizeBy: none
+		sourceColumn: Discovery Data Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wave Planning - Current'
+		dataType: string
+		lineageTag: e6d415e8-ea7e-43b7-a6d2-ddb02a42477a
+		summarizeBy: none
+		sourceColumn: Wave Planning - Current
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Reference'
+		dataType: double
+		formatString: 0
+		lineageTag: 67f76bbc-b21e-4310-ba74-cf1c7a374fc5
+		summarizeBy: sum
+		sourceColumn: Application Reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wave
+		dataType: string
+		lineageTag: 9280a88a-1e1e-400e-bbd9-b8a1da4caba4
+		summarizeBy: none
+		sourceColumn: Wave
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wave Outlook'
+		dataType: string
+		lineageTag: 92437fd8-db0e-49fb-8bf0-e2706c8aeb39
+		summarizeBy: none
+		sourceColumn: Wave Outlook
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: 47e14f9a-e4bf-4091-bab7-f94786f8dc77
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KS Comments'
+		dataType: string
+		lineageTag: e12ca855-0d0a-423d-abfb-dafb027bbf5e
+		summarizeBy: none
+		sourceColumn: KS Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposed Handling'
+		dataType: string
+		lineageTag: 6c92c9e4-2f04-44e8-8cbf-90f10f3f89b1
+		summarizeBy: none
+		sourceColumn: Proposed Handling
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Application Catalogue Discrepancies' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Application%20Catalogue%20Discrepancies.xlsx"), null, true),
+				    Comparison_Table = Source{[Item="Comparison",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Comparison_Table,{{"Discovery Data Model", type text}, {"Wave Planning - Current", type text}, {"Application Reference", Int64.Type}, {"Wave", type any}, {"Wave Outlook", type text}, {"Notes", type text}, {"KS Comments", type text}, {"Proposed Handling", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",null,"NOT IN MODEL",Replacer.ReplaceValue,{"Discovery Data Model"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",null,"NOT IN APPLICATION CATALOGUE",Replacer.ReplaceValue,{"Wave Planning - Current"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1",null,0,Replacer.ReplaceValue,{"Application Reference"})
+				in
+				    #"Replaced Value2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

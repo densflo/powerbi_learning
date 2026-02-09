@@ -1,0 +1,84 @@
+table 'Azure Arc SQL Instances'
+	lineageTag: 70ed2fa0-066c-40d3-847d-526b459eb9dc
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: fba98aac-2489-4a82-8bff-97bbbd4d96f7
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Server Name'
+		dataType: string
+		lineageTag: 9e8d27a7-0f89-4b99-9ce1-23389b8f0a10
+		summarizeBy: none
+		sourceColumn: Server Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instance Name'
+		dataType: string
+		lineageTag: ed3b68c4-79b7-4b98-b6f7-3f069c54d137
+		summarizeBy: none
+		sourceColumn: Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'License Type'
+		dataType: string
+		lineageTag: 93d12e50-9eed-481b-a429-b3d5fddf040b
+		summarizeBy: none
+		sourceColumn: License Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column ESU
+		dataType: string
+		lineageTag: 44b2e163-e55c-4f99-ae10-616e73ecb221
+		summarizeBy: none
+		sourceColumn: ESU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: c22b8220-c750-4aeb-b9d0-1fc78731a0ff
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Version'
+		dataType: string
+		lineageTag: 0566fdbc-4491-4a31-826a-4496dbaf45f5
+		summarizeBy: none
+		sourceColumn: SQL Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SQL Edition'
+		dataType: string
+		lineageTag: 606fe8a5-a494-4a09-bdd3-571796bf725c
+		summarizeBy: none
+		sourceColumn: SQL Edition
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure Arc SQL Instances' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-Azure%20Arc%20SQL%20Instances.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Server Name", type text}, {"Full Instance Name", type text}, {"Instance Name", type text}, {"SQL Version", type text}, {"SQL Edition", type text}, {"License Type", type text}, {"ESU", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"Server Name", Text.Upper, type text}, {"Full Instance Name", Text.Upper, type text}, {"Instance Name", Text.Upper, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Source", each "Azure Arc")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

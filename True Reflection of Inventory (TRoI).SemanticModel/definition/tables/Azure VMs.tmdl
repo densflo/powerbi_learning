@@ -1,0 +1,181 @@
+table 'Azure VMs'
+	lineageTag: 4ac3a8e2-a5b8-4995-ad2c-ef5e99d16094
+
+	column Name
+		dataType: string
+		lineageTag: 3e711154-f5b6-4cbe-b67c-1d0c92a3fa98
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IPAddress
+		dataType: string
+		lineageTag: 32970949-b45c-4be0-bac0-714b7acd78dd
+		summarizeBy: none
+		sourceColumn: IPAddress
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column licenseType
+		dataType: string
+		lineageTag: 5ff84e4a-d710-40b6-8a0c-8892684204ff
+		summarizeBy: none
+		sourceColumn: licenseType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sqlServerLicenseType
+		dataType: string
+		lineageTag: 8fe2677e-9deb-4b9b-94ce-40c6df19d2da
+		summarizeBy: none
+		sourceColumn: sqlServerLicenseType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AutoShutdownSchedule
+		dataType: string
+		lineageTag: da5da224-9f85-4454-adb3-a1b0a5bba6d7
+		summarizeBy: none
+		sourceColumn: AutoShutdownSchedule
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AutoShutdownDisabled
+		dataType: int64
+		formatString: 0
+		lineageTag: 5124ea39-605f-4f76-8ec5-5316f29bdd08
+		summarizeBy: sum
+		sourceColumn: AutoShutdownDisabled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		lineageTag: 0659b93c-3c27-40b0-a447-ecd5d569f8bd
+		summarizeBy: none
+		sourceColumn: Size
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subscription
+		dataType: string
+		lineageTag: 5267fd9b-d2e9-4835-9473-d97ecb8b80db
+		summarizeBy: none
+		sourceColumn: Subscription
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResourceGroup
+		dataType: string
+		lineageTag: 8894040a-3905-4190-937f-4190ba33858f
+		summarizeBy: none
+		sourceColumn: ResourceGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 63b9e3ba-61d2-4ffa-a657-d9f0bb25397e
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column PowerState
+		dataType: string
+		lineageTag: 3b11df95-16bb-4c46-aef1-c9a0ffee1dd0
+		summarizeBy: none
+		sourceColumn: PowerState
+
+		annotation SummarizationSetBy = Automatic
+
+	column OperatingSystem
+		dataType: string
+		lineageTag: 97add2d7-1383-4133-9bea-72aad88a0981
+		summarizeBy: none
+		sourceColumn: OperatingSystem
+
+		annotation SummarizationSetBy = Automatic
+
+	column OSType
+		dataType: string
+		lineageTag: 32cdd92f-059e-473f-b4fb-a74632a7bde2
+		summarizeBy: none
+		sourceColumn: OSType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cores = ```
+			
+			 LOOKUPVALUE('Azure VM Sizes'[Cores],'Azure VM Sizes'[Name],[Size])
+			```
+		formatString: 0
+		lineageTag: f3dca269-8edb-41a8-9044-5fedd467b961
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Memory (MB)' =
+			
+			LOOKUPVALUE('Azure VM Sizes'[Memory (MB)], 'Azure VM Sizes'[Name], [Size])
+		formatString: 0
+		lineageTag: 25314e8c-5e42-45cc-b0b1-8cdc44f8e714
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Memory = ```
+			
+			VAR MemoryMB = 
+			    LOOKUPVALUE('Azure VM Sizes'[Memory (MB)], 'Azure VM Sizes'[Name], [Size])
+			VAR MemoryGB = MemoryMB / 1024
+			VAR MemoryTB = MemoryMB / (1024 * 1024)
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    MemoryTB >= 1, FORMAT(MemoryTB, "#,##0") & " TB",
+			    MemoryGB >= 1, FORMAT(MemoryGB, "#,##0") & " GB",
+			    FORMAT(MemoryMB, "#,##0") & " MB"
+			)
+			```
+		lineageTag: 453e7967-a916-4739-aa16-0fcfada7c47d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure VMs' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-All%20Azure%20Virtual%20Machines.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"Subscription", type text}, {"ResourceGroup", type text}, {"Location", type text}, {"PowerState", type text}, {"OperatingSystem", type text}, {"OSType", type text}, {"licenseType", type text}, {"sqlServerLicenseType", type text}, {"AutoShutdownSchedule", type text}, {"AutoShutdownDisabled", Int8.Type}, {"Size", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","null",null,Replacer.ReplaceValue,Table.ColumnNames(#"Changed Type")),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value",{{"Name", Text.Upper, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Uppercased Text", each ([Name] <> "AZ-UK-S-ASA-01-A" and [Name] <> "AZ-UK-S-ASA-01-B")),
+				    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows", {"Name"})
+				in
+				    #"Removed Duplicates"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

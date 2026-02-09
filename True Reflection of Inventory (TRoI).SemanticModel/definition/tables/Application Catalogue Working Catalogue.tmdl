@@ -1,0 +1,440 @@
+table 'Application Catalogue Working Catalogue'
+	lineageTag: 0e4d4cc1-baa5-4d97-942e-f2aa4ee29d6e
+
+	column 'Application Reference'
+		dataType: string
+		lineageTag: a8e29fe1-9487-475a-b3f4-d0b0ba1c05d0
+		summarizeBy: none
+		sourceColumn: Application Reference
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application component'
+		dataType: string
+		lineageTag: 80b06934-ac68-4e1d-b5bc-4b7ed7e2adc0
+		summarizeBy: none
+		sourceColumn: Application component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Thunderbird
+		dataType: string
+		lineageTag: e1c9bb15-c7e6-4b89-9600-2ae57f43e568
+		summarizeBy: none
+		sourceColumn: Thunderbird
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBS
+		dataType: string
+		lineageTag: 9b777edb-cc68-4c44-ba6a-42c04e212e6d
+		summarizeBy: none
+		sourceColumn: IBS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decomm Scope'
+		dataType: string
+		lineageTag: 14cba05e-95da-42c6-a3d8-d20fdd360841
+		summarizeBy: none
+		sourceColumn: Decomm Scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decomm date'
+		dataType: string
+		lineageTag: 95d0f736-f4b8-486f-b049-6cb8e2783e51
+		summarizeBy: none
+		sourceColumn: Decomm date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Project For Decomm'
+		dataType: string
+		lineageTag: 7bc97719-1fd6-4dcc-9c0d-6bd4782aebbc
+		summarizeBy: none
+		sourceColumn: Project For Decomm
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In Infra list'
+		dataType: string
+		lineageTag: e271d27b-40de-4c44-923c-207d18ae37e1
+		summarizeBy: none
+		sourceColumn: In Infra list
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Extended DC Migration Path'
+		dataType: string
+		lineageTag: f0b5ccb8-3fe2-4b55-be0b-9c549b84ced2
+		summarizeBy: none
+		sourceColumn: Extended DC Migration Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: 5a98a2b9-0498-4ac3-9a5f-9566d3a05758
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AUL Decomm Date'
+		dataType: string
+		lineageTag: 2b02a838-f405-4923-98b4-05efcc5790c1
+		summarizeBy: none
+		sourceColumn: AUL Decomm Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AISE Decomm Date'
+		dataType: string
+		lineageTag: e6ad3916-2868-455a-9a6d-cbdc084927b0
+		summarizeBy: none
+		sourceColumn: AISE Decomm Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MS Re Decomm Date'
+		dataType: string
+		lineageTag: a0eebc54-56e7-4c80-a0b7-700a8e86d711
+		summarizeBy: none
+		sourceColumn: MS Re Decomm Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABS Decomm Date'
+		dataType: string
+		lineageTag: 087cf451-4a82-4902-ae77-676ee36d1776
+		summarizeBy: none
+		sourceColumn: ABS Decomm Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IT Owner'
+		dataType: string
+		lineageTag: 7d6094db-2150-4fee-9e03-3b1310d32332
+		summarizeBy: none
+		sourceColumn: IT Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Owner'
+		dataType: string
+		lineageTag: 61aac4b2-1ef5-4c0e-9e6b-d2046f6bc46c
+		summarizeBy: none
+		sourceColumn: Product Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IT SME'
+		dataType: string
+		lineageTag: 9d2eff38-5bbd-477d-93fe-072d874c03ac
+		summarizeBy: none
+		sourceColumn: IT SME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product SME'
+		dataType: string
+		lineageTag: 35bc94bd-ecc2-45c8-be06-2e677364c023
+		summarizeBy: none
+		sourceColumn: Product SME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABS Product Owner'
+		dataType: string
+		lineageTag: c7c6f947-6c7f-4025-b889-e0ecb49ac4a7
+		summarizeBy: none
+		sourceColumn: ABS Product Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Owner'
+		dataType: string
+		lineageTag: 14307477-bf68-477e-9304-1646498457b9
+		summarizeBy: none
+		sourceColumn: Business Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Summary Status'
+		dataType: string
+		lineageTag: 295d311a-e5b3-4bc8-9afb-dcbdb5bcce7a
+		summarizeBy: none
+		sourceColumn: Summary Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary Function'
+		dataType: string
+		lineageTag: f1fa11de-ffd8-4f6f-891d-f3e7098fb2c1
+		summarizeBy: none
+		sourceColumn: Primary Function
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IT Sub Grouping'
+		dataType: string
+		lineageTag: 6582ab0d-b99a-4e36-8ade-4b5a5e4e00c0
+		summarizeBy: none
+		sourceColumn: IT Sub Grouping
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Capability'
+		dataType: string
+		lineageTag: 31a64def-787c-48d2-b3e4-b0add8c511b6
+		summarizeBy: none
+		sourceColumn: Business Capability
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: ae25b454-9379-42a8-b89a-de1f745c0550
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Style Of System'
+		dataType: string
+		lineageTag: 76bd21da-1705-4d28-afdc-7c5bf79d66ee
+		summarizeBy: none
+		sourceColumn: Style Of System
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AUL Usage'
+		dataType: string
+		lineageTag: dc44cf9d-33f5-4dae-b1fb-4e499c50bde5
+		summarizeBy: none
+		sourceColumn: AUL Usage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AUL Date'
+		dataType: string
+		lineageTag: cbcb2401-e31c-433d-8496-1d7b297944e1
+		summarizeBy: none
+		sourceColumn: AUL Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AISE Usage'
+		dataType: string
+		lineageTag: 6e2be61d-7cf4-4f5c-bc6f-af180ee6e5e8
+		summarizeBy: none
+		sourceColumn: AISE Usage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AISE Date'
+		dataType: string
+		lineageTag: d0194430-c123-4349-9cf6-b51a655758a2
+		summarizeBy: none
+		sourceColumn: AISE Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MS Re Usage'
+		dataType: string
+		lineageTag: 158984ed-46aa-418b-981b-9b03c0c28d60
+		summarizeBy: none
+		sourceColumn: MS Re Usage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MS Re Date'
+		dataType: string
+		lineageTag: 4b76b898-a3a3-477c-b7bd-d582992d9c33
+		summarizeBy: none
+		sourceColumn: MS Re Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABS Usage'
+		dataType: string
+		lineageTag: 9cd99249-df95-4027-aa40-8f0a82b195c6
+		summarizeBy: none
+		sourceColumn: ABS Usage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABS Date'
+		dataType: string
+		lineageTag: 361fa3e6-a74b-4f32-a734-79077fbdde63
+		summarizeBy: none
+		sourceColumn: ABS Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column MSAIML
+		dataType: string
+		lineageTag: 11e6d55f-a3c6-4a08-b6c3-10bd14345dab
+		summarizeBy: none
+		sourceColumn: MSAIML
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AIML Date'
+		dataType: string
+		lineageTag: 8b5ddb11-0e43-4689-8183-a8dcb745c75b
+		summarizeBy: none
+		sourceColumn: AIML Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MSIG UK'
+		dataType: string
+		lineageTag: ee007e97-c477-4ebb-aaa8-c2d0a19bdc14
+		summarizeBy: none
+		sourceColumn: MSIG UK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MSIG UK Date'
+		dataType: string
+		lineageTag: c90f4a8e-cda3-45bc-9f70-ca3f74edfe07
+		summarizeBy: none
+		sourceColumn: MSIG UK Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expected DC Handling'
+		dataType: string
+		lineageTag: a2a56387-33ca-4c1a-b3ce-bf74267a8863
+		summarizeBy: none
+		sourceColumn: Expected DC Handling
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposed DC Handling'
+		dataType: string
+		lineageTag: 6c443033-f464-46ef-bbb5-7120db922a92
+		summarizeBy: none
+		sourceColumn: Proposed DC Handling
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Completion Status'
+		dataType: string
+		lineageTag: 8a5eb6f4-7510-443e-96a6-4dba24151efd
+		summarizeBy: none
+		sourceColumn: Completion Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DC Exit Balancing Marker'
+		dataType: string
+		lineageTag: 711bc0ae-6b3f-4437-9ddf-4fa068f9d74b
+		summarizeBy: none
+		sourceColumn: DC Exit Balancing Marker
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Final Date - IN SCOPE apps only'
+		dataType: string
+		lineageTag: 7aca1335-1612-4199-8719-8ba1b8f5842d
+		summarizeBy: none
+		sourceColumn: Final Date - IN SCOPE apps only
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business or Technology'
+		dataType: string
+		lineageTag: e19edda8-0214-4323-a86c-c7e75fc58ff8
+		summarizeBy: none
+		sourceColumn: Business or Technology
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Usage (Exclusive/Shared)'
+		dataType: string
+		lineageTag: 7271e34a-0aa1-419b-b663-87a19d85d870
+		summarizeBy: none
+		sourceColumn: Usage (Exclusive/Shared)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Core/Non Core'
+		dataType: string
+		lineageTag: 7fde0bfc-3f5e-4920-94e0-379a3194f83e
+		summarizeBy: none
+		sourceColumn: Core/Non Core
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBS or Core'
+		dataType: string
+		lineageTag: edb5efe5-8c07-4618-b037-693f977dd18e
+		summarizeBy: none
+		sourceColumn: IBS or Core
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Legal Entity Usage'
+		dataType: string
+		lineageTag: 5cf82fe6-17b4-49e2-86c6-a52737f7ddfb
+		summarizeBy: none
+		sourceColumn: Legal Entity Usage
+
+		annotation SummarizationSetBy = Automatic
+
+	column ANDIM
+		dataType: string
+		lineageTag: c8a85cd1-8a78-4a21-acb6-435580056f8e
+		summarizeBy: none
+		sourceColumn: ANDIM
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ANDIM Date'
+		dataType: string
+		lineageTag: ced6f6d7-56d6-48cd-a85e-bdd30c3b8989
+		summarizeBy: none
+		sourceColumn: ANDIM Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Critical JSOX (2025)'
+		dataType: string
+		lineageTag: 2980c123-e47c-42b3-8494-5314a4138490
+		summarizeBy: none
+		sourceColumn: Critical JSOX (2025)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Critical AUL (2025)'
+		dataType: string
+		lineageTag: 32b34e2a-0a16-44e6-9565-b188a2280c18
+		summarizeBy: none
+		sourceColumn: Critical AUL (2025)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Application Catalogue Working Catalogue' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(ApplicationCataloguePath), null, true),
+				    #"Working Catalogue_Sheet" = Source{[Item="Working Catalogue",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Working Catalogue_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Application Reference", type number}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Expected DC Handling", Text.Trim, type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Trimmed Text","",null,Replacer.ReplaceValue,{"Expected DC Handling"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Replaced Value", {"Application Reference"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

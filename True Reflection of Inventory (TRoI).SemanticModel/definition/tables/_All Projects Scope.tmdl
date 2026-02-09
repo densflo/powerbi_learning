@@ -1,0 +1,289 @@
+table '_All Projects Scope'
+	lineageTag: 07af5727-b980-4628-8c66-7832484b1ae7
+
+	measure Applications =
+			
+			VAR Applications =
+				DISTINCTCOUNTNOBLANK('_All Projects Scope'[Application])
+			RETURN
+			IF(
+			    Applications = BLANK(),
+			    0,
+			    Applications
+			)
+		formatString: 0
+		lineageTag: 080bd0f7-1367-4457-b69f-beb12ba5084a
+
+	measure Servers =
+			
+			VAR Servers =
+				DISTINCTCOUNTNOBLANK('_All Projects Scope'[Name])
+			RETURN
+			IF(
+			    Servers = BLANK(),
+			    0,
+			    Servers
+			)
+		formatString: 0
+		lineageTag: 27671b4d-e0a4-4e8a-89a8-f5cb39279165
+
+	measure 'Apps (Apps Cat)' =
+			
+			VAR AppsAppsCat =
+				DISTINCTCOUNTNOBLANK('_All Projects Scope'[Application (Application Catalogue)])
+			RETURN
+			IF(
+			    AppsAppsCat = BLANK(),
+			    0,
+			    AppsAppsCat
+			)
+		formatString: 0
+		lineageTag: 161240dd-3ebf-4323-8391-65c49c19c60a
+
+	column Name
+		lineageTag: 0160c801-bc65-4624-9750-57e00e4dc27e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM Name'
+		lineageTag: f17cc7cb-66dc-4042-843d-0b1d3fe483f3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [VM Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Device Type'
+		lineageTag: d8fc5fe1-9d25-4907-b2b2-16e5053bfc58
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Device Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Power State'
+		lineageTag: c796703c-03ee-422e-9d86-35e5a426e57f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Power State]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		lineageTag: aeb8867b-1035-41c4-8c2d-11573b533c11
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Location]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CMDB Status'
+		lineageTag: 5cb9ff84-255a-4824-991b-4264ea20ff65
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CMDB Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Application
+		lineageTag: bf3fe46e-583a-494c-b586-188d7f2594eb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Application]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application (Application Catalogue)' =
+			
+			LOOKUPVALUE('Mapping Application to Application Catalogue'[Name (Application Catalogue)],'Mapping Application to Application Catalogue'[Name],[Application])
+		lineageTag: 87f11e18-95b8-4cbc-b95f-873e30b0758f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Reference (Application Catalogue)' = LOOKUPVALUE('Mapping Application to Application Catalogue'[Reference],'Mapping Application to Application Catalogue'[Name],[Application])
+		dataType: string
+		lineageTag: d9e5feb7-22b8-4e84-92ec-2c3616c0a3d3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Name Match' = IF(ISBLANK([Application]), BLANK(), IF(EXACT([Application], [Application (Application Catalogue)]), "True", "False"))
+		lineageTag: c2ff2199-55f1-4d86-a204-7858065c0e62
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wave = LOOKUPVALUE('Application Catalogue Wave Plan'[Wave],'Application Catalogue Wave Plan'[Application Reference],[Application Reference (Application Catalogue)])
+		lineageTag: c4e51fa9-d0ca-4173-8b8d-fc6e9a1173e1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expected DC Migration Path' =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    LOOKUPVALUE(
+			        'Application Catalogue Working Catalogue'[Expected DC Handling],
+			        'Application Catalogue Working Catalogue'[Application Reference],
+			        [Application Reference (Application Catalogue)]
+			    ),
+			    BLANK()
+			)
+		lineageTag: fe7ab268-08b6-45d8-b4e5-ede13480a32e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposed DC Migration Path' =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    LOOKUPVALUE(
+			        'Application Catalogue Working Catalogue'[Proposed DC Handling],
+			        'Application Catalogue Working Catalogue'[Application Reference],
+			        [Application Reference (Application Catalogue)]
+			    ),
+			    BLANK()
+			)
+		lineageTag: eeb755e2-4d0d-42f2-8fa6-af06c0d6a04d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KS Comments' = LOOKUPVALUE('Mapping Application to Application Catalogue'[KS Comments],'Mapping Application to Application Catalogue'[Name],[Application])
+		lineageTag: 48a1eab6-67b0-4ae6-ac51-f03f811458db
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network = ```
+			
+			VAR VMwareNetwork = 
+			    CALCULATE(
+			        FIRSTNONBLANK('VMware VMs'[Network], 'VMware VMs'[Network] <> BLANK()),
+			        FILTER(
+			            'VMware VMs',
+			            'VMware VMs'[Name] = EARLIER('_All Projects Scope'[Name])
+			        )
+			    )
+			RETURN
+			COALESCE(
+			    LOOKUPVALUE('Network Team Network Switch Traffic'[VLAN],'Network Team Network Switch Traffic'[IP Address],[IP Address]),
+			    VMwareNetwork,
+			    BLANK()
+			)
+			```
+		lineageTag: 0467cc00-a26b-4302-96d3-e91af1b0f345
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain =
+			
+			COALESCE(
+			    LOOKUPVALUE('Active Directory Computers'[Domain], 'Active Directory Computers'[Name], [Name]),
+			    LOOKUPVALUE('Snow Computers'[Domain], 'Snow Computers'[Name], [Name]),
+			    LOOKUPVALUE('SolarWinds Nodes'[Domain], 'SolarWinds Nodes'[Name], [Name])
+			)
+		lineageTag: 3bc73521-91ea-4422-ac34-c8f11653ff40
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		lineageTag: 0a0fe38c-15f0-43fe-8fd4-68f1f31bbcc1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IP Address]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Legal Entity Usage (Application Catalogue)' =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    LOOKUPVALUE(
+			        'Application Catalogue Working Catalogue'[Legal Entity Usage],
+			        'Application Catalogue Working Catalogue'[Application Reference],
+			        [Application Reference (Application Catalogue)]
+			    ),
+			    BLANK()
+			)
+		lineageTag: c379ec81-2ccd-453a-9934-ee22e359acbd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decom CHG'
+		lineageTag: 8137dfa8-baf3-4e82-8c03-67885dc1049d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Decom CHG]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type =
+			
+			IF(
+			    NOT(ISBLANK([Application Reference (Application Catalogue)])),
+			    SWITCH(
+			        LOOKUPVALUE(
+			            'Application Catalogue Working Catalogue'[Business or Technology],
+			            'Application Catalogue Working Catalogue'[Application Reference],
+			            [Application Reference (Application Catalogue)]
+			        ),
+			        "Business Application", "Business",
+			        "Technology Component", "Technology",
+			        BLANK()
+			    ),
+			    BLANK()
+			)
+		lineageTag: b813f22b-533f-44f1-b6af-d74b1d967274
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Environment
+		lineageTag: 3ce8c906-f231-4089-9a98-a44faf366126
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Environment]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_All Projects Scope' = calculated
+		mode: import
+		source =
+				
+				DISTINCT(
+				    SELECTCOLUMNS(
+				        GENERATE(
+				            '_All Devices',
+				            FILTER(
+				                'Mapping Server To Application',
+				                'Mapping Server To Application'[Server] = '_All Devices'[Name] &&
+				                'Mapping Server To Application'[Application] <> "Client Endpoint" &&
+				                NOT CONTAINSSTRING('_All Devices'[Location], "AVS") &&
+				                NOT CONTAINSSTRING('_All Devices'[Location], "New ALZ")
+				            )
+				        ),
+				        "Name", '_All Devices'[Name],
+				        "VM Name", '_All Devices'[VM],
+				        "Device Type", '_All Devices'[Device Type],
+				        "Power State", '_All Devices'[Power State],
+				        "Location", '_All Devices'[Location],
+				        "CMDB Status", '_All Devices'[CMDB Status],
+				        "Decom CHG", '_All Devices'[Decom CHG Number],
+				        "Application", 'Mapping Server To Application'[Application],
+				        "IP Address", '_All Devices'[IP Address],
+				        "Environment", '_All Devices'[Environment]
+				    )
+				)
+
+	annotation PBI_Id = 307096ad2cd941f3ad1ff30577d47f26
+

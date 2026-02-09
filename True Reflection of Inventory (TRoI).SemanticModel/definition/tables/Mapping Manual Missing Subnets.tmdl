@@ -1,0 +1,50 @@
+table 'Mapping Manual Missing Subnets'
+	lineageTag: 33090603-92b4-4a02-90a9-eba53da478ef
+
+	column Subnet
+		dataType: string
+		lineageTag: 1c1e3ebc-6b81-48d0-b806-1ed252caa379
+		summarizeBy: none
+		sourceColumn: Subnet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Details
+		dataType: string
+		lineageTag: 5a5149e7-57a2-4f37-999b-bb18b618ceb3
+		summarizeBy: none
+		sourceColumn: Details
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 5001af56-11e9-4641-9b3b-346e1832e68c
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: fab8ea82-92e2-47a3-8b4e-65834d2c9274
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping Manual Missing Subnets' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("nZBBb4JAEIX/ymTPSpeVIlejiSYSJDZtEwwHCmNLgjtmWWrsr+9sTNsLGuxlDjvve+/N7nbCnypPhZ6SU08+qECMxGzzkiYwb2rUtoXU4Dg1VPFiS4c9mUrkows28QdhKzxgAzyPrcXiD3epKnC47MGp6kpbk+7JdWAg/wG6woMSr1V2BoOSb90so36DRd0WrDawxZI+0ZyvffkdfG8P6fkT9mAXP2TNsqG3ouH6FksL7MhvCZ5gFmcwhuc1PFFnP37R8EI+/qi+OoMQF7qq9TtkpPE2Ht2Lv2JrRZ5/Aw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Subnet = _t, Details = _t, Location = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Subnet", type text}, {"Details", type text}, {"Location", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Source", each "Manual")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,31 @@
+table 'Mapping DomainNetBIOS to DomainFQDN'
+	lineageTag: 0174e1c3-52d6-4c61-aeb2-c80400c7996a
+
+	column NetBIOS
+		dataType: string
+		lineageTag: 05981316-4fe8-4fff-a0d5-fe3ab6c7618b
+		summarizeBy: none
+		sourceColumn: NetBIOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FQDN
+		dataType: string
+		lineageTag: 8e4ab6f2-8e1a-4b80-b60c-00ea72e2c37a
+		summarizeBy: none
+		sourceColumn: FQDN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping DomainNetBIOS to DomainFQDN' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("ZY5LDsMgDETvwpr4Dg6BxJKNK6DdRLn/NeqQX6VuYPwGz7CuDtF55zZviupQVJvNl4SgcnjpnWN3ugCcDixMeRhlN055r4TFaFjgL4tyQ/mYmQJB0tKodj5P1aCdMI+Wle4F4ddZvnc8WMiYpcWSkUEq8dOuOdof/XEDa0DuvGBsVbBQjub+TNeb7Qs=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [NetBIOS = _t, FQDN = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"NetBIOS", type text}, {"FQDN", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+

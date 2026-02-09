@@ -1,0 +1,78 @@
+table 'SolarWinds VMs'
+	lineageTag: 0afe9b5f-6762-4cb5-b538-559978423667
+
+	column VM
+		dataType: string
+		lineageTag: 0c035caa-d9da-4d94-8256-85f17ae7314b
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Virtualization Platform'
+		dataType: string
+		lineageTag: 3f806b98-b84a-4b73-9b94-f64641e1be4a
+		summarizeBy: none
+		sourceColumn: Virtualization Platform
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: ba1363c9-eb5f-41ff-8e42-b83fef2b85ff
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: ebf8c5da-24c3-4d0a-b959-34ea8c99b50e
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: fb6e816e-3a8e-462e-97e6-3a03d227995d
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: fa923ae5-075f-4b9f-903f-84f1308e9113
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'SolarWinds VMs' = m
+		mode: import
+		queryGroup: 'Child Queries\Monitoring Tools'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Report_All_Virtual_Machines.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(Sheet1_Sheet,2),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"Domain", type text}, {"Virtualization Platform", type text}, {"Status", type text}, {"IP Address", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Name", "VM"}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Renamed Columns",{{"VM", Text.Trim, type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"VM", Text.Upper, type text}, {"Domain", Text.Upper, type text}}),
+				    #"Merged Domain on Mapping DomainFQDN to DomainNetBIOS" = Table.NestedJoin(#"Uppercased Text", {"Domain"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "Mapping DomainFQDN to DomainNetBIOS", JoinKind.LeftOuter),
+				    #"Expanded Mapping DomainFQDN to DomainNetBIOS" = Table.ExpandTableColumn(#"Merged Domain on Mapping DomainFQDN to DomainNetBIOS", "Mapping DomainFQDN to DomainNetBIOS", {"NetBIOS"}, {"Mapping DomainFQDN to DomainNetBIOS.NetBIOS"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Expanded Mapping DomainFQDN to DomainNetBIOS",{"Domain"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns1",{{"Mapping DomainFQDN to DomainNetBIOS.NetBIOS", "Domain"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns1", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping-VMwareVM-ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping-VMwareVM-ServerName", {"Name"}, {"TempName"}),
+				    #"Added Name Column" = Table.AddColumn(#"Expanded Mapping-VMwareVM-ServerName", "Name", each if [TempName] <> null then [TempName] else [VM]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Name Column",{"TempName"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns",{"Name", "VM", "Domain", "Virtualization Platform", "Status", "IP Address"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_ResultType = Exception
+

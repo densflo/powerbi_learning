@@ -1,0 +1,74 @@
+table 'Merged Subnets Expanded'
+	lineageTag: a2aed6c3-4edc-4067-8117-ee36a8110cb5
+
+	column Subnet
+		dataType: string
+		lineageTag: 603503f2-9d1e-4ddd-9995-879725e218aa
+		summarizeBy: none
+		sourceColumn: Subnet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 59f194cd-b204-4ce9-b90e-c584a944c958
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: d6eea2c9-e738-4999-9823-265567b951ef
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 0512ebe3-5352-4088-a706-83473ee06884
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address (Decimal)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 946f86f3-ddb1-4d57-a892-50578f2a8279
+		summarizeBy: sum
+		sourceColumn: IP Address (Decimal)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subnet (Decimal)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 58753a77-0d7a-413e-b080-69ce43b2c364
+		summarizeBy: sum
+		sourceColumn: Subnet (Decimal)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Merged Subnets Expanded' = m
+		mode: import
+		queryGroup: 'Child Queries\Merged'
+		source =
+				let
+				    Source = #"Merged Subnets",
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "IP Address", each ExpandSubnet([Subnet])),
+				    #"Expanded IP Address" = Table.ExpandListColumn(#"Invoked Custom Function", "IP Address"),
+				    #"Added Index Column" = Table.AddColumn(#"Expanded IP Address", "Index", each if [Source] = "Manual" then 1 else if [Source] = "Diamond IP IPControl" then 2 else if [Source] = "GIPAA" then 3 else null),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Added Index Column",{{"IP Address", Order.Ascending}, {"Index", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"IP Address"}),
+				    #"Removed Index Column" = Table.RemoveColumns(#"Removed Duplicates",{"Index"}),
+				    #"Added IP Address (Decimal) Column" = Table.AddColumn(#"Removed Index Column", "IP Address (Decimal)", each ConvertIPToDecimal([IP Address]), Int64.Type),
+				    #"Sorted by IP Address (Decimal)" = Table.Sort(#"Added IP Address (Decimal) Column",{{"IP Address (Decimal)", Order.Ascending}})
+				in
+				    #"Sorted by IP Address (Decimal)"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,51 @@
+table 'Azure VM Sizes'
+	lineageTag: 8166ecf2-349c-4994-92bd-81ead0115905
+
+	column Name
+		dataType: string
+		lineageTag: efea59b1-06e9-4a55-b8f4-7e635b2bd82b
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cores
+		dataType: int64
+		formatString: 0
+		lineageTag: 720f4ed6-cd00-4926-8f37-f84cd3277622
+		summarizeBy: sum
+		sourceColumn: Cores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Memory (MB)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e9a20e9-7c48-4ab6-9f6a-1564b53e3ca7
+		summarizeBy: sum
+		sourceColumn: Memory (MB)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure VM Sizes' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureVMSizes.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Name", type text}, {"Cores", Int64.Type}, {"Memory (MB)", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+

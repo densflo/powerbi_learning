@@ -1,0 +1,1053 @@
+table 'VMware VMs'
+	lineageTag: c8804037-d21c-4c6e-91f5-0f6deabba039
+
+	column VM
+		dataType: string
+		lineageTag: a4c419db-3844-4157-92a4-6f27cb07e931
+		summarizeBy: none
+		sourceColumn: VM
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: e2a05a40-7876-42f6-b922-304d00a5dcc9
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Template
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 161a66bc-1806-42a2-8590-6c51aeeca123
+		summarizeBy: none
+		sourceColumn: Template
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SRM Placeholder'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3dd5bd3a-8c8f-414f-a821-7a44b2a4242e
+		summarizeBy: none
+		sourceColumn: SRM Placeholder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Config status'
+		dataType: string
+		lineageTag: a714d979-cda5-40a7-a9d0-614a71a283a6
+		summarizeBy: none
+		sourceColumn: Config status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DNS Name'
+		dataType: string
+		lineageTag: c9ce875f-cace-41c3-bfcf-9cbfc9d2400b
+		summarizeBy: none
+		sourceColumn: DNS Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Connection state'
+		dataType: string
+		lineageTag: cebaea7e-0ed8-4d4a-a39a-07ec28a7aef7
+		summarizeBy: none
+		sourceColumn: Connection state
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Guest state'
+		dataType: string
+		lineageTag: ed804d88-f4e3-449d-9b4e-e19f620af636
+		summarizeBy: none
+		sourceColumn: Guest state
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Heartbeat
+		dataType: string
+		lineageTag: ac360b69-294d-47c5-ad21-e0e15c2898fe
+		summarizeBy: none
+		sourceColumn: Heartbeat
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consolidation Needed'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ad2e7824-ce26-4c29-a9d0-28ddd01eb641
+		summarizeBy: none
+		sourceColumn: Consolidation Needed
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PowerOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 00c88491-8606-4928-bf67-c546127adff6
+		summarizeBy: none
+		sourceColumn: PowerOn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Suspended To Memory'
+		dataType: string
+		lineageTag: f6f58ace-6111-4eee-873f-b191c75ccdf5
+		summarizeBy: none
+		sourceColumn: Suspended To Memory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Suspend time'
+		dataType: string
+		lineageTag: 02102605-3780-46bd-b7ac-c312e8417685
+		summarizeBy: none
+		sourceColumn: Suspend time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Suspend Interval'
+		dataType: int64
+		formatString: 0
+		lineageTag: f7a06a09-52ef-499a-99cb-34b362d0c9c6
+		summarizeBy: sum
+		sourceColumn: Suspend Interval
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Creation date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b75a9874-1034-40e1-af8b-bc33d1e0ddbb
+		summarizeBy: none
+		sourceColumn: Creation date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Change Version'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0d51415e-85c0-4d9c-a4ef-f73ccda3c445
+		summarizeBy: none
+		sourceColumn: Change Version
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPUs
+		dataType: int64
+		formatString: 0
+		lineageTag: 514d446f-2feb-4434-90ff-4ba99abe8e10
+		summarizeBy: sum
+		sourceColumn: CPUs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Overall Cpu Readiness'
+		dataType: double
+		lineageTag: 89c602e8-f99f-4bfc-a357-759e6b1d8efe
+		summarizeBy: sum
+		sourceColumn: Overall Cpu Readiness
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Memory (MB)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f183197-2dcf-4ce1-bae4-e54ccb17e16d
+		summarizeBy: sum
+		sourceColumn: Memory (MB)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Active Memory'
+		dataType: int64
+		formatString: 0
+		lineageTag: d42d5681-21f4-40e1-8bf9-e375bc0957dc
+		summarizeBy: sum
+		sourceColumn: Active Memory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NICs
+		dataType: int64
+		formatString: 0
+		lineageTag: e19391f7-c9d0-4a1e-a9ea-d089bb4e1e16
+		summarizeBy: sum
+		sourceColumn: NICs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Disks
+		dataType: int64
+		formatString: 0
+		lineageTag: 11379174-4069-47e4-a24e-32205019bfa4
+		summarizeBy: sum
+		sourceColumn: Disks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total disk capacity MiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4250081a-d081-424a-846f-10217a7779d9
+		summarizeBy: sum
+		sourceColumn: Total disk capacity MiB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fixed Passthru HotPlug'
+		dataType: string
+		lineageTag: ff4e876e-36f1-4ecc-8348-2bea6cd88b11
+		summarizeBy: none
+		sourceColumn: Fixed Passthru HotPlug
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'min Required EVC Mode Key'
+		dataType: string
+		lineageTag: 47e23481-81a4-4de0-b14a-c3f2d68855b5
+		summarizeBy: none
+		sourceColumn: min Required EVC Mode Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Latency Sensitivity'
+		dataType: string
+		lineageTag: 9c74c008-fa05-427c-9828-816cd762b057
+		summarizeBy: none
+		sourceColumn: Latency Sensitivity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Op Notification Timeout'
+		dataType: string
+		lineageTag: 608f8d96-7341-45b3-a522-11de9f27ab87
+		summarizeBy: none
+		sourceColumn: Op Notification Timeout
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnableUUID
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e605c84c-708e-4ab0-9c9e-2b08854397d2
+		summarizeBy: none
+		sourceColumn: EnableUUID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CBT
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 456d99c9-0d23-4407-839e-67bb7ffc18f3
+		summarizeBy: none
+		sourceColumn: CBT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary IP Address'
+		dataType: string
+		lineageTag: 93a97677-da7a-4c02-87dc-1a814cc158e0
+		summarizeBy: none
+		sourceColumn: Primary IP Address
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #1'
+		dataType: string
+		lineageTag: b80bb6a0-6bd2-4b2a-9d41-16146d7ec88e
+		summarizeBy: none
+		sourceColumn: Network #1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #2'
+		dataType: string
+		lineageTag: 24511830-1332-4366-8172-7a0537555e35
+		summarizeBy: none
+		sourceColumn: Network #2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #3'
+		dataType: string
+		lineageTag: e284117a-f241-4724-a575-92c0802a3014
+		summarizeBy: none
+		sourceColumn: Network #3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #4'
+		dataType: string
+		lineageTag: 64fb1766-4aff-4b0b-bed5-4034a3f07cf9
+		summarizeBy: none
+		sourceColumn: Network #4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #5'
+		dataType: string
+		lineageTag: f23eee5a-984d-44db-9af3-c7071a9f516d
+		summarizeBy: none
+		sourceColumn: Network #5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #6'
+		dataType: string
+		lineageTag: 75bbd03b-541d-48bd-bd1d-4df6755a568e
+		summarizeBy: none
+		sourceColumn: Network #6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #7'
+		dataType: string
+		lineageTag: d5aba1fd-2c5b-4a55-8170-5dd8f9efdb1b
+		summarizeBy: none
+		sourceColumn: Network #7
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Network #8'
+		dataType: string
+		lineageTag: d296dfcb-0138-4743-902f-0dd832599f4f
+		summarizeBy: none
+		sourceColumn: Network #8
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Num Monitors'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8eb76b65-b190-47ff-b1a5-e69ac8ff6b58
+		summarizeBy: sum
+		sourceColumn: Num Monitors
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Video Ram KiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d93f783-2bcc-4bf5-829a-0cf45e45c082
+		summarizeBy: sum
+		sourceColumn: Video Ram KiB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resource pool'
+		dataType: string
+		lineageTag: 16c22e7d-ceac-4028-93dd-218e7dc66abf
+		summarizeBy: none
+		sourceColumn: Resource pool
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder ID'
+		dataType: string
+		lineageTag: 7fa1f530-86fa-45d4-8af9-715710c49619
+		summarizeBy: none
+		sourceColumn: Folder ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: e564c9c6-a2d7-4db5-9d68-5411fccf3bb9
+		summarizeBy: none
+		sourceColumn: Folder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vApp
+		dataType: string
+		lineageTag: 15c80e97-685e-412e-bf61-6056af866bba
+		summarizeBy: none
+		sourceColumn: vApp
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DAS protection'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b3191721-3fc9-470e-b816-2a1a063426fa
+		summarizeBy: none
+		sourceColumn: DAS protection
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FT State'
+		dataType: string
+		lineageTag: 3b2cd3fb-6e61-432f-a8e2-304e4624d67c
+		summarizeBy: none
+		sourceColumn: FT State
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FT Role'
+		dataType: string
+		lineageTag: df7e02b7-066e-478f-b615-19e21155ce3c
+		summarizeBy: none
+		sourceColumn: FT Role
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FT Latency'
+		dataType: string
+		lineageTag: 07a7e196-fe65-4b65-9c99-9d9179541469
+		summarizeBy: none
+		sourceColumn: FT Latency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FT Bandwidth'
+		dataType: int64
+		formatString: 0
+		lineageTag: 13572546-5987-48a0-b195-78227da5261a
+		summarizeBy: sum
+		sourceColumn: FT Bandwidth
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FT Sec. Latency'
+		dataType: int64
+		formatString: 0
+		lineageTag: ccf28c25-6361-4e8b-b89d-4de04343aee4
+		summarizeBy: sum
+		sourceColumn: FT Sec. Latency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vm Failover In Progress'
+		dataType: string
+		lineageTag: 1610fb52-cba0-462a-ae1e-68c5666dbcc3
+		summarizeBy: none
+		sourceColumn: Vm Failover In Progress
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Provisioned MiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: a93b5d64-8987-42ef-8d15-0d3700b4013c
+		summarizeBy: sum
+		sourceColumn: Provisioned MiB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In Use MiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ab653dd-ed7c-47e0-9e91-ea753c403a12
+		summarizeBy: sum
+		sourceColumn: In Use MiB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unshared MiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: 493694b1-b8db-4549-b1ca-9b4e57b206e5
+		summarizeBy: sum
+		sourceColumn: Unshared MiB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HA Restart Priority'
+		dataType: string
+		lineageTag: 77325bc8-c6aa-4ff0-ae9a-8a8584bd4a2c
+		summarizeBy: none
+		sourceColumn: HA Restart Priority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HA Isolation Response'
+		dataType: string
+		lineageTag: f6471fbf-5d91-49d7-91e0-482c7ec9f3d7
+		summarizeBy: none
+		sourceColumn: HA Isolation Response
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HA VM Monitoring'
+		dataType: string
+		lineageTag: 825024e9-8ba1-4cdc-9e55-8bc029f1333a
+		summarizeBy: none
+		sourceColumn: HA VM Monitoring
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cluster rule(s)'
+		dataType: string
+		lineageTag: f4a5273d-8af0-4cee-82a3-9cb77856e57d
+		summarizeBy: none
+		sourceColumn: Cluster rule(s)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cluster rule name(s)'
+		dataType: string
+		lineageTag: 01c6879c-417b-4ee5-9e8b-999ad2ddc16b
+		summarizeBy: none
+		sourceColumn: Cluster rule name(s)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot Required'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9d0138a8-6765-4c88-932f-bb0a2077b13b
+		summarizeBy: none
+		sourceColumn: Boot Required
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot delay'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cbb2a0e-d88c-4113-8f2f-3f530b985ac0
+		summarizeBy: sum
+		sourceColumn: Boot delay
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot retry delay'
+		dataType: int64
+		formatString: 0
+		lineageTag: b142d188-1ce1-481c-8bb4-50563030308a
+		summarizeBy: sum
+		sourceColumn: Boot retry delay
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot retry enabled'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 99d84649-c7a9-4229-82a9-4458ae2246dd
+		summarizeBy: none
+		sourceColumn: Boot retry enabled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Boot BIOS setup'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 841031bc-9e97-4f83-9c83-5f899bbeabe6
+		summarizeBy: none
+		sourceColumn: Boot BIOS setup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reboot PowerOff'
+		dataType: string
+		lineageTag: 51eb8a43-6452-4c06-b385-bb2c213ad728
+		summarizeBy: none
+		sourceColumn: Reboot PowerOff
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'EFI Secure boot'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 68a69408-5f58-4013-bb66-9cd6dd33bad9
+		summarizeBy: none
+		sourceColumn: EFI Secure boot
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Firmware
+		dataType: string
+		lineageTag: 2fb37fe4-0cb5-4315-b5a5-c0dfe595adc2
+		summarizeBy: none
+		sourceColumn: Firmware
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HW version'
+		dataType: int64
+		formatString: 0
+		lineageTag: 90727313-12b2-4f77-8987-33060b7d47ec
+		summarizeBy: sum
+		sourceColumn: HW version
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HW upgrade status'
+		dataType: string
+		lineageTag: b2602e18-f6c0-4773-a5b7-c64a7d15d7ed
+		summarizeBy: none
+		sourceColumn: HW upgrade status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HW upgrade policy'
+		dataType: string
+		lineageTag: b08e6b9b-43f6-4ecf-bc77-f6a54772142e
+		summarizeBy: none
+		sourceColumn: HW upgrade policy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HW target'
+		dataType: string
+		lineageTag: 9142769a-f7f1-4ec3-acc8-cfafefb272f4
+		summarizeBy: none
+		sourceColumn: HW target
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Path
+		dataType: string
+		lineageTag: 2ac6558d-740f-4835-8385-e4e111bf891a
+		summarizeBy: none
+		sourceColumn: Path
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Log directory'
+		dataType: string
+		lineageTag: 97f72bcd-502d-4ed0-ac8c-ff6ffc23acb1
+		summarizeBy: none
+		sourceColumn: Log directory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Snapshot directory'
+		dataType: string
+		lineageTag: 3bf52023-2c2a-42eb-9f51-7719f99ae6c5
+		summarizeBy: none
+		sourceColumn: Snapshot directory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Suspend directory'
+		dataType: string
+		lineageTag: a90642cc-fd93-4320-ab3b-82615b5e1810
+		summarizeBy: none
+		sourceColumn: Suspend directory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 5d611d93-4d0a-4d0e-9692-b753e9938dca
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: c8695c14-de7d-454b-bc3d-b79b29f8f559
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: 1b67d92d-12fa-48bf-bb1f-bf18227904d1
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: 5c533c8b-e987-487f-b9a3-ef8d848ce1ef
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: 23b074d2-e412-4a33-8d7c-8d77b95596a0
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: 15e5c444-8e41-499a-837c-253760c4a4ea
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: 203328c2-d55b-45b5-86ff-1d14d0458360
+		summarizeBy: none
+		sourceColumn: Host
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: ed6a95d0-c056-4198-846a-e8c639d07dff
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 54c399f5-ac1e-4c31-92f7-1968234fe175
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customization Info'
+		dataType: string
+		lineageTag: cd021a18-8d3d-42e3-80f0-29ad551e6d5e
+		summarizeBy: none
+		sourceColumn: Customization Info
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Guest Detailed Data'
+		dataType: string
+		lineageTag: db156be3-7127-4b80-868a-4fef591755db
+		summarizeBy: none
+		sourceColumn: Guest Detailed Data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: b95dded9-e84f-4d31-a7f8-8833ceb38581
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SMBIOS UUID'
+		dataType: string
+		lineageTag: 859d6be6-0610-484f-89f5-9a46746343ac
+		summarizeBy: none
+		sourceColumn: SMBIOS UUID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: 2e20e114-aca8-4742-a7c1-27e4e9cf2edc
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server type'
+		dataType: string
+		lineageTag: 3df0f578-0499-472e-83da-c287925aed7c
+		summarizeBy: none
+		sourceColumn: VI SDK Server type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK API Version'
+		dataType: string
+		lineageTag: a40f33f5-a132-4717-ae0e-336eaa52821c
+		summarizeBy: none
+		sourceColumn: VI SDK API Version
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: 84775710-e0d7-4c93-938f-03596275cc6f
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 02c7fb3c-4fe9-4bf3-b13f-2360882eb6de
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 1bff4142-0f48-41a5-8fb2-a4d4903721f4
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Memory =
+			
+			VAR MemoryMB = [Memory (MB)]
+			VAR MemoryGB = MemoryMB / 1024
+			VAR MemoryTB = MemoryMB / (1024 * 1024)
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    MemoryTB >= 1, FORMAT(MemoryTB, "#,##0") & " TB",
+			    MemoryGB >= 1, FORMAT(MemoryGB, "#,##0") & " GB",
+			    FORMAT(MemoryMB, "#,##0") & " MB"
+			)
+		lineageTag: a9d325a2-e1b5-4741-98b0-f2e85d7401fa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network
+		dataType: string
+		lineageTag: 47018b35-8024-4765-8254-c431031a0fa6
+		summarizeBy: none
+		sourceColumn: Network
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location =
+			
+			SWITCH(
+			    TRUE(),
+			    CONTAINSSTRING([Host], "uksouth"), "AVS - UK South",
+			    CONTAINSSTRING([Host], "ukwest"), "AVS - UK West",
+			    [Datacenter] = "Paris Garden - HH3", "Hemel Hempstead",
+			    [Datacenter] = "Amlin-BranchOffices", "Leadenhall Building",
+			    [Datacenter]
+			)
+		lineageTag: c182be05-5207-46b3-85a6-a00397cad9f9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware VMs' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vInfo",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"VM", type text}, {"Powerstate", type text}, {"Template", type logical}, {"SRM Placeholder", type logical}, {"Config status", type text}, {"DNS Name", type text}, {"Connection state", type text}, {"Guest state", type text}, {"Heartbeat", type text}, {"Consolidation Needed", type logical}, {"PowerOn", type datetime}, {"Suspended To Memory", type any}, {"Suspend time", type any}, {"Suspend Interval", Int64.Type}, {"Creation date", type datetime}, {"Change Version", type datetime}, {"CPUs", Int64.Type}, {"Overall Cpu Readiness", Percentage.Type}, {"Memory", Int64.Type}, {"Active Memory", Int64.Type}, {"NICs", Int64.Type}, {"Disks", Int64.Type}, {"Total disk capacity MiB", Int64.Type}, {"Fixed Passthru HotPlug", type any}, {"min Required EVC Mode Key", type text}, {"Latency Sensitivity", type text}, {"Op Notification Timeout", type any}, {"EnableUUID", type logical}, {"CBT", type logical}, {"Primary IP Address", type text}, {"Network #1", type text}, {"Network #2", type text}, {"Network #3", type text}, {"Network #4", type text}, {"Network #5", type text}, {"Network #6", type text}, {"Network #7", type text}, {"Network #8", type text}, {"Num Monitors", Int64.Type}, {"Video Ram KiB", Int64.Type}, {"Resource pool", type text}, {"Folder ID", type text}, {"Folder", type any}, {"vApp", type any}, {"DAS protection", type logical}, {"FT State", type text}, {"FT Role", type any}, {"FT Latency", type text}, {"FT Bandwidth", Int64.Type}, {"FT Sec. Latency", Int64.Type}, {"Vm Failover In Progress", type any}, {"Provisioned MiB", Int64.Type}, {"In Use MiB", Int64.Type}, {"Unshared MiB", Int64.Type}, {"HA Restart Priority", type text}, {"HA Isolation Response", type text}, {"HA VM Monitoring", type text}, {"Cluster rule(s)", type text}, {"Cluster rule name(s)", type text}, {"Boot Required", type logical}, {"Boot delay", Int64.Type}, {"Boot retry delay", Int64.Type}, {"Boot retry enabled", type logical}, {"Boot BIOS setup", type logical}, {"Reboot PowerOff", type any}, {"EFI Secure boot", type logical}, {"Firmware", type text}, {"HW version", Int64.Type}, {"HW upgrade status", type text}, {"HW upgrade policy", type text}, {"HW target", type any}, {"Path", type text}, {"Log directory", type text}, {"Snapshot directory", type text}, {"Suspend directory", type text}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"Customization Info", type text}, {"Guest Detailed Data", type any}, {"VM ID", type text}, {"SMBIOS UUID", type text}, {"VM UUID", type text}, {"VI SDK Server type", type text}, {"VI SDK API Version", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping VM to ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping VM to ServerName", {"Name"}, {"Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded Mapping-VMwareVM-ServerName",{{"Name", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Memory", "Memory (MB)"}}),
+				    #"Added Network Column" = Table.AddColumn(#"Renamed Columns", "Network", each if Text.Contains([#"Network #1"], "DMZ") = true then [#"Network #1"] else
+				Text.Select([#"Network #1"], {"0".."9", "A", "L", "N", "V"})),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Added Network Column",{{"Powerstate", Order.Descending}, {"PowerOn", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"VM"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Duplicates",{"Name", "VM", "Powerstate", "Template", "SRM Placeholder", "Config status", "DNS Name", "Connection state", "Guest state", "Heartbeat", "Consolidation Needed", "PowerOn", "Suspended To Memory", "Suspend time", "Suspend Interval", "Creation date", "Change Version", "CPUs", "Overall Cpu Readiness", "Memory (MB)", "Active Memory", "NICs", "Disks", "Total disk capacity MiB", "Fixed Passthru HotPlug", "min Required EVC Mode Key", "Latency Sensitivity", "Op Notification Timeout", "EnableUUID", "CBT", "Primary IP Address", "Network", "Network #1", "Network #2", "Network #3", "Network #4", "Network #5", "Network #6", "Network #7", "Network #8", "Num Monitors", "Video Ram KiB", "Resource pool", "Folder ID", "Folder", "vApp", "DAS protection", "FT State", "FT Role", "FT Latency", "FT Bandwidth", "FT Sec. Latency", "Vm Failover In Progress", "Provisioned MiB", "In Use MiB", "Unshared MiB", "HA Restart Priority", "HA Isolation Response", "HA VM Monitoring", "Cluster rule(s)", "Cluster rule name(s)", "Boot Required", "Boot delay", "Boot retry delay", "Boot retry enabled", "Boot BIOS setup", "Reboot PowerOff", "EFI Secure boot", "Firmware", "HW version", "HW upgrade status", "HW upgrade policy", "HW target", "Path", "Log directory", "Snapshot directory", "Suspend directory", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "OS according to the configuration file", "OS according to the VMware Tools", "Customization Info", "Guest Detailed Data", "VM ID", "SMBIOS UUID", "VM UUID", "VI SDK Server type", "VI SDK API Version", "VI SDK Server", "VI SDK UUID"})
+				in
+				    #"Reordered Columns"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

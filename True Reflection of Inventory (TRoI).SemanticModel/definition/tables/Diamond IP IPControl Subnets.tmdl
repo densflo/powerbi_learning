@@ -1,0 +1,75 @@
+table 'Diamond IP IPControl Subnets'
+	lineageTag: 2d2752b3-54f7-40ab-bbb7-01ecd49fa782
+
+	column Subnet
+		dataType: string
+		lineageTag: 613c9269-e98f-475e-b7b5-0cd2db5bb4d9
+		summarizeBy: none
+		sourceColumn: Subnet
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Block Type'
+		dataType: string
+		lineageTag: c1a1ea70-d16b-4162-abc3-8eb3f72e5dca
+		summarizeBy: none
+		sourceColumn: Block Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Container
+		dataType: string
+		lineageTag: 087cfd10-93c4-4562-9ef0-02f13d59c69a
+		summarizeBy: none
+		sourceColumn: Container
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 3cf56050-1ddf-44fd-ad2f-ebcf93077eb0
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: d59193c8-b070-49af-aecd-e07f4b8ea9fe
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Diamond IP IPControl Subnets' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/dhcpServerAssignmentReport.csv"),[Delimiter=","]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Assigned To", type text}, {"Type", type text}, {"Subnet/Block", type text}, {"Block Type", type text}, {"Container", type text}, {"Primary DHCP Server Name", type text}, {"Primary DHCP Server IP Address", type text}, {"Failover DHCP Server Name", type text}, {"Failover DHCP Server IP Address", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type1",{"Subnet/Block", "Block Type", "Container"}),
+				    #"Split Column by Delimiter" = Table.ExpandListColumn(Table.TransformColumns(#"Removed Other Columns", {{"Container", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Container"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Container", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type2",{{"Container", Text.Trim, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Trimmed Text", {"Container"}, #"Mapping Diamond IP IPControl Subnet to Location", {"Container"}, "Mapping Diamond IP IPControl Subnet to Location", JoinKind.LeftOuter),
+				    #"Expanded Mapping Diamond IP IPControl Subnet to Location" = Table.ExpandTableColumn(#"Merged Queries", "Mapping Diamond IP IPControl Subnet to Location", {"Location"}, {"Location"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded Mapping Diamond IP IPControl Subnet to Location", each ([Location] <> null)),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Filtered Rows",{{"Subnet/Block", Order.Ascending}, {"Location", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Subnet/Block"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Duplicates",{{"Subnet/Block", "Subnet"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Source", each "Diamond IP IPControl"),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"Location", "Existing Location"}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Renamed Columns1", {"Existing Location"}, #"Mapping Location", {"Existing Location"}, "Mapping Location", JoinKind.LeftOuter),
+				    #"Expanded Mapping Location" = Table.ExpandTableColumn(#"Merged Queries1", "Mapping Location", {"Correct Location"}, {"Correct Location"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Expanded Mapping Location", "Location", each if [Correct Location] <> null then [Correct Location] else [Existing Location]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Existing Location", "Correct Location"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,79 @@
+table 'Network Team Global IP Address Allocation'
+	lineageTag: 088a6afa-7e4e-444d-bb0e-41ab43970fc4
+
+	column Location
+		dataType: string
+		lineageTag: 27d4a8ea-e0b8-4201-8b49-786e4dd8814d
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column UID
+		dataType: string
+		lineageTag: 19848992-6771-41c0-b8d8-a95830234b0d
+		summarizeBy: none
+		sourceColumn: UID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subnet
+		dataType: string
+		lineageTag: 696eb975-e485-4b78-b26c-224689596016
+		summarizeBy: none
+		sourceColumn: Subnet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Network
+		dataType: string
+		lineageTag: c57322eb-41bf-41c6-b2d6-5170a2b24d92
+		summarizeBy: none
+		sourceColumn: Network
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 05c90227-0803-4ae6-b21f-04c46d095bc1
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Network Team Global IP Address Allocation' = m
+		mode: import
+		queryGroup: 'Child Queries\Other Teams'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Global%20IP%20Address%20Allocation.xlsx"), null, true),
+				    #"New Overview1" = Source{[Name="New Overview"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"New Overview1", [PromoteAllScalars=true]),
+				    #"Split Location Column Into Rows" = Table.ExpandListColumn(Table.TransformColumns(#"Promoted Headers", {{"Location", Splitter.SplitTextByDelimiter("#(lf)", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Location"),
+				    #"Split Location Column Into Delimiter" = Table.ExpandListColumn(Table.TransformColumns(#"Split Location Column Into Rows", {{"Location", Splitter.SplitTextByDelimiter("#(lf)", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Location"),
+				    #"Split Location Column Into Columns" = Table.SplitColumn(#"Split Location Column Into Delimiter", "Location", Splitter.SplitTextByEachDelimiter({"("}, QuoteStyle.Csv, false), {"Location.1", "Location.2"}),
+				    #"Trimmed Location.1 Column" = Table.TransformColumns(#"Split Location Column Into Columns",{{"Location.1", Text.Trim, type text}}),
+				    #"Renamed IP Subnet & Network Columns" = Table.RenameColumns(#"Trimmed Location.1 Column",{{"Location.1", "Subnet"}, {"Location.2", "Network"}}),
+				    #"Added Location Column" = Table.AddColumn(#"Renamed IP Subnet & Network Columns", "Existing Location", each if [Subnet] = "NA" then null else if [Subnet] = "" then null else if not Text.Contains([Subnet], "/") then [Subnet] else null),
+				    #"Added TempLocation Column" = Table.AddColumn(#"Added Location Column", "TempLocation", each [Existing Location]),
+				    #"Filled Down Location Column" = Table.FillDown(#"Added TempLocation Column",{"Existing Location"}),
+				    #"Filtered TempLocation Column to Non Null" = Table.SelectRows(#"Filled Down Location Column", each ([TempLocation] = null)),
+				    #"Split Network Column By )" = Table.SplitColumn(#"Filtered TempLocation Column to Non Null", "Network", Splitter.SplitTextByEachDelimiter({")"}, QuoteStyle.Csv, true), {"Network", "TempNetwork"}),
+				    #"Removed Unused Columns" = Table.RemoveColumns(#"Split Network Column By )",{"TempLocation", "TempNetwork", "Comparision with Qualys Asset Groups ", "Scanner used", "Owner", "Remarks", "Column9", "Provided by", "Validated/Updated on"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Unused Columns",{"Existing Location", "UID", "Subnet", "Network"}),
+				    #"Replaced Anomalous Value" = Table.ReplaceValue(#"Reordered Columns","10.220.80.0/22aeu-amv-usr-VDI)","10.220.80.0/22",Replacer.ReplaceText,{"Subnet"}),
+				    #"Filtered Out Blanks from IP Subnet" = Table.SelectRows(#"Replaced Anomalous Value", each ([Subnet] <> "" and [Subnet] <> "N/A" and [Subnet] <> "NA")),
+				    #"Removed Duplicates from IP Subnet" = Table.Distinct(#"Filtered Out Blanks from IP Subnet", {"Subnet"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates from IP Subnet", {"Existing Location"}, #"Mapping Location", {"Existing Location"}, "Mapping Location", JoinKind.LeftOuter),
+				    #"Expanded Mapping Location" = Table.ExpandTableColumn(#"Merged Queries", "Mapping Location", {"Correct Location"}, {"Correct Location"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Expanded Mapping Location", "Location", each if [Correct Location] <> null then [Correct Location] else [Existing Location]),
+				    #"Removed Temp Location Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Existing Location", "Correct Location"}),
+				    #"Removed Spaces from Subnet" = Table.ReplaceValue(#"Removed Temp Location Columns"," ","",Replacer.ReplaceText,{"Subnet"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Spaces from Subnet", "Source", each "GIPAA")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

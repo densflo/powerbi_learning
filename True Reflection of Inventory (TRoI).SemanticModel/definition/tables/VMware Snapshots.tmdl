@@ -1,0 +1,239 @@
+table 'VMware Snapshots'
+	lineageTag: 39685654-91fb-4151-ba07-29e35846709b
+
+	column VM
+		dataType: string
+		lineageTag: dbb9234a-f675-4ae1-8e17-7ff421bbcb42
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: e9adedd2-5fba-4447-a22d-116401554f5a
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Snapshot Name'
+		dataType: string
+		lineageTag: d23c65de-8680-4d31-b0c3-da403adc34aa
+		summarizeBy: none
+		sourceColumn: Snapshot Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 3bef62fc-1066-4087-b503-b4ae654a0c2d
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date / time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f44988ec-c7e2-4a93-a740-32809fcc60d3
+		summarizeBy: none
+		sourceColumn: Date / time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Filename
+		dataType: string
+		lineageTag: 53bf0565-3f5e-4e9d-8497-35b8132ea7f4
+		summarizeBy: none
+		sourceColumn: Filename
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Size MiB (vmsn)'
+		dataType: double
+		lineageTag: 82cce6d4-c4fd-4361-8b59-891462ca6c21
+		summarizeBy: sum
+		sourceColumn: Size MiB (vmsn)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Size MiB (total)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f5ed9d9-9b8f-4b96-b5d9-6137a2b19914
+		summarizeBy: sum
+		sourceColumn: Size MiB (total)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quiesced
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 63b41d3e-9961-4189-bffe-ed2b7ec0ad40
+		summarizeBy: none
+		sourceColumn: Quiesced
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: b646eb1f-e879-4d75-a966-0101a3195670
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 2d880042-68dd-403d-933c-6fa6f212bec6
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: 76a757b2-1100-453a-9d30-0e2457bad61b
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: 7780229b-f63e-4f81-9d0e-44b0e20ad803
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: ac7933fb-aabb-4d34-bc36-c46f3f23b215
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: 69675b9b-1cba-4e1a-944b-1551cd74186d
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: 05fe6fa5-deae-4ba2-8946-4c736f469249
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: 831559ef-8fcb-460b-9b31-28c2bbf10a71
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: 859a49c1-f5b9-45ec-afec-6b6e6c5fb3ae
+		summarizeBy: none
+		sourceColumn: Folder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: acf5fa8d-00cc-4d4f-8d84-a4175c3545fa
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 7829f527-68b6-445c-a149-ab567280873d
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: 0d8f1cf3-c30f-4854-8080-25e073e02a17
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: a781e135-7dc8-4805-b46b-43244fc003d1
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: bacce878-6437-4f61-8864-84adb48f86f5
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 3c6be8db-95b8-4a7a-94f3-50c61f9368ef
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: aa2c8a86-bfe5-46f8-92a0-50280a16e730
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware Snapshots' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vSnapshot",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(CombinedTable,{{"VM", type text}, {"Powerstate", type text}, {"Name", type text}, {"Description", type text}, {"Date / time", type datetime}, {"Filename", type text}, {"Size MiB (vmsn)", type number}, {"Size MiB (total)", Int64.Type}, {"Quiesced", type logical}, {"State", type text}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"Folder", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"VM ID", type text}, {"VM UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping-VMwareVM-ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping-VMwareVM-ServerName", {"Name"}, {"Name.1"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded Mapping-VMwareVM-ServerName",{{"Name", "Snapshot Name"}, {"Name.1", "Name"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Name", "VM", "Powerstate", "Snapshot Name", "Description", "Date / time", "Filename", "Size MiB (vmsn)", "Size MiB (total)", "Quiesced", "State", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "Folder", "OS according to the configuration file", "OS according to the VMware Tools", "VM ID", "VM UUID", "VI SDK Server", "VI SDK UUID"})
+				in
+				    #"Reordered Columns"
+				```
+
+	annotation PBI_ResultType = Exception
+

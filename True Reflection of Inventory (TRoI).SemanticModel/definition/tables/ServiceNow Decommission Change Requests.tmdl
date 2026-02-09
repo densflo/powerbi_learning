@@ -1,0 +1,106 @@
+table 'ServiceNow Decommission Change Requests'
+	lineageTag: ef4bd4c7-bb59-41ba-88db-8ee68bd64a8a
+
+	column Number
+		dataType: string
+		lineageTag: 449ff236-27ed-41df-8343-2e9b04fe59cd
+		summarizeBy: none
+		sourceColumn: Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short description'
+		dataType: string
+		lineageTag: 76a9b372-8351-4ef3-84bf-2617695fb1f8
+		summarizeBy: none
+		sourceColumn: Short description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: b67b7fe0-9974-4a4d-ae77-7b140f58474c
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 7bd2fc2d-1c5f-4c2b-a360-3a4f2eaad052
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Planned start date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 301ce017-a751-477a-b5fd-c0661234ab2a
+		summarizeBy: none
+		sourceColumn: Planned start date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Planned end date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 959c2ae8-e3cf-4c12-bcb0-a2b12cc724a9
+		summarizeBy: none
+		sourceColumn: Planned end date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Requested by'
+		dataType: string
+		lineageTag: 802eaf6b-2c13-478b-87b7-15335ead182b
+		summarizeBy: none
+		sourceColumn: Requested by
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 785df51c-1a5b-4e46-9ea8-e286f8ec5429
+		summarizeBy: none
+		sourceColumn: Created
+
+		annotation SummarizationSetBy = Automatic
+
+	column Part
+		dataType: string
+		lineageTag: 1dfb740a-64f2-4113-9376-6138d3d41cfe
+		summarizeBy: none
+		sourceColumn: Part
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ServiceNow Decommission Change Requests' = m
+		mode: import
+		queryGroup: 'Child Queries\Asset Management & Inventory'
+		source = ```
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/change_request.xlsx"), null, true),
+				    #"Page 1_Sheet" = Source{[Item="Page 1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Page 1_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Number", type text}, {"Short description", type text}, {"Description", type text}, {"State", type text}, {"Planned start date", type datetime}, {"Planned end date", type datetime}, {"Requested by", type text}, {"Created", type datetime}}),
+				    #"Added Part Column" = Table.AddColumn(#"Changed Type", "Part", each 
+				        let
+				            Description = [Description],
+				            StartPosition = Text.PositionOf(Description, "Part"),
+				            ExtractedText = 
+				                if StartPosition <> -1 
+				                then Text.Middle(Description, StartPosition, 6)
+				                else null
+				        in
+				            ExtractedText
+				)
+				in
+				    #"Added Part Column"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

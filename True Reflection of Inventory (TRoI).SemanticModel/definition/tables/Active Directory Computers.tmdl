@@ -1,0 +1,128 @@
+table 'Active Directory Computers'
+	lineageTag: a17eed04-3c09-4d8a-a337-9a76fc2c9e6f
+
+	column Name
+		dataType: string
+		lineageTag: 65502202-2279-4eb6-ae32-e846ddd28c13
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Enabled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ef5b0a59-6f01-4850-a0f9-bea45c65b300
+		summarizeBy: none
+		sourceColumn: Enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domain
+		dataType: string
+		lineageTag: 80ab2e62-5f6b-4e8b-8edd-93c5a04fe043
+		summarizeBy: none
+		sourceColumn: Domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IP Address'
+		dataType: string
+		lineageTag: 48e9f8f1-f76a-403d-bb4c-4b9c9472d817
+		summarizeBy: none
+		sourceColumn: IP Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Logon'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 89246f98-6b44-4343-a63a-e942ab1d03b5
+		summarizeBy: none
+		sourceColumn: Last Logon
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Logon Age'
+		dataType: int64
+		formatString: 0
+		lineageTag: 44140f77-9860-4ec6-93ff-a9ee5e924543
+		summarizeBy: sum
+		sourceColumn: Logon Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column OS
+		dataType: string
+		lineageTag: 61079eb5-82c6-497f-bf83-e3fa7bc980cc
+		summarizeBy: none
+		sourceColumn: OS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 134d1c8b-4562-4c9e-bb4f-79f2487c3664
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column DN
+		dataType: string
+		lineageTag: 4779c0d5-7663-4d1f-8355-6602311415f3
+		summarizeBy: none
+		sourceColumn: DN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5414c038-6fd2-4a3f-80a8-bdbdf5599333
+		summarizeBy: none
+		sourceColumn: Created
+
+		annotation SummarizationSetBy = Automatic
+
+	column Modified
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f6df3237-062c-4557-bc33-fecfdec12fbf
+		summarizeBy: none
+		sourceColumn: Modified
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Password Last Set'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8593130c-b30b-4853-b12b-c48252049dbe
+		summarizeBy: none
+		sourceColumn: Password Last Set
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Active Directory Computers' = m
+		mode: import
+		queryGroup: 'Child Queries\Resource Management'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/MSA%20Report%20-%20All%20Servers.xlsx"), null, true),
+				    AllServers_Table = Source{[Item="AllServers",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(AllServers_Table,{{"Name", type text}, {"Enabled", type logical}, {"Domain", type text}, {"IP Address", type text}, {"Last Logon", type datetime}, {"Logon Age", Int64.Type}, {"OS", type text}, {"Description", type text}, {"DN", type text}, {"Created", type datetime}, {"Modified", type datetime}, {"Password Last Set", type datetime}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"Name", Text.Upper, type text}}),
+				    #"Merged DomainList = Domain on FQDN" = Table.NestedJoin(#"Uppercased Text", {"Domain"}, #"Mapping DomainFQDN to DomainNetBIOS", {"FQDN"}, "DomainList", JoinKind.LeftOuter),
+				    #"Expanded DomainList" = Table.ExpandTableColumn(#"Merged DomainList = Domain on FQDN", "DomainList", {"NetBIOS"}, {"DomainList.NetBIOS"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded DomainList",{"Name", "Enabled", "Domain", "DomainList.NetBIOS", "IP Address", "Last Logon", "Logon Age", "OS", "Description", "DN", "Created", "Modified", "Password Last Set"}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Reordered Columns",{{"Name", Order.Ascending}, {"Logon Age", Order.Ascending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Name"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Duplicates",{"Domain"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"DomainList.NetBIOS", "Domain"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,401 @@
+table 'VMware Disks'
+	lineageTag: 4c3d7cde-391a-4955-a36f-1d319ca87f02
+
+	column VM
+		dataType: string
+		lineageTag: 84b09314-ef5a-4165-860e-196486466bdf
+		summarizeBy: none
+		sourceColumn: VM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powerstate
+		dataType: string
+		lineageTag: 5a3348c1-f4af-4313-b61f-f31977fc0077
+		summarizeBy: none
+		sourceColumn: Powerstate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Template
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 51968ada-458b-43a0-839c-4ad9c9bcc0de
+		summarizeBy: none
+		sourceColumn: Template
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SRM Placeholder'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2a873f36-c7e7-496f-9e12-c6ba25536510
+		summarizeBy: none
+		sourceColumn: SRM Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Disk
+		dataType: string
+		lineageTag: d8079ecd-639b-4678-ae30-d0d66587c764
+		summarizeBy: none
+		sourceColumn: Disk
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disk Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: db58cd03-c1b6-4ad5-9c4d-7acee209ba46
+		summarizeBy: count
+		sourceColumn: Disk Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disk UUID'
+		dataType: string
+		lineageTag: 39236b15-1343-482a-b7d4-95b1c4640b17
+		summarizeBy: none
+		sourceColumn: Disk UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disk Path'
+		dataType: string
+		lineageTag: 67451a2e-885f-479a-b428-a73b0ba23bdb
+		summarizeBy: none
+		sourceColumn: Disk Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capacity MiB'
+		dataType: int64
+		formatString: 0
+		lineageTag: b9ce4ee1-f18d-4903-8563-7f14ed2d8917
+		summarizeBy: sum
+		sourceColumn: Capacity MiB
+
+		annotation SummarizationSetBy = Automatic
+
+	column Raw
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a07bcffb-f489-4213-9ab6-1958fb6f0d71
+		summarizeBy: none
+		sourceColumn: Raw
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disk Mode'
+		dataType: string
+		lineageTag: a0942d4c-0e36-4601-a1fe-8cd4816cee51
+		summarizeBy: none
+		sourceColumn: Disk Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sharing mode'
+		dataType: string
+		lineageTag: f0aae420-f5a6-4e39-a90b-ed2d6aaa6641
+		summarizeBy: none
+		sourceColumn: Sharing mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Thin
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b08957cf-9046-4e0b-be82-9979a14dfb17
+		summarizeBy: none
+		sourceColumn: Thin
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Eagerly Scrub'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 90c393e2-b81c-4fcd-946a-13f2bc6533dc
+		summarizeBy: none
+		sourceColumn: Eagerly Scrub
+
+		annotation SummarizationSetBy = Automatic
+
+	column Split
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d4528b1c-4038-44a0-9929-228ed4b1b18a
+		summarizeBy: none
+		sourceColumn: Split
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Write Through'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b7bb1a11-d198-4d73-888b-a7e55d76bf0d
+		summarizeBy: none
+		sourceColumn: Write Through
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level
+		dataType: string
+		lineageTag: 74d1e503-5d18-4ef6-a397-4257baa56878
+		summarizeBy: none
+		sourceColumn: Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Shares
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a7ea514-bc5a-4b3c-b5c6-420f07adaae5
+		summarizeBy: sum
+		sourceColumn: Shares
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reservation
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d1c4c86-b5bc-450c-bfde-c1b7d1cfd7a9
+		summarizeBy: sum
+		sourceColumn: Reservation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Limit
+		dataType: int64
+		formatString: 0
+		lineageTag: 84b1a9ce-debc-4688-abbf-9c178a96ff7d
+		summarizeBy: sum
+		sourceColumn: Limit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Controller
+		dataType: string
+		lineageTag: d422d34b-fd66-4b8b-911c-57aa96f23d7d
+		summarizeBy: none
+		sourceColumn: Controller
+
+		annotation SummarizationSetBy = Automatic
+
+	column Label
+		dataType: string
+		lineageTag: bbb39977-bba1-43ba-a614-76ce7140b0c0
+		summarizeBy: none
+		sourceColumn: Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SCSI Unit #'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2162bbb6-ac68-4e3c-9f7c-c2254f41b6f8
+		summarizeBy: sum
+		sourceColumn: SCSI Unit #
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit #'
+		dataType: int64
+		formatString: 0
+		lineageTag: 954e6617-4534-44bb-b96b-80f3ab8bf176
+		summarizeBy: sum
+		sourceColumn: Unit #
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shared Bus'
+		dataType: string
+		lineageTag: fef19779-8d2d-4a87-ac88-e951d9195809
+		summarizeBy: none
+		sourceColumn: Shared Bus
+
+		annotation SummarizationSetBy = Automatic
+
+	column Path
+		dataType: string
+		lineageTag: 140fad79-9c41-47ad-811b-2fd68544b780
+		summarizeBy: none
+		sourceColumn: Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Raw LUN ID'
+		dataType: string
+		lineageTag: 47f682e6-75b6-4425-8a34-bae3dc9b4210
+		summarizeBy: none
+		sourceColumn: Raw LUN ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Raw Comp. Mode'
+		dataType: string
+		lineageTag: f5ea04af-e8ad-4848-b717-47b1f92a41d9
+		summarizeBy: none
+		sourceColumn: Raw Comp. Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internal Sort Column'
+		dataType: string
+		lineageTag: cad193b4-a05d-4582-be8c-80084d812551
+		summarizeBy: none
+		sourceColumn: Internal Sort Column
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annotation
+		dataType: string
+		lineageTag: 7b3a1e51-4218-4e3b-b86e-4f2465a3f22e
+		summarizeBy: none
+		sourceColumn: Annotation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backup Status'
+		dataType: string
+		lineageTag: 63cebeac-bec6-4641-b369-dc328fcdc155
+		summarizeBy: none
+		sourceColumn: Backup Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Backup'
+		dataType: string
+		lineageTag: e95537d5-3950-4ae7-b9d0-9b6be9758055
+		summarizeBy: none
+		sourceColumn: Last Backup
+
+		annotation SummarizationSetBy = Automatic
+
+	column XdConfig
+		dataType: string
+		lineageTag: 3ba884b4-e030-4b3a-ae2e-fcb551d85e24
+		summarizeBy: none
+		sourceColumn: XdConfig
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datacenter
+		dataType: string
+		lineageTag: 0e14c623-3907-4e58-b41b-2333124b0d0a
+		summarizeBy: none
+		sourceColumn: Datacenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: string
+		lineageTag: fa93e37e-b6ab-42c5-afa0-57689357097c
+		summarizeBy: none
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column Host
+		dataType: string
+		lineageTag: 7ecb3d7d-c597-4e36-8aa7-f24a71f34c4c
+		summarizeBy: none
+		sourceColumn: Host
+
+		annotation SummarizationSetBy = Automatic
+
+	column Folder
+		dataType: string
+		lineageTag: fd362493-0c8a-433d-b6dd-54cde1db1ce0
+		summarizeBy: none
+		sourceColumn: Folder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the configuration file'
+		dataType: string
+		lineageTag: ce5b1657-747f-4d75-8f4a-c3fe1c71974a
+		summarizeBy: none
+		sourceColumn: OS according to the configuration file
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OS according to the VMware Tools'
+		dataType: string
+		lineageTag: 7f99f287-5ae3-4768-ab77-4d3a53374395
+		summarizeBy: none
+		sourceColumn: OS according to the VMware Tools
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM ID'
+		dataType: string
+		lineageTag: 7a73ee0a-ecb4-4583-a6a4-9a8fa17ddd60
+		summarizeBy: none
+		sourceColumn: VM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VM UUID'
+		dataType: string
+		lineageTag: f9cce369-bf17-498e-8827-6204fd02d1db
+		summarizeBy: none
+		sourceColumn: VM UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK Server'
+		dataType: string
+		lineageTag: d87280c1-4942-4d99-9ea6-4abcca29cb50
+		summarizeBy: none
+		sourceColumn: VI SDK Server
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VI SDK UUID'
+		dataType: string
+		lineageTag: 8c3bf2d1-6195-4040-bb84-9ba8a405e249
+		summarizeBy: none
+		sourceColumn: VI SDK UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: cff6067b-af19-4597-be85-789b1bea2e84
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'VMware Disks' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source = ```
+				let
+				    Sheet = "vDisk",
+				    
+				    #"Source-SVCENT0005" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_SVCENT0005.xlsx"), null, true),
+				    #"Sheet-SVCENT0005" = #"Source-SVCENT0005"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-SVCENT0005" = Table.PromoteHeaders(#"Sheet-SVCENT0005", [PromoteAllScalars=true]),
+				    #"Source-AVSUKSouth" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKSouth.xlsx"), null, true),
+				    #"Sheet-AVSUKSouth" = #"Source-AVSUKSouth"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKSouth" = Table.PromoteHeaders(#"Sheet-AVSUKSouth", [PromoteAllScalars=true]),
+				    #"Source-AVSUKWest" = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/RVTools_export_all_AVSUKWest.xlsx"), null, true),
+				    #"Sheet-AVSUKWest" = #"Source-AVSUKWest"{[Item=Sheet,Kind="Sheet"]}[Data],
+				    #"Table-AVSUKWest" = Table.PromoteHeaders(#"Sheet-AVSUKWest", [PromoteAllScalars=true]),
+				
+				    CombinedTable = Table.Combine({#"Table-SVCENT0005", #"Table-AVSUKSouth", #"Table-AVSUKWest"}),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(#"CombinedTable",{{"VM", type text}, {"Powerstate", type text}, {"Template", type logical}, {"SRM Placeholder", type logical}, {"Disk", type text}, {"Disk Key", Int64.Type}, {"Disk UUID", type text}, {"Disk Path", type text}, {"Capacity MiB", Int64.Type}, {"Raw", type logical}, {"Disk Mode", type text}, {"Sharing mode", type text}, {"Thin", type logical}, {"Eagerly Scrub", type logical}, {"Split", type logical}, {"Write Through", type logical}, {"Level", type text}, {"Shares", Int64.Type}, {"Reservation", Int64.Type}, {"Limit", Int64.Type}, {"Controller", type text}, {"Label", type text}, {"SCSI Unit #", Int64.Type}, {"Unit #", Int64.Type}, {"Shared Bus", type text}, {"Path", type text}, {"Raw LUN ID", type any}, {"Raw Comp. Mode", type any}, {"Internal Sort Column", type text}, {"Annotation", type text}, {"Backup Status", type text}, {"Last Backup", type text}, {"XdConfig", type any}, {"Datacenter", type text}, {"Cluster", type text}, {"Host", type text}, {"Folder", type text}, {"OS according to the configuration file", type text}, {"OS according to the VMware Tools", type text}, {"VM ID", type text}, {"VM UUID", type text}, {"VI SDK Server", type text}, {"VI SDK UUID", type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"VM", Text.Upper, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"VM"}, #"Mapping VM to ServerName", {"VM"}, "Mapping-VMwareVM-ServerName", JoinKind.LeftOuter),
+				    #"Expanded Mapping-VMwareVM-ServerName" = Table.ExpandTableColumn(#"Merged Queries", "Mapping-VMwareVM-ServerName", {"Name"}, {"Name"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded Mapping-VMwareVM-ServerName",{"Name", "VM", "Powerstate", "Template", "SRM Placeholder", "Disk", "Disk Key", "Disk UUID", "Disk Path", "Capacity MiB", "Raw", "Disk Mode", "Sharing mode", "Thin", "Eagerly Scrub", "Split", "Write Through", "Level", "Shares", "Reservation", "Limit", "Controller", "Label", "SCSI Unit #", "Unit #", "Shared Bus", "Path", "Raw LUN ID", "Raw Comp. Mode", "Internal Sort Column", "Annotation", "Backup Status", "Last Backup", "XdConfig", "Datacenter", "Cluster", "Host", "Folder", "OS according to the configuration file", "OS according to the VMware Tools", "VM ID", "VM UUID", "VI SDK Server", "VI SDK UUID"})
+				in
+				    #"Reordered Columns"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

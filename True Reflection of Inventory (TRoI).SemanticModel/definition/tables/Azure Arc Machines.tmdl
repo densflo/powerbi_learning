@@ -1,0 +1,50 @@
+table 'Azure Arc Machines'
+	lineageTag: 59039f58-0785-4a39-9075-751c794ed44d
+
+	column Name
+		dataType: string
+		lineageTag: 0f53d5ac-62f1-46c5-99c1-c7652dffcb32
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 33b4989b-5b09-484b-aec1-cbe5e3dc66aa
+		summarizeBy: none
+		sourceColumn: Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OperatingSystem
+		dataType: string
+		lineageTag: cfa12613-ed21-4ed5-af84-7c0242430646
+		summarizeBy: none
+		sourceColumn: OperatingSystem
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure Arc Machines' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-All%20Servers%20in%20Azure%20Arc.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"name", type text}, {"status", type text}, {"operatingSystem", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"name", "Name"}, {"status", "Status"}, {"operatingSystem", "OperatingSystem"}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Renamed Columns",{{"Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+

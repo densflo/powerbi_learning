@@ -1,0 +1,91 @@
+relationship f91bd89d-1e3f-eda9-5ef7-d50f7f4249a6
+	fromColumn: 'Mapping DomainFQDN to DomainNetBIOS'.NetBIOS
+	toColumn: 'Mapping DomainNetBIOS to DomainFQDN'.NetBIOS
+
+relationship be452c2b-09be-ba58-59f9-5e9182f46423
+	fromColumn: 'VMware VMs'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 3ebdf2e7-70f6-931f-7492-29c65338e86f
+	fromColumn: 'VMware Disks'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 50b0cfc2-b325-f791-ed0e-504db5c73dec
+	fromColumn: 'VMware Snapshots'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 12585306-7ccb-4a0d-11d0-1233ad6b7085
+	fromColumn: 'VMware CD'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 0133beac-358c-f40d-c345-79a8a5825e38
+	fromColumn: 'VMware Tools'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 4dc758f0-b610-28b6-4c9f-461c0f1e2d7e
+	fromColumn: 'VMware Network'.Host
+	toColumn: 'VMware Hosts'.Host
+
+relationship 192c2fe7-cfbf-887d-4802-f02bcfc565b6
+	fromColumn: 'Application Catalogue Working Catalogue'.'Application Reference'
+	toColumn: 'Application Catalogue Wave Plan'.'Application Reference'
+
+relationship AutoDetected_30287392-9cd6-4e0f-a4e3-51cbb92996f6
+	fromColumn: 'Diamond IP IPControl Subnets'.Container
+	toColumn: 'Mapping Diamond IP IPControl Subnet to Location'.Container
+
+relationship AutoDetected_5583ef6b-cd4b-4baf-bf0e-f4e504050281
+	fromColumn: 'Merged Subnets'.Subnet
+	toColumn: 'Network Team Global IP Address Allocation'.Subnet
+
+relationship AutoDetected_0a03d7fa-2ea7-49e7-8234-3974fb5fb409
+	fromColumn: 'Mapping Manual Missing Subnets'.Location
+	toColumn: 'Mapping Diamond IP IPControl Subnet to Location'.Location
+
+relationship AutoDetected_59cf18fe-095b-4031-ab7e-061a8993ae79
+	fromColumn: 'Merged Subnets Expanded'.Subnet
+	toColumn: 'Network Team Global IP Address Allocation'.Subnet
+
+relationship AutoDetected_7803bc33-cf4c-4def-81ef-a420e422bfe3
+	isActive: false
+	fromColumn: 'Merged IP Addresses'.'IP Address (Decimal)'
+	toColumn: 'Merged Subnets Expanded'.'IP Address (Decimal)'
+
+relationship AutoDetected_94969dd4-5a3a-472b-9453-7fe7240fa7bd
+	fromColumn: 'Merged IP Addresses'.Subnet
+	toColumn: 'Network Team Global IP Address Allocation'.Subnet
+
+relationship AutoDetected_48265579-1db9-482b-8f64-6abaf2eee0e5
+	fromColumn: 'ServiceNow MSSQL Databases'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_690a8c51-c15e-4df9-a138-70c24ee2fc79
+	fromColumn: 'Azure Arc SQL Databases'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_ab96293b-c596-4956-bcf8-14dd8d2ad6fa
+	fromColumn: 'DB Inventory System Databases'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_56734066-bfdb-4637-92b0-31cd65d16d86
+	fromColumn: 'Merged SQL Databases'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_b9ac15b2-3263-42f9-95d0-dfc336b7c8e5
+	fromColumn: 'Merged SQL Instances'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_a9136490-ba92-44d0-8312-ec3098e7e61c
+	fromColumn: 'DB Inventory System Instances'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship AutoDetected_b3bff9eb-3936-47fc-b78a-e6118eb673cd
+	fromColumn: 'ServiceNow MSSQL Instances'.'Full Instance Name'
+	toColumn: 'Azure Arc SQL Instances'.'Full Instance Name'
+
+relationship 5d5ca0a0-b035-4262-8bd1-9cbc2cc282ce
+	fromColumn: 'Mapping VM to ServerName'.VM
+	toColumn: 'VMware VMs'.VM
+
+	annotation PBI_IsFromSource = FS
+

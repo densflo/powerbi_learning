@@ -1,0 +1,50 @@
+table 'DR Manager Important Business Services'
+	lineageTag: 92432f05-5823-4574-83c7-9856a347a093
+
+	column 'IBS APPLICATIONS'
+		dataType: string
+		lineageTag: 5a2f0715-7748-417b-8ea2-8e3dfcac5fae
+		summarizeBy: none
+		sourceColumn: IBS APPLICATIONS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY
+		dataType: string
+		lineageTag: a6e6adfa-1304-4422-aef1-569158ae92a4
+		summarizeBy: none
+		sourceColumn: CATEGORY
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Immutable Backups'
+		dataType: string
+		lineageTag: 9165cc2c-1d75-4c33-843b-7f3eafb1f0bc
+		summarizeBy: none
+		sourceColumn: Immutable Backups
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DR Manager Important Business Services' = m
+		mode: import
+		queryGroup: 'Child Queries\Other Teams'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/IBS%20Master%20List%20v0.5%20-%2010%20Oct%202024%20(v.04%20APPROVED%20on%2015%20Jul%202024).xlsx"), null, true),
+				    #"IBS Master List_Sheet" = Source{[Item="IBS Master List",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"IBS Master List_Sheet",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}}),
+				    #"Removed Top Rows" = Table.Skip(#"Changed Type",3),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"IBS APLLICATIONS", type text}, {"Resource Assessment", type text}, {"Requires Investigation", type text}, {"CATEGORY", type text}, {"Column5", type text}, {"Claims", type text}, {"Underwriting", type text}, {"Complaints", type text}, {"Pervasive#(lf)(RESOURCE ASSESSMENT)", type text}, {"Claims_1", type text}, {"Underwriting_2", type text}, {"Complaints_3", type text}, {"Pervasive#(lf)(RESOURCE ASSESSMENT)_4", type text}, {"Claims_5", type text}, {"Underwriting_6", type text}, {"Complaints_7", type text}, {"Pervasive#(lf)(RESOURCE ASSESSMENT)_8", type text}, {"Claims_9", type text}, {"Underwriting_10", type text}, {"Complaints_11", type text}, {"Pervasive#(lf)(RESOURCE ASSESSMENT)_12", type text}, {"Claims_13", type text}, {"Underwriting_14", type text}, {"Complaints_15", type text}, {"Pervasive#(lf)(RESOURCE ASSESSMENT)_16", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"IBS APLLICATIONS", "IBS APPLICATIONS"}, {"Column5", "Immutable Backups"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"IBS APPLICATIONS", "CATEGORY", "Immutable Backups"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Other Columns","Y","TRUE",Replacer.ReplaceValue,{"Immutable Backups"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value","N","FALSE",Replacer.ReplaceValue,{"Immutable Backups"}),
+				    #"Sorted Rows" = Table.Sort(#"Replaced Value2",{{"IBS APPLICATIONS", Order.Ascending}})
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

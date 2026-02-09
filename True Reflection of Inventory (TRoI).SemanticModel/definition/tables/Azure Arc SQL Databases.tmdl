@@ -1,0 +1,43 @@
+table 'Azure Arc SQL Databases'
+	lineageTag: 09e17c50-3923-4683-9f5c-618af1af4c68
+
+	column 'Full Instance Name'
+		dataType: string
+		lineageTag: 0b30aae0-a9b9-4ab0-ad03-df0ca132b945
+		summarizeBy: none
+		sourceColumn: Full Instance Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Database Name'
+		dataType: string
+		lineageTag: cc443ac1-0c35-441a-b357-8428cf3066f9
+		summarizeBy: none
+		sourceColumn: Database Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 95b1a950-dcc5-4461-8daa-69a1308b1c22
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Azure Arc SQL Databases' = m
+		mode: import
+		queryGroup: 'Child Queries\Hosting Platforms'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/AzureResourceGraphFormattedResults-Azure%20Arc%20SQL%20Databases.csv"),[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Full Instance Name", type text}, {"Database Name", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Source", each "Azure Arc")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,60 @@
+table 'Citrix Team Published Applications'
+	lineageTag: 7f582b83-2793-49ae-a1c3-69b4413a48eb
+
+	column 'Delivery Group'
+		dataType: string
+		lineageTag: 7c46356b-afad-4804-8ba4-5be085f28c8d
+		summarizeBy: none
+		sourceColumn: Delivery Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Machine Catalog'
+		dataType: string
+		lineageTag: ac9046c9-2892-4c08-8633-299b23181031
+		summarizeBy: none
+		sourceColumn: Machine Catalog
+
+		annotation SummarizationSetBy = Automatic
+
+	column VDA
+		dataType: string
+		lineageTag: b06489c1-0d38-41a5-a798-8cd718b8250b
+		summarizeBy: none
+		sourceColumn: VDA
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Name'
+		dataType: string
+		lineageTag: 5364cca6-0c5b-4532-9021-9c3fcc6aa88f
+		summarizeBy: none
+		sourceColumn: Application Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Citrix Team Published Applications' = m
+		mode: import
+		queryGroup: 'Child Queries\Other Teams'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Power%20BI%20Data%20Models/Discovery%20Data%20Model/Published-app-And-Server.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Application Name", each if [Column1] = null then null else if Text.Contains([Column1], "Application name:") then [Column1] else null),
+				    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Added Conditional Column", {{"Application Name", each if _ <> null then Text.AfterDelimiter(_, ": ") else null, type text}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Extracted Text After Delimiter", "Delivery Group", each if [Application Name] = null then [Column1] else null),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Added Conditional Column1", "VDA", each Text.BetweenDelimiters([Column3], " ", " "), type text),
+				    #"Inserted Text After Delimiter" = Table.AddColumn(#"Inserted Text Between Delimiters", "Machine Catalog", each Text.AfterDelimiter([Column3], " ", 3), type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Text After Delimiter",{"Column1", "Column2", "Column3"}),
+				    #"Filled Down" = Table.FillDown(#"Removed Columns",{"Application Name", "Delivery Group"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Filled Down", each ([VDA] <> "")),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Filtered Rows",{"Delivery Group", "Machine Catalog", "VDA", "Application Name"}),
+				    #"Sorted Rows" = Table.Sort(#"Reordered Columns",{{"Delivery Group", Order.Ascending}, {"Machine Catalog", Order.Ascending}, {"VDA", Order.Ascending}, {"Application Name", Order.Ascending}})
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

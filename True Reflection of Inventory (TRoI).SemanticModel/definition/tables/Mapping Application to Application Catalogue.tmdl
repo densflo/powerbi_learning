@@ -1,0 +1,69 @@
+table 'Mapping Application to Application Catalogue'
+	lineageTag: e74c00aa-478d-420d-abda-dee0923641aa
+
+	column Reference
+		dataType: string
+		lineageTag: 99c51691-9ff4-4a24-9a4c-89e97d9bb017
+		summarizeBy: none
+		sourceColumn: Reference
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 0b9151f0-85ea-420e-a735-0921505a803b
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Name (Application Catalogue)'
+		dataType: string
+		lineageTag: 5d78df66-2b93-4a99-ade7-dae0bf9c393a
+		summarizeBy: none
+		sourceColumn: Name (Application Catalogue)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KS Comments'
+		dataType: string
+		lineageTag: a82fb6dc-bccf-43a9-a636-9a149b66ee68
+		summarizeBy: none
+		sourceColumn: KS Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposed Handling'
+		dataType: string
+		lineageTag: f937603b-a79b-489f-8947-87e8831e6b5a
+		summarizeBy: none
+		sourceColumn: Proposed Handling
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mapping Application to Application Catalogue' = m
+		mode: import
+		queryGroup: 'Child Queries\Mapping'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://amlinonline.sharepoint.com/sites/DCExit-MigrationTeam/Shared%20Documents/Enterprise%20Apps%20DC%20Exit/Server%20&%20Application%20Mapping.xlsx"), null, true),
+				    ApplicationCatalogueMapping_Table = Source{[Item="ApplicationCatalogueMapping",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(ApplicationCatalogueMapping_Table,{{"Reference", type number}, {"Name", type text}, {"Name (Application Catalogue)", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","",null,Replacer.ReplaceValue,{"Name (Application Catalogue)"}),
+				    #"Sorted Rows" = Table.Sort(#"Replaced Value",{{"Name", Order.Ascending}}),
+				    #"Merged Discrepancies - Reference" = Table.NestedJoin(#"Sorted Rows", {"Reference"}, #"Application Catalogue Discrepancies", {"Application Reference"}, "Discrepancies - Reference", JoinKind.LeftOuter),
+				    #"Merged Discrepancies - Application Name" = Table.NestedJoin(#"Merged Discrepancies - Reference", {"Name"}, #"Application Catalogue Discrepancies", {"Discovery Data Model"}, "Discrepancies - Application Name", JoinKind.LeftOuter),
+				    #"Expanded Discrepancies - Reference" = Table.ExpandTableColumn(#"Merged Discrepancies - Application Name", "Discrepancies - Reference", {"KS Comments", "Proposed Handling"}, {"Discrepancies - Reference.KS Comments", "Discrepancies - Reference.Proposed Handling"}),
+				    #"Expanded Discrepancies - Application Name" = Table.ExpandTableColumn(#"Expanded Discrepancies - Reference", "Discrepancies - Application Name", {"KS Comments", "Proposed Handling"}, {"Discrepancies - Application Name.KS Comments", "Discrepancies - Application Name.Proposed Handling"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Expanded Discrepancies - Application Name", "KS Comments", each if [#"Discrepancies - Reference.KS Comments"] <> null then [#"Discrepancies - Reference.KS Comments"] else [#"Discrepancies - Application Name.KS Comments"]),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Added Conditional Column", "Proposed Handling", each if [#"Discrepancies - Reference.Proposed Handling"] <> null then [#"Discrepancies - Reference.Proposed Handling"] else [#"Discrepancies - Application Name.Proposed Handling"]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column1",{"Discrepancies - Reference.KS Comments", "Discrepancies - Reference.Proposed Handling", "Discrepancies - Application Name.KS Comments", "Discrepancies - Application Name.Proposed Handling"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
